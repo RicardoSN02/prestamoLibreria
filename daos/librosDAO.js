@@ -2,6 +2,7 @@
  * archivo con la clase libros dao
  */
 class libroDAO{
+
     constructor(conexion){
         this.conexion = conexion;
     }
@@ -132,3 +133,4 @@ class libroDAO{
         });
     }
 }
+    module.exports = libroDAO;
