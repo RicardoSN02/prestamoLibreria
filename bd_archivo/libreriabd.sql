@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `libreriabd` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `libreriabd`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: localhost    Database: libreriabd
@@ -169,9 +167,9 @@ CREATE TABLE `socio` (
   `idsocio` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `contrasenia` varchar(45) NOT NULL,
   `telefono` varchar(45) NOT NULL,
-  `tipo` varchar(45) NOT NULL,
+  `tipo` enum('admin','socio') NOT NULL,
   PRIMARY KEY (`idsocio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -194,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-29 23:30:59
+-- Dump completed on 2023-10-01 15:41:59
