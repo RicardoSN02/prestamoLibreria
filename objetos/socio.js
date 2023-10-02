@@ -11,3 +11,5 @@ class socio{
        this.tipo = tipo;
     }
 }  
+
+module.exports = socio
