@@ -1,19 +1,19 @@
-class socioDAO{
+class inventarioDAO{
     constructor(conexion){
         this.conexion = conexion;
     }
 
     /**
-     * Inserta el socio ingresado como parámetro a la base de datos
+     * Inserta el inventario ingresado como parámetro a la base de datos
      */
-   insertarSocio(socio){
+    agregarInventario(inventario){
         return new Promise((resolve, reject) => {
-            if(socio !== null){
+            if(inventario !== null){
 
                 let sqlObj = {
-                sql: 'INSERT INTO socio (nombre,email,contrasenia,telefono,tipo) VALUES (?,?,?,?,?)',
+                sql: 'INSERT INTO inventario (cantidad,existencia,idlibro) VALUES (?,?,?)',
                 timeout: 40000, 
-                values: [socio.nombre,socio.email,socio.password,socio.telefono,socio.tipo]
+                values: [inventario.cantidad,inventario.existencia,inventario.libro]
                 };
         
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
@@ -30,16 +30,15 @@ class socioDAO{
     }
 
 
-    
-    actualizarSocio(socio){
+    actualizarInventario(inventario,cantidad){
         return new Promise((resolve, reject) => {
-            if(socio !== null){
+            if(inventario !== null){
 
 
                 let sqlObj = {
-                sql: 'UPDATE socio SET nombre = ?, email = ?, contrasenia = ?, telefono = ?, tipo = ? WHERE socio.idsocio = ?',
+                sql: 'UPDATE inventario SET cantidad = (cantidad + (?)) WHERE inventario.idinventario = ?',
                 timeout: 40000, 
-                values: [socio.nombre, socio.email, socio.password, socio.telefono, socio.tipo, socio.id]
+                values: [cantidad,inventario.id]
                 };
         
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
@@ -54,11 +53,12 @@ class socioDAO{
         });    
     }
 
-    eliminarSocio(id){
+
+    eliminarInventario(id){
         return new Promise((resolve, reject) => {
             
             let sqlObj = {
-            sql: 'DELETE FROM socio WHERE socio.idsocio = ?',
+            sql: 'DELETE FROM inventario WHERE inventario.idinventario = ?',
             timeout: 40000, 
             values: [id]
             };
@@ -75,12 +75,11 @@ class socioDAO{
         
     }
 
-    consultarSocios(){
+    consultarInventarios(){
         return new Promise((resolve, reject) => {
-            
 
             let sqlObj = {
-            sql: 'SELECT * FROM socio',
+            sql: 'SELECT * FROM inventario',
             timeout: 40000, 
             };
 
@@ -95,11 +94,11 @@ class socioDAO{
         });  
     }
 
-    consultarSocio(id){
+    consultarInventario(id){
         return new Promise((resolve,reject) => {
             
             let sqlObj = {
-                sql: 'SELECT * FROM socio WHERE socio.idsocio = ?',
+                sql: 'SELECT * FROM inventario WHERE inventario.idinventario = ?',
                 timeout: 40000, 
                 values: [id]
             };
@@ -118,5 +117,5 @@ class socioDAO{
 
 }
 
-module.exports = socioDAO
+module.exports = inventarioDAO
 

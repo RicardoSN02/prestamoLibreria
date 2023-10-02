@@ -9,3 +9,5 @@ class inventario{
        this.libro = libro;
     }
 }  
+
+module.exports = inventario;
