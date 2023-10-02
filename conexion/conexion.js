@@ -40,6 +40,7 @@ class conexion{
                 }
             });
         });
-        
     }
 }
+
+module.exports = conexion;

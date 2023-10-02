@@ -11,3 +11,5 @@ class libro{
        this.autor = autor;
     }
 }  
+
+module.exports = libro;

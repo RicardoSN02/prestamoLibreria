@@ -11,21 +11,17 @@ class libroDAO{
         return new Promise((resolve, reject) => {
             if(libro !== null){
 
-                this.conexion.abrirConexion();
-
                 let sqlObj = {
                 sql: 'INSERT into libro (titulo,editorial,fechaPublicacion,categoria,autor) VALUES (?,?,?,?,?)',
                 timeout: 40000, // 40 segundos
-                values: [libro.nombre, libro.autor, libro.editorial]
+                values: [libro.titulo,libro.editorial,libro.fechaPublicacion,libro.categoria,libro.autor]
                 };
         
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
                 if (error){
-                    this.conexion.cerrarConexion();
                     reject(error);
                 } else {
                     console.log("se guardo en base de datos");
-                    this.conexion.cerrarConexion();
                     resolve();
                 }
                 });
@@ -88,8 +84,6 @@ class libroDAO{
     consultarLibros(){
         return new Promise((resolve, reject) => {
             
-            this.conexion.abrirConexion();
-
             let sqlObj = {
             sql: 'SELECT * FROM libro',
             timeout: 40000, // 40 segundos
@@ -97,11 +91,9 @@ class libroDAO{
 
             this.conexion.conn.query(sqlObj, (error, results, fields) => {
             if (error){
-                this.conexion.cerrarConexion();
                 reject(error);
             } else {
                 console.log("se ha consultado con exito");
-                this.conexion.cerrarConexion();
                 resolve(results);
             }
             });
@@ -133,4 +125,5 @@ class libroDAO{
         });
     }
 }
-    module.exports = libroDAO;
+    
+module.exports = libroDAO;
