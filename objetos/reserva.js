@@ -9,3 +9,5 @@ class reserva{
        this.socio = socio;
     }
 }  
+
+module.exports = reserva;

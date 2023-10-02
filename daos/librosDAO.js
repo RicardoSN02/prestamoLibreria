@@ -9,7 +9,7 @@ class libroDAO{
 
    insertarLibro(libro){
         return new Promise((resolve, reject) => {
-            if(libro !== null){
+            if(libro !== undefined){
 
                 let sqlObj = {
                 sql: 'INSERT into libro (titulo,editorial,fechaPublicacion,categoria,autor) VALUES (?,?,?,?,?)',
@@ -32,23 +32,19 @@ class libroDAO{
 
     actualizarLibro(libro){
         return new Promise((resolve, reject) => {
-            if(libro !== null){
-
-                this.conexion.abrirConexion();
+            if(libro !== undefined){
 
                 let sqlObj = {
-                sql: 'UPDATE libro SET titulo = ? , editorial = ? , fechaPublicacon = ?, categoria = ?, autor = ? WHERE libro.idlibro = ?',
+                sql: 'UPDATE libro SET titulo = ? , editorial = ? , fechaPublicacion = ?, categoria = ?, autor = ? WHERE libro.idlibro = ?',
                 timeout: 40000, // 40 segundos
-                values: [libro.titulo, libro.editorial, libro.fechaPublicacion,libro.categoria,libro.autor]
+                values: [libro.titulo, libro.editorial, libro.fechaPublicacion,libro.categoria,libro.autor,libro.id]
                 };
         
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
                 if (error){
-                    this.conexion.cerrarConexion();
                     reject(error);
                 } else {
                     console.log("se guardo en base de datos");
-                    this.conexion.cerrarConexion();
                     resolve();
                 }
                 });
@@ -58,9 +54,7 @@ class libroDAO{
 
     eliminarLibro(id){
         return new Promise((resolve, reject) => {
-            
-            this.conexion.abrirConexion();
-
+  
             let sqlObj = {
             sql: 'DELETE FROM libro WHERE libro.idlibro = ?',
             timeout: 40000, // 40 segundos
@@ -69,11 +63,8 @@ class libroDAO{
 
            this.conexion.conn.query(sqlObj, (error, results, fields) => {
            if (error){
-             this.conexion.cerrarConexion();
              reject(error);
            } else {
-             console.log("se ha eliminado con exito");
-             this.conexion.cerrarConexion();
              resolve(results);
            }
           });
@@ -103,21 +94,17 @@ class libroDAO{
     consultarLibro(id){
         return new Promise((resolve,reject) => {
             
-            this.conexion.abrirConexion();
-
             let sqlObj = {
-                sql: 'SELECT * FROM libro WHERE libros.idlibro= ?',
+                sql: 'SELECT * FROM libro WHERE libro.idlibro= ?',
                 timeout: 40000, // 40 segundos
                 values: [id]
             };
     
             this.conexion.conn.query(sqlObj, (error, results, fields) => {
             if (error){
-                this.conexion.cerrarConexion();
                 reject(error);
             } else {
                 console.log("se ha consultado con exito");
-                this.conexion.cerrarConexion();
                 resolve(results);
             }
             });
