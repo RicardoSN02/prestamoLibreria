@@ -11,3 +11,5 @@ class prestamo{
        this.socio = socio;
     }
 }  
+
+module.exports = prestamo;

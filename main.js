@@ -5,11 +5,15 @@ const libroDao = require('./daos/librosDAO');
 const socioDao = require('./daos/sociosDAO');
 const inventarioDao = require('./daos/inventarioDAO');
 const prestamoDAO = require('./daos/prestamoDAO');
+const reservaDao = require('./daos/reservaDAO');
+const multaDao = require('./daos/multaDAO');
 
 const socio = require('./objetos/socio');
 const inventario = require('./objetos/inventario');
 const libro = require('./objetos/libro');
 const prestamo = require('./objetos/prestamo');
+const reserva = require('./objetos/reserva');
+const multa = require('./objetos/multa');
 
 const nuevaConexcion = new conexion();
 
@@ -17,7 +21,8 @@ const instanciaLibroDao = new libroDao(nuevaConexcion);
 const instanciaSocioDao = new socioDao(nuevaConexcion);
 const instanciaInventarioDao = new inventarioDao(nuevaConexcion);
 const instanciaPrestamoDao = new prestamoDAO(nuevaConexcion);
-
+const instanciaReservaDao = new reservaDao(nuevaConexcion);
+const instanciaMultaDao = new multaDao(nuevaConexcion);
 
 nuevaConexcion.abrirConexion();
 
@@ -42,7 +47,7 @@ async function menu(){
 
     switch(num){
         case 1:
-            menuUsuarios();
+            menuSocios();
             break;
         case 2:
             menuLibros();
@@ -54,10 +59,10 @@ async function menu(){
             menuPrestamo();
             break; 
         case 5:
-            menuLibros();
+            menuReserva();
             break;
         case 6:
-            menuLibros();
+            menuMulta();
             break;
         case 7:
             console.log("Saliendo ... ... .. .. .");     
@@ -103,14 +108,14 @@ async function menuSocios(){
             console.log("Ingrese datos");
             console.log("   °-----------------°-----------------°");
             const idSocio = readline.question("ID: ");
-            let idBuscado = parseInt(idBuscado);
+            let idBuscado = parseInt(idSocio);
             const nombreSocioNuevo = readline.question("Nombre: ");
             const emailSocioNuevo = readline.question("Correo electrónico: ");
             const passwordSocioNuevo = readline.question("Contraseña: ");
             const telefonoSocioNuevo = readline.question("Teléfono : ");
             const tipoUsuarioNuevo = readline.question("Tipo de usuario: Administrador   |   Socio");
 
-            instanciaSocioDao.actualizarSocio(new socio(nombreSocio, emailSocio, passwordSocio, telefonoSocio, tipoUsuario, idBuscado));
+            instanciaSocioDao.actualizarSocio(new socio(nombreSocioNuevo, emailSocioNuevo, passwordSocioNuevo, telefonoSocioNuevo, tipoUsuarioNuevo, idBuscado));
 
             menuSocios();
             break;    
@@ -381,6 +386,166 @@ async function menuPrestamo(){
         default:
             console.log('Opción no válida. Inténtalo de nuevo.');
             menuPrestamo();
+            break;
+    }
+}
+
+async function menuReserva(){
+    console.log("    --- --- --- --- --- --- --- --- ---")
+    console.log('   1. Registrar reserva');
+    console.log('   2. Eliminar');
+    console.log('   3. Consultar reserva por ID');
+    console.log('   4. Consultar reservas');
+    console.log('   5. Salir');
+
+    const numero = readline.question("Seleccione una opcion: ");
+    let num = parseInt(numero);
+    console.log();
+
+    switch(num){
+        case 1:
+            console.log("REGISTRAR RESERVA");
+            console.log("Ingrese datos");
+            console.log("   °-----------------°-----------------°");
+
+            const fechaInicio = readline.question("Fecha de entrega (aaaa/mm/dd): ");
+            const FechaFin = readline.question("Fecha de devolución (aaaa/mm/dd): ");
+            const estado = readline.question("Estado: ");
+            const idLibro = readline.question("ID libro: ");
+            let idLibroPrestamo = parseInt(idLibro);
+            const idSocio = readline.question("ID socio: ");
+            let idSocioPrestamo = parseInt(idSocio);
+
+            instanciaPrestamoDao.registrarPrestamo(new prestamo(fechaInicio, FechaFin, estado, idLibroPrestamo, idSocioPrestamo));
+
+            menuReserva();
+            break;
+        case 2:
+            console.log("ELIMINAR RESERVA");
+            console.log("Ingrese ID");
+            console.log("   °-----------------°-----------------°");
+
+            const idEliminar = readline.question("ID: ");
+            let idReservaEliminado = parseInt(idEliminar);
+
+            instanciaPrestamoDao.renovarPrestamo(idReservaEliminado);
+
+            menuReserva();
+            break;    
+        case 3:
+            console.log("CONSULTAR RESERVA POR ID");
+            console.log("Ingrese ID");
+            console.log("   °-----------------°-----------------°");
+
+            const idConsultar = readline.question("ID: ");
+            let idResult = parseInt(idConsultar);
+
+            instanciaReservaDao.consultarReserva(idResult);
+
+            menuReserva();
+            break;
+        case 4:
+            console.log("CONSULTA DE RESERVAS");
+            console.log("   °-----------------°-----------------°");
+
+            instanciaReservaDao.consultarReservas();
+
+            menuReserva();
+            break;
+        case 5:
+            menu();
+            break;
+        default:
+            console.log('Opción no válida. Inténtalo de nuevo.');
+            menuReserva();
+            break;
+    }
+}
+
+async function menuMulta(){
+    console.log("    --- --- --- --- --- --- --- --- ---")
+    console.log('   1. Registrar multa');
+    console.log('   2. Actualizar multa');
+    console.log('   3. Eliminar multa');
+    console.log('   4. Consultar prestamo por ID');
+    console.log('   5. Consultar prestamos');
+    console.log('   6. Salir');
+
+    const numero = readline.question("Seleccione una opcion: ");
+    let num = parseInt(numero);
+    console.log();
+
+    switch(num){
+        case 1:
+            console.log("REGISTRAR MULTA");
+            console.log("Ingrese datos");
+            console.log("   °-----------------°-----------------°");
+
+            const registrarMulta = readline.question("Multa: ");
+            let cantidad = parseInt(registrarMulta);
+            const fechaMulta = readline.question("Fecha de multa (aaaa/mm/dd): ");
+            const idPrestamo = readline.question("ID prestamo: ");
+            let idPrestamoMultado = parseInt(idPrestamo);
+            
+
+            instanciaMultaDao.registrarMulta(new multa(cantidad, fechaMulta, idPrestamoMultado));
+
+            menuMulta();
+            break;
+        case 2:
+            console.log("ACTUALIZAR MULTA");
+            console.log("Ingrese ID");
+            console.log("   °-----------------°-----------------°");
+
+            const multaActualizada = readline.question("Multa: ");
+            let multaNueva = parseInt(multaActualizada);
+            const fechaMultaNueva = readline.question("Fecha de multa (aaaa/mm/dd): ");
+            const idMulta = readline.question("ID prestamo: ");
+            let idMultaActualizada = parseInt(idMulta);
+            
+
+            instanciaMultaDao.actualizarMulta(idMultaActualizada, multaNueva, fechaMultaNueva);
+
+            menuMulta();
+            break;
+        case 3:
+            console.log("ELIMINAR MULTA");
+            console.log("Ingrese ID");
+            console.log("   °-----------------°-----------------°");
+
+            const idEliminar = readline.question("ID: ");
+            let idMultaEliminada = parseInt(idEliminar);
+
+            instanciaMultaDao.eliminarMulta(idMultaEliminada);
+
+            menuMulta();
+            break;   
+        case 4:
+            console.log("CONSULTAR MULTA POR ID");
+            console.log("Ingrese ID");
+            console.log("   °-----------------°-----------------°");
+
+            const idConsultar = readline.question("ID: ");
+            let idResult = parseInt(idConsultar);
+
+            instanciaMultaDao.consultarMulta(idResult);
+
+            menuMulta();
+            break;
+        case 5:
+            console.log("CONSULTA DE MULTAS");
+            console.log("   °-----------------°-----------------°");
+
+            instanciaMultaDao.consultarMultas();
+
+            menuMulta();
+            break;
+        case 6:
+            menu();
+            break;
+        default:
+            console.log('Opción no válida. Inténtalo de nuevo.');
+            menuMulta();
             break;
     }
 }

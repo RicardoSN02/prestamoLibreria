@@ -9,3 +9,5 @@ class multa{
        this.prestamo = prestamo;
     }
 }  
+
+module.exports = multa;
