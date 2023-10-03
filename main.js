@@ -77,11 +77,10 @@ async function menuSocios(){
     console.log("    --- --- --- --- --- --- --- --- ---")
     console.log('   1. Registrar socio');
     console.log('   2. Actualizar socio');
-    console.log('   3. Consultar socio');
-    console.log('   4. Eliminar socio');
-    console.log('   5. Realizar prestamo');
-    console.log('   6. Reservar');
-    console.log('   7. Salir');
+    console.log('   3. Consultar socio por ID');
+    console.log('   4. Consultar socios');
+    console.log('   5. Eliminar socio');
+    console.log('   6. Salir');
 
     const numero = readline.question("Seleccione una opcion: ");
     let num = parseInt(numero);
@@ -99,7 +98,7 @@ async function menuSocios(){
             const telefonoSocio = readline.question("Teléfono : ");
             const tipoUsuario = readline.question("Tipo de usuario: Administrador   |   Socio");
 
-            instanciaSocioDao.insertarSocio(new socio(nombreSocio, emailSocio, passwordSocio, telefonoSocio, tipoUsuario));
+            await instanciaSocioDao.insertarSocio(new socio(nombreSocio, emailSocio, passwordSocio, telefonoSocio, tipoUsuario));
 
             menuSocios();
             break;
@@ -115,29 +114,42 @@ async function menuSocios(){
             const telefonoSocioNuevo = readline.question("Teléfono : ");
             const tipoUsuarioNuevo = readline.question("Tipo de usuario: Administrador   |   Socio");
 
-            instanciaSocioDao.actualizarSocio(new socio(nombreSocioNuevo, emailSocioNuevo, passwordSocioNuevo, telefonoSocioNuevo, tipoUsuarioNuevo, idBuscado));
+            await instanciaSocioDao.actualizarSocio(new socio(nombreSocioNuevo, emailSocioNuevo, passwordSocioNuevo, telefonoSocioNuevo, tipoUsuarioNuevo, idBuscado));
 
             menuSocios();
             break;    
         case 3:
-            console.log("CONSULTA DE SOCIOS");
+            console.log("CONSULTA DE SOCIO POR ID");
+            console.log("   °-----------------°-----------------°");
+
             console.log("Ingrese datos");
             const idSocioConsultado = readline.question("ID: ");
             let idConsultado = parseInt(idSocioConsultado);
 
-            instanciaSocioDao.consultarSocio(idConsultado);
+            await instanciaSocioDao.consultarSocio(idConsultado);
 
             menuSocios();
             break;
         case 4:
-            const idSocioEliminar = readline.question("ID: ");
-            let idEliminado = parseInt(idSocioEliminar);
+            console.log("CONSULTA DE SOCIOS");
+            console.log("   °-----------------°-----------------°");
 
-            instanciaSocioDao.eliminarSocio(idEliminado);
+            await instanciaSocioDao.consultarSocios();
 
             menuSocios();
             break;
         case 5:
+            console.log("ELIMINAR SOCIOS");
+            console.log("   °-----------------°-----------------°");
+
+            const idSocioEliminar = readline.question("ID: ");
+            let idEliminado = parseInt(idSocioEliminar);
+
+            await instanciaSocioDao.eliminarSocio(idEliminado);
+           
+            menuSocios();
+            break;
+        case 6:
             menu();
             break;
         default:
@@ -172,7 +184,7 @@ async function menuLibros(){
             const categoria = readline.question("Categoria: ");
             const autor = readline.question("Nombre del autor: ");
 
-            instanciaLibroDao.insertarLibro(new libro(nombreLibro, editorial, fechaPublicacion, categoria, autor ));
+            await instanciaLibroDao.insertarLibro(new libro(nombreLibro, editorial, fechaPublicacion, categoria, autor ));
 
             menuUsuarios();
             break;
@@ -187,7 +199,7 @@ async function menuLibros(){
             const categoriaNuevo = readline.question("Categoria: ");
             const autorNuevo = readline.question("Nombre del autor: ");
 
-            instanciaLibroDao.actualizarLibro(new libro(nombreLibroNuevo, editorialNuevo, fechaPublicacionNuevo, categoriaNuevo, autorNuevo));
+            awaitinstanciaLibroDao.actualizarLibro(new libro(nombreLibroNuevo, editorialNuevo, fechaPublicacionNuevo, categoriaNuevo, autorNuevo));
 
             break;
         case 3:
@@ -198,7 +210,8 @@ async function menuLibros(){
             const idBuscado = readline.question("ID: ");
             let idLibro = parseInt(idBuscado);
 
-            instanciaLibroDao.consultarLibro(idLibro);
+            await instanciaLibroDao.consultarLibro(idLibro);
+
             menuUsuarios();
             break;    
         case 4:
@@ -209,14 +222,15 @@ async function menuLibros(){
             const idEliminar = readline.question("ID: ");
             let idBorrado = parseInt(idEliminar);
 
-            instanciaLibroDao.eliminarLibro(idBorrado);
+            await instanciaLibroDao.eliminarLibro(idBorrado);
+
             menuUsuarios();
             break;
         case 5:
             console.log("CONSULTAR LIBROS");
             console.log("   °-----------------°-----------------°");
 
-            instanciaLibroDao.consultarLibros();
+            await instanciaLibroDao.consultarLibros();
 
             menuUsuarios();
             break;
@@ -256,7 +270,7 @@ async function menuInventario(){
             const idLibroInventariar = readline.question("ID de libro: ");
             let libroNuevo = parseInt(idLibroInventariar);
 
-            instanciaInventarioDao.agregarInventario(new inventario(cantidadNueva, existenciaNueva, libroNuevo));
+            await instanciaInventarioDao.agregarInventario(new inventario(cantidadNueva, existenciaNueva, libroNuevo));
 
             menuInventario();
             break;
@@ -270,7 +284,8 @@ async function menuInventario(){
             const cantidadActualizar = readline.question("Cantidad nueva: ");
             let cantidadActualizada = parseInt(cantidadActualizar);
 
-            instanciaInventarioDao.actualizarInventario(cantidadActualizada, idActualizar);
+            await instanciaInventarioDao.actualizarInventario(cantidadActualizada, idActualizar);
+
             menuInventario();
             break;    
         case 3:
@@ -281,7 +296,7 @@ async function menuInventario(){
             const idEliminar = readline.question("ID: ");
             let idBorrado = parseInt(idEliminar);
 
-            instanciaInventarioDao.eliminarInventario(idBorrado);
+            await instanciaInventarioDao.eliminarInventario(idBorrado);
 
             menuInventario();
             break;
@@ -289,7 +304,7 @@ async function menuInventario(){
             console.log("CONSULTA DE INVENTARIOS");
             console.log("   °-----------------°-----------------°");
 
-            instanciaInventarioDao.consultarInventarios();
+            await instanciaInventarioDao.consultarInventarios();
 
             menuInventario();
             break;
@@ -301,7 +316,7 @@ async function menuInventario(){
             const idConsultado = readline.question("ID: ");
             let idResult = parseInt(idConsultado);
 
-            instanciaInventarioDao.consultarInventario(idResult);
+            await instanciaInventarioDao.consultarInventario(idResult);
 
             menuInventario();
             break;
@@ -341,7 +356,7 @@ async function menuPrestamo(){
             const idSocio = readline.question("ID socio: ");
             let idSocioPrestamo = parseInt(idSocio);
 
-            instanciaPrestamoDao.registrarPrestamo(new prestamo(fechaInicio, FechaFin, estado, idLibroPrestamo, idSocioPrestamo));
+            await instanciaPrestamoDao.registrarPrestamo(new prestamo(fechaInicio, FechaFin, estado, idLibroPrestamo, idSocioPrestamo));
 
             menuPrestamo();
             break;
@@ -356,7 +371,7 @@ async function menuPrestamo(){
             const estadoNuevo = readline.question("Cantidad nueva: ");
             let estadoActualizado= parseInt(estadoNuevo);
 
-            instanciaPrestamoDao.renovarPrestamo(FechaDevolucionNueva, estadoActualizado, idActualizado);
+            await instanciaPrestamoDao.renovarPrestamo(FechaDevolucionNueva, estadoActualizado, idActualizado);
 
             menuPrestamo();
             break;    
@@ -368,7 +383,7 @@ async function menuPrestamo(){
             const idConsultar = readline.question("ID: ");
             let idResult = parseInt(idConsultar);
 
-            instanciaPrestamoDao.consultarPrestamo(idResult);
+            await instanciaPrestamoDao.consultarPrestamo(idResult);
 
             menuPrestamo();
             break;
@@ -376,7 +391,7 @@ async function menuPrestamo(){
             console.log("CONSULTA DE PRESTAMOS");
             console.log("   °-----------------°-----------------°");
 
-            instanciaPrestamoDao.consultarPrestamos();
+            await instanciaPrestamoDao.consultarPrestamos();
 
             menuPrestamo();
             break;
@@ -416,7 +431,7 @@ async function menuReserva(){
             const idSocio = readline.question("ID socio: ");
             let idSocioPrestamo = parseInt(idSocio);
 
-            instanciaPrestamoDao.registrarPrestamo(new prestamo(fechaInicio, FechaFin, estado, idLibroPrestamo, idSocioPrestamo));
+            await instanciaPrestamoDao.registrarPrestamo(new prestamo(fechaInicio, FechaFin, estado, idLibroPrestamo, idSocioPrestamo));
 
             menuReserva();
             break;
@@ -428,7 +443,7 @@ async function menuReserva(){
             const idEliminar = readline.question("ID: ");
             let idReservaEliminado = parseInt(idEliminar);
 
-            instanciaPrestamoDao.renovarPrestamo(idReservaEliminado);
+            await instanciaPrestamoDao.renovarPrestamo(idReservaEliminado);
 
             menuReserva();
             break;    
@@ -440,7 +455,7 @@ async function menuReserva(){
             const idConsultar = readline.question("ID: ");
             let idResult = parseInt(idConsultar);
 
-            instanciaReservaDao.consultarReserva(idResult);
+            await instanciaReservaDao.consultarReserva(idResult);
 
             menuReserva();
             break;
@@ -448,7 +463,7 @@ async function menuReserva(){
             console.log("CONSULTA DE RESERVAS");
             console.log("   °-----------------°-----------------°");
 
-            instanciaReservaDao.consultarReservas();
+            await instanciaReservaDao.consultarReservas();
 
             menuReserva();
             break;
@@ -488,7 +503,7 @@ async function menuMulta(){
             let idPrestamoMultado = parseInt(idPrestamo);
             
 
-            instanciaMultaDao.registrarMulta(new multa(cantidad, fechaMulta, idPrestamoMultado));
+            await instanciaMultaDao.registrarMulta(new multa(cantidad, fechaMulta, idPrestamoMultado));
 
             menuMulta();
             break;
@@ -504,7 +519,7 @@ async function menuMulta(){
             let idMultaActualizada = parseInt(idMulta);
             
 
-            instanciaMultaDao.actualizarMulta(idMultaActualizada, multaNueva, fechaMultaNueva);
+            await instanciaMultaDao.actualizarMulta(idMultaActualizada, multaNueva, fechaMultaNueva);
 
             menuMulta();
             break;
@@ -516,7 +531,7 @@ async function menuMulta(){
             const idEliminar = readline.question("ID: ");
             let idMultaEliminada = parseInt(idEliminar);
 
-            instanciaMultaDao.eliminarMulta(idMultaEliminada);
+            await instanciaMultaDao.eliminarMulta(idMultaEliminada);
 
             menuMulta();
             break;   
@@ -528,7 +543,7 @@ async function menuMulta(){
             const idConsultar = readline.question("ID: ");
             let idResult = parseInt(idConsultar);
 
-            instanciaMultaDao.consultarMulta(idResult);
+            await instanciaMultaDao.consultarMulta(idResult);
 
             menuMulta();
             break;
@@ -536,7 +551,7 @@ async function menuMulta(){
             console.log("CONSULTA DE MULTAS");
             console.log("   °-----------------°-----------------°");
 
-            instanciaMultaDao.consultarMultas();
+            await instanciaMultaDao.consultarMultas();
 
             menuMulta();
             break;
