@@ -6,7 +6,6 @@ class prestamoDAO {
 
     registrarPrestamo(prestamo) {
         return new Promise((resolve, reject) => {
-            if (prestamo !== undefined) {
                 let sqlObj = {
                     sql: 'INSERT into prestamo (fechainicio, fechafin, estado, idlibro, idsocio) VALUES (?,?,?,?,?)',
                     timeout: 40000,
@@ -21,13 +20,11 @@ class prestamoDAO {
                         resolve();
                     }
                 });
-            }
         });
     }
 
     renovarPrestamo(prestamo){
         return new Promise((resolve, reject) =>{
-            if(prestamo !== null){
                 let sqlObj = {
                     sql: 'UPDATE prestamo SET fechafin = ?, estado = ? WHERE prestamo.idprestamo = ?',
                     timeout: 40000,
@@ -41,7 +38,6 @@ class prestamoDAO {
                     resolve();
                     }
                 });
-            }
         });
     }
 

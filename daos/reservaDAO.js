@@ -9,8 +9,6 @@ class reservaDAO{
 
     registrarReserva(reserva){
         return new Promise((resolve,reject) =>{
-            if(reserva !== undefined){
-
                 let sqlObj = {
                 sql: 'INSERT into reserva (fechaespera,idlbro,idsocio) VALUES (?,?,?)',
                 timeout: 40000, // 40 segundos
@@ -25,14 +23,12 @@ class reservaDAO{
                     resolve();
                 }
                 });
-             }
         });
     }
     
 
     eliminarReserva(id){
         return new Promise((resolve, reject) => {
-            if(id !== undefined){
                 let sqlObj = {
                     sql: 'DELETE FROM reserva WHERE reserva.idreserva = ?',
                     timeout: 40000, // 40 segundos
@@ -46,8 +42,6 @@ class reservaDAO{
                      resolve(results);
                    }
                   });
-            }
-
         });  
     }
 
@@ -71,7 +65,6 @@ class reservaDAO{
 
     consultarReserva(id){
         return new Promise((resolve,reject) =>{
-            if(id !== undefined){
                 let sqlObj = {
                 sql: 'SELECT * FROM reserva WHERE idreserva = ?',
                 timeout: 40000, // 40 segundos
@@ -86,7 +79,6 @@ class reservaDAO{
                         resolve(results);
                     }
                     }); 
-            }
         });
                        
     }

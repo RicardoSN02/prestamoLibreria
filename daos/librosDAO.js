@@ -9,46 +9,42 @@ class libroDAO{
 
    insertarLibro(libro){
         return new Promise((resolve, reject) => {
-            if(libro !== undefined){
-
-                let sqlObj = {
+            let sqlObj = {
                 sql: 'INSERT into libro (titulo,editorial,fechaPublicacion,categoria,autor) VALUES (?,?,?,?,?)',
                 timeout: 40000, // 40 segundos
                 values: [libro.titulo,libro.editorial,libro.fechaPublicacion,libro.categoria,libro.autor]
-                };
+            };
         
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
                 if (error){
                     reject(error);
                 } else {
                     console.log("se guardo en base de datos");
-                    resolve();
+                    resolve("se guardo con exito");
                 }
                 });
-             }
+            
         });    
      
     }
 
     actualizarLibro(libro){
         return new Promise((resolve, reject) => {
-            if(libro !== undefined){
-
-                let sqlObj = {
-                sql: 'UPDATE libro SET titulo = ? , editorial = ? , fechaPublicacion = ?, categoria = ?, autor = ? WHERE libro.idlibro = ?',
-                timeout: 40000, // 40 segundos
-                values: [libro.titulo, libro.editorial, libro.fechaPublicacion,libro.categoria,libro.autor,libro.id]
-                };
+            let sqlObj = {
+            sql: 'UPDATE libro SET titulo = ? , editorial = ? , fechaPublicacion = ?, categoria = ?, autor = ? WHERE libro.idlibro = ?',
+            timeout: 40000, // 40 segundos
+            values: [libro.titulo, libro.editorial, libro.fechaPublicacion,libro.categoria,libro.autor,libro.id]
+            };
         
-                this.conexion.conn.query(sqlObj, (error, results, fields) => {
-                if (error){
-                    reject(error);
-                } else {
-                    console.log("se guardo en base de datos");
-                    resolve();
-                }
-                });
-             }
+            this.conexion.conn.query(sqlObj, (error, results, fields) => {
+            if (error){
+                 reject(error);
+            } else {
+                console.log("se guardo en base de datos");
+                resolve("se actualizo con exito");
+            }
+            });
+    
         });    
     }
 

@@ -5,7 +5,7 @@ class multaDAO {
 
     registrarMulta(multa) {
         return new Promise((resolve, reject) => {
-            if (multa !== undefined) {
+            
                 let sqlObj = {
                     sql: 'INSERT into multa (cantidad, fechamulta, idprestamo) VALUES (?,?,?)',
                     timeout: 40000,
@@ -20,7 +20,7 @@ class multaDAO {
                         resolve();
                     }
                 });
-            }
+            
         });
     }
 

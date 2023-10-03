@@ -1,30 +1,40 @@
 const readline = require('readline-sync');
-const conexion = require('./conexion/conexion');
+const conexionn = require('./conexion/conexion.js');
 
-const libroDao = require('./daos/librosDAO');
-const socioDao = require('./daos/sociosDAO');
-const inventarioDao = require('./daos/inventarioDAO');
-const prestamoDAO = require('./daos/prestamoDAO');
-const reservaDao = require('./daos/reservaDAO');
-const multaDao = require('./daos/multaDAO');
+const librodao = require('./daos/librosDAO.js');
+const sociodao = require('./daos/sociosDAO.js');
+const inventariodao = require('./daos/inventarioDAO.js');
+const prestamodao = require('./daos/prestamoDAO.js');
+const reservadao = require('./daos/reservaDAO.js');
+const multadao = require('./daos/multaDAO.js');
 
-const socio = require('./objetos/socio');
-const inventario = require('./objetos/inventario');
-const libro = require('./objetos/libro');
-const prestamo = require('./objetos/prestamo');
-const reserva = require('./objetos/reserva');
-const multa = require('./objetos/multa');
+const socio = require('./objetos/socio.js');
+const inventario = require('./objetos/inventario.js');
+const libro = require('./objetos/libro.js');
+const prestamo = require('./objetos/prestamo.js');
+const reserva = require('./objetos/reserva.js');
+const multa = require('./objetos/multa.js');
 
-const nuevaConexcion = new conexion();
+const nuevaConexcion = new conexionn();
 
-const instanciaLibroDao = new libroDao(nuevaConexcion);
-const instanciaSocioDao = new socioDao(nuevaConexcion);
-const instanciaInventarioDao = new inventarioDao(nuevaConexcion);
-const instanciaPrestamoDao = new prestamoDAO(nuevaConexcion);
-const instanciaReservaDao = new reservaDao(nuevaConexcion);
-const instanciaMultaDao = new multaDao(nuevaConexcion);
+abrirConexion();
 
-nuevaConexcion.abrirConexion();
+const instanciaLibroDao = new librodao(nuevaConexcion);
+const instanciaSocioDao = new sociodao(nuevaConexcion);
+const instanciaInventarioDao = new inventariodao(nuevaConexcion);
+const instanciaPrestamoDao = new prestamodao(nuevaConexcion);
+const instanciaReservaDao = new reservadao(nuevaConexcion);
+const instanciaMultaDao = new multadao(nuevaConexcion);
+
+
+
+async function abrirConexion(){
+   await nuevaConexcion.abrirConexion();
+}
+
+async function cerrarConexion(){
+   await nuevaConexcion.cerrarConexion();
+}
 
 console.log("   °-----------------°-----------------°");
 console.log("                 BIBLIOTECA");
@@ -66,7 +76,7 @@ async function menu(){
             break;
         case 7:
             console.log("Saliendo ... ... .. .. .");     
-            nuevaConexcion.cerrarConexion();       
+            await cerrarConexion();     
             break;
         default:
             break;
@@ -96,7 +106,7 @@ async function menuSocios(){
             const emailSocio = readline.question("Correo electrónico: ");
             const passwordSocio = readline.question("Contraseña: ");
             const telefonoSocio = readline.question("Teléfono : ");
-            const tipoUsuario = readline.question("Tipo de usuario: Administrador   |   Socio");
+            const tipoUsuario = readline.question("Tipo de usuario: Administrador   |   Socio\n");
 
             await instanciaSocioDao.insertarSocio(new socio(nombreSocio, emailSocio, passwordSocio, telefonoSocio, tipoUsuario));
 
@@ -134,7 +144,8 @@ async function menuSocios(){
             console.log("CONSULTA DE SOCIOS");
             console.log("   °-----------------°-----------------°");
 
-            await instanciaSocioDao.consultarSocios();
+            let resultadoSocio = await instanciaSocioDao.consultarSocios();
+            console.log(resultadoSocio);
 
             menuSocios();
             break;
@@ -184,14 +195,18 @@ async function menuLibros(){
             const categoria = readline.question("Categoria: ");
             const autor = readline.question("Nombre del autor: ");
 
-            await instanciaLibroDao.insertarLibro(new libro(nombreLibro, editorial, fechaPublicacion, categoria, autor ));
+            await instanciaLibroDao.insertarLibro(new libro(0,nombreLibro, editorial, new Date(fechaPublicacion), categoria, autor ));
 
-            menuUsuarios();
+            menuLibros();
             break;
         case 2:
             console.log("ACTUALIZAR LIBRO");
+            let imprimirlibrosAct = await instanciaLibroDao.consultarLibros();
+            console.log(imprimirlibrosAct);
+            const idlibroact = readline.question("seleccione el id de un libro de la lista");
             console.log("Ingrese datos");
             console.log("   °-----------------°-----------------°");
+
 
             const nombreLibroNuevo = readline.question("Nombre del libro: ");
             const editorialNuevo = readline.question("Nombre de la editorial: ");
@@ -199,7 +214,8 @@ async function menuLibros(){
             const categoriaNuevo = readline.question("Categoria: ");
             const autorNuevo = readline.question("Nombre del autor: ");
 
-            awaitinstanciaLibroDao.actualizarLibro(new libro(nombreLibroNuevo, editorialNuevo, fechaPublicacionNuevo, categoriaNuevo, autorNuevo));
+            await instanciaLibroDao.actualizarLibro(new libro(idlibroact,nombreLibroNuevo, editorialNuevo, new Date(fechaPublicacionNuevo), categoriaNuevo, autorNuevo));
+            menuLibros();
 
             break;
         case 3:
@@ -210,12 +226,15 @@ async function menuLibros(){
             const idBuscado = readline.question("ID: ");
             let idLibro = parseInt(idBuscado);
 
-            await instanciaLibroDao.consultarLibro(idLibro);
+            let imprimirlibro = await instanciaLibroDao.consultarLibro(idLibro);
+            console.log(imprimirlibro);
 
-            menuUsuarios();
+            menuLibros();
             break;    
         case 4:
             console.log("ELIMINAR LIBRO");
+            let imprimirlibrosEl = await instanciaLibroDao.consultarLibros();
+            console.log(imprimirlibrosEl);
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
 
@@ -224,15 +243,17 @@ async function menuLibros(){
 
             await instanciaLibroDao.eliminarLibro(idBorrado);
 
-            menuUsuarios();
+            menuLibros();
             break;
         case 5:
             console.log("CONSULTAR LIBROS");
             console.log("   °-----------------°-----------------°");
 
-            await instanciaLibroDao.consultarLibros();
+            let imprimirlibros = await instanciaLibroDao.consultarLibros();
 
-            menuUsuarios();
+            console.log(imprimirlibros);
+
+            menuLibros();
             break;
         case 6:
             menu();
@@ -423,27 +444,34 @@ async function menuReserva(){
             console.log("Ingrese datos");
             console.log("   °-----------------°-----------------°");
 
-            const fechaInicio = readline.question("Fecha de entrega (aaaa/mm/dd): ");
-            const FechaFin = readline.question("Fecha de devolución (aaaa/mm/dd): ");
-            const estado = readline.question("Estado: ");
+            const fechaEspera = readline.question("Fecha de entrega (aaaa-mm-dd): ");
+            
+            let imprimirlibros = await instanciaLibroDao.consultarLibros();
+            console.log(imprimirlibros);
             const idLibro = readline.question("ID libro: ");
             let idLibroPrestamo = parseInt(idLibro);
+
+            let resultadoSocio = await instanciaSocioDao.consultarSocios();
+            console.log(resultadoSocio);
             const idSocio = readline.question("ID socio: ");
             let idSocioPrestamo = parseInt(idSocio);
 
-            await instanciaPrestamoDao.registrarPrestamo(new prestamo(fechaInicio, FechaFin, estado, idLibroPrestamo, idSocioPrestamo));
+            await instanciaReservaDao.registrarReserva(new reserva(0,new Date(fechaEspera),idLibroPrestamo, idSocioPrestamo));
 
             menuReserva();
             break;
         case 2:
             console.log("ELIMINAR RESERVA");
+            let imprimirReservasEl = await instanciaReservaDao.consultarReservas();
+            console.log(imprimirReservasEl);
+
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
 
             const idEliminar = readline.question("ID: ");
             let idReservaEliminado = parseInt(idEliminar);
 
-            await instanciaPrestamoDao.renovarPrestamo(idReservaEliminado);
+            await instanciaReservaDao.eliminarReserva(idReservaEliminado);
 
             menuReserva();
             break;    
@@ -455,7 +483,8 @@ async function menuReserva(){
             const idConsultar = readline.question("ID: ");
             let idResult = parseInt(idConsultar);
 
-            await instanciaReservaDao.consultarReserva(idResult);
+            let imprimirReserva = await instanciaReservaDao.consultarReserva(idResult);
+            console.log(imprimirReserva);
 
             menuReserva();
             break;
@@ -463,7 +492,8 @@ async function menuReserva(){
             console.log("CONSULTA DE RESERVAS");
             console.log("   °-----------------°-----------------°");
 
-            await instanciaReservaDao.consultarReservas();
+            let imprimirReservas = await instanciaReservaDao.consultarReservas();
+            console.log(imprimirReservas);
 
             menuReserva();
             break;
