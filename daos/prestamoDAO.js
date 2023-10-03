@@ -31,7 +31,7 @@ class prestamoDAO {
                 let sqlObj = {
                     sql: 'UPDATE prestamo SET fechafin = ?, estado = ? WHERE prestamo.idprestamo = ?',
                     timeout: 40000,
-                    values: [prestamo.fechafin, prestamo.estado]
+                    values: [prestamo.fechafin, prestamo.estado, prestamo.id]
                 };
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
                     if (error){
