@@ -8,8 +8,6 @@ class inventarioDAO{
      */
     agregarInventario(inventario){
         return new Promise((resolve, reject) => {
-            if(inventario !== null){
-
                 let sqlObj = {
                 sql: 'INSERT INTO inventario (cantidad,existencia,idlibro) VALUES (?,?,?)',
                 timeout: 40000, 
@@ -24,7 +22,6 @@ class inventarioDAO{
                     resolve();
                 }
                 });
-             }
         });    
      
     }
@@ -32,13 +29,10 @@ class inventarioDAO{
 
     actualizarInventario(inventario,cantidad){
         return new Promise((resolve, reject) => {
-            if(inventario !== null){
-
-
                 let sqlObj = {
                 sql: 'UPDATE inventario SET cantidad = (cantidad + (?)) WHERE inventario.idinventario = ?',
                 timeout: 40000, 
-                values: [cantidad,inventario.id]
+                values: [cantidad,inventario]
                 };
         
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
@@ -49,7 +43,6 @@ class inventarioDAO{
                     resolve();
                 }
                 });
-             }
         });    
     }
 

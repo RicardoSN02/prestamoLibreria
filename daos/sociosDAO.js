@@ -8,8 +8,6 @@ class socioDAO{
      */
    insertarSocio(socio){
         return new Promise((resolve, reject) => {
-            if(socio !== null){
-
                 let sqlObj = {
                 sql: 'INSERT INTO socio (nombre,email,contrasenia,telefono,tipo) VALUES (?,?,?,?,?)',
                 timeout: 40000, 
@@ -24,7 +22,6 @@ class socioDAO{
                     resolve();
                 }
                 });
-             }
         });    
      
     }
@@ -33,9 +30,6 @@ class socioDAO{
     
     actualizarSocio(socio){
         return new Promise((resolve, reject) => {
-            if(socio !== null){
-
-
                 let sqlObj = {
                 sql: 'UPDATE socio SET nombre = ?, email = ?, contrasenia = ?, telefono = ?, tipo = ? WHERE socio.idsocio = ?',
                 timeout: 40000, 
@@ -50,7 +44,6 @@ class socioDAO{
                     resolve();
                 }
                 });
-             }
         });    
     }
 

@@ -24,13 +24,13 @@ class multaDAO {
         });
     }
 
-    actualizarMulta(multa, cantidad, fechamulta) {
+    actualizarMulta(multa) {
         return new Promise((resolve, reject) => {
             if (multa !== null) {
                 let sqlObj = {
                     sql: 'UPDATE multa SET cantidad = (cantidad + ?), fechamulta = ? WHERE multa.idmulta = ?',
                     timeout: 40000,
-                    values: [cantidad, fechamulta, multa.idmulta]
+                    values: [multa.cantidad, multa.fechamulta, multa.id]
                 };
 
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
