@@ -76,7 +76,6 @@ class multaDAO {
             if (error){
                 reject(error);
             } else {
-                console.log("se ha consultado con exito");
                 resolve(results);
             }
             });

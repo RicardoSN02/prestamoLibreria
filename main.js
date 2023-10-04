@@ -49,6 +49,8 @@ async function menu(){
     console.log('   6. Administrar multa');
     console.log('   7. Salir');
 
+    await instanciaMultaDao.consultarMultas();
+
     const numero = readline.question("Seleccione una opcion: ");
     let num = parseInt(numero);
     console.log();
@@ -77,6 +79,7 @@ async function menu(){
             await cerrarConexion();     
             break;
         default:
+            menu();
             break;
     }
 }
@@ -101,10 +104,10 @@ async function menuSocios(){
             console.log("   °-----------------°-----------------°");
 
             const nombreSocio = readline.question("Nombre: ");
-            const emailSocio = readline.question("Correo electronico: ");
+            const emailSocio = validarCorreo();
             const passwordSocio = readline.question("Contrasenia: ");
-            const telefonoSocio = readline.question("Telefono : ");
-            const tipoUsuario = readline.question("Tipo de usuario: admin  |   socio\n");
+            const telefonoSocio = validarNumero();
+            const tipoUsuario = readline.question("Tipo de usuario: (admin|socio):");
 
             await instanciaSocioDao.insertarSocio(new socio(0,nombreSocio, emailSocio, passwordSocio, telefonoSocio, tipoUsuario));
 
@@ -113,21 +116,35 @@ async function menuSocios(){
         case 2:
             console.log("ACTUALIZACION DE DATOS");
             let resultadoSociosAct = await instanciaSocioDao.consultarSocios();
+            if(resultadoSociosAct.length !==0){
             console.log(resultadoSociosAct);
             console.log("Ingrese datos");
             console.log("   °-----------------°-----------------°");
             const idSocio = readline.question("ID: ");
             let idBuscado = parseInt(idSocio);
+
+            if(!validarIdSocio(resultadoSociosAct,idBuscado)){
+                console.log("seleccione un id valido");
+                menuSocios();
+                break;
+            }
+
             const nombreSocioNuevo = readline.question("Nombre: ");
-            const emailSocioNuevo = readline.question("Correo electronico: ");
+            const emailSocioNuevo = validarCorreo();
             const passwordSocioNuevo = readline.question("Contrasenia: ");
-            const telefonoSocioNuevo = readline.question("Telefono : ");
-            const tipoUsuarioNuevo = readline.question("Tipo de usuario: Administrador   |   Socio\n");
+            const telefonoSocioNuevo = validarNumero();
+            const tipoUsuarioNuevo = readline.question("Tipo de usuario: (admin|socio): ");
 
             await instanciaSocioDao.actualizarSocio(new socio(idBuscado,nombreSocioNuevo, emailSocioNuevo, passwordSocioNuevo, telefonoSocioNuevo, tipoUsuarioNuevo));
 
             menuSocios();
             break;    
+
+           }else{
+             console.log("no existen registros en la bd");
+             menuSocios();
+             break;
+           }
         case 3:
             console.log("CONSULTA DE SOCIO POR ID");
             console.log("   °-----------------°-----------------°");
@@ -153,16 +170,28 @@ async function menuSocios(){
         case 5:
             console.log("ELIMINAR SOCIOS");
             let resultadoSociosEl = await instanciaSocioDao.consultarSocios();
+            if(resultadoSociosEl.length !==0){
             console.log(resultadoSociosEl);
             console.log("   °-----------------°-----------------°");
 
             const idSocioEliminar = readline.question("ID: ");
             let idEliminado = parseInt(idSocioEliminar);
 
+            if(!validarIdSocio(resultadoSociosEl,idEliminado)){
+                console.log("seleccione un id valido");
+                menuSocios();
+                break;
+            }  
+
             await instanciaSocioDao.eliminarSocio(idEliminado);
            
             menuSocios();
             break;
+            }else{
+             console.log("no existen registros en la bd");
+             menuSocios();
+             break;
+            }
         case 6:
             menu();
             break;
@@ -194,7 +223,7 @@ async function menuLibros(){
 
             const nombreLibro = readline.question("Nombre del libro: ");
             const editorial = readline.question("Nombre de la editorial: ");
-            const fechaPublicacion = readline.question("Fecha de publicacion (aaaa-mm-dd): ");
+            const fechaPublicacion = validarFecha("Publicacion (aaaa-mm-dd)");
             const categoria = readline.question("Categoria: ");
             const autor = readline.question("Nombre del autor: \n");
 
@@ -205,22 +234,35 @@ async function menuLibros(){
         case 2:
             console.log("ACTUALIZAR LIBRO");
             let imprimirlibrosAct = await instanciaLibroDao.consultarLibros();
+            if(imprimirlibrosAct.length !==0){
             console.log(imprimirlibrosAct);
             const idlibroact = readline.question("seleccione el id de un libro de la lista\n");
+
+            if(!validarIdLibro(imprimirlibrosAct,idlibroact)){
+                console.log("seleccione un id valido");
+                menuLibros();
+                break;
+            }  
             console.log("Ingrese datos");
             console.log("   °-----------------°-----------------°");
 
 
             const nombreLibroNuevo = readline.question("Nombre del libro: ");
             const editorialNuevo = readline.question("Nombre de la editorial: ");
-            const fechaPublicacionNuevo = readline.question("Fecha de publicacion (aaaa-mm-dd): ");
+            const fechaPublicacionNuevo = validarFecha("Publicacion");
             const categoriaNuevo = readline.question("Categoria: ");
-            const autorNuevo = readline.question("Nombre del autor:\n");
+            const autorNuevo = readline.question("Nombre del autor: ");
 
-            await instanciaLibroDao.actualizarLibro(new libro(0,idlibroact,nombreLibroNuevo, editorialNuevo, crearFecha(fechaPublicacionNuevo), categoriaNuevo, autorNuevo));
+            await instanciaLibroDao.actualizarLibro(new libro(idlibroact,nombreLibroNuevo, editorialNuevo, crearFecha(fechaPublicacionNuevo), categoriaNuevo, autorNuevo));
             menuLibros();
 
             break;
+
+            }else{
+              console.log("no existen registros en la bd");
+              menuLibros();
+              break;
+            }
         case 3:
             console.log("CONSULTA DE LIBRO POR");
             console.log("Ingrese ID");
@@ -237,6 +279,8 @@ async function menuLibros(){
         case 4:
             console.log("ELIMINAR LIBRO");
             let imprimirlibrosEl = await instanciaLibroDao.consultarLibros();
+
+            if(imprimirlibrosEl.length !==0){
             console.log(imprimirlibrosEl);
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
@@ -244,10 +288,22 @@ async function menuLibros(){
             const idEliminar = readline.question("ID: ");
             let idBorrado = parseInt(idEliminar);
 
+            if(!validarIdLibro(imprimirlibrosEl,idBorrado)){
+                console.log("seleccione un id valido");
+                menuLibros();
+                break;
+            }  
+
             await instanciaLibroDao.eliminarLibro(idBorrado);
 
             menuLibros();
             break;
+
+            }else{
+              console.log("no existen registros en la bd");
+              menuLibros();
+              break;
+            }
         case 5:
             console.log("CONSULTAR LIBROS");
             console.log("   °-----------------°-----------------°");
@@ -291,8 +347,21 @@ async function menuInventario(){
             let cantidadNueva = parseInt(cantidad);
             const existencia = readline.question("Existencia: ");
             let existenciaNueva = parseInt(existencia);
+
+            let imprimirlibros = await instanciaLibroDao.consultarLibros();
+            console.log(imprimirlibros);
+            
             const idLibroInventariar = readline.question("ID de libro: ");
+
+            
+
             let libroNuevo = parseInt(idLibroInventariar);
+
+            if(!validarIdLibro(imprimirlibros,libroNuevo)){
+                console.log("seleccione un id valido");
+                menuInventario();
+                break;
+            }  
 
             await instanciaInventarioDao.agregarInventario(new inventario(0,cantidadNueva, existenciaNueva, libroNuevo));
 
@@ -301,22 +370,38 @@ async function menuInventario(){
         case 2:
             console.log("ACTUALIZAR INVENTARIO");
             let imprimirInventariosAct = await instanciaInventarioDao.consultarInventarios();
+
+            if(imprimirInventariosAct.length !==0){
             console.log(imprimirInventariosAct);
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
 
             const idBuscado = readline.question("ID: ");
             let idActualizar = parseInt(idBuscado);
+
+            if(!validarIdInventario(imprimirInventariosAct,idActualizar)){
+                console.log("seleccione un id valido");
+                menuInventario();
+                break;
+             }  
             const cantidadActualizar = readline.question("Cantidad nueva: ");
             let cantidadActualizada = parseInt(cantidadActualizar);
 
             await instanciaInventarioDao.actualizarInventario(idActualizar,cantidadActualizada);
 
             menuInventario();
-            break;    
+            break; 
+
+           }else{
+            console.log("no existen registros en la bd");
+            menuInventario();
+            break;
+           }
         case 3:
             console.log("ELIMINAR INVENTARIO");
             let imprimirInventariosEl = await instanciaInventarioDao.consultarInventarios();
+
+            if(imprimirInventariosEl.length !==0){
             console.log(imprimirInventariosEl);
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
@@ -324,10 +409,21 @@ async function menuInventario(){
             const idEliminar = readline.question("ID: ");
             let idBorrado = parseInt(idEliminar);
 
+            if(!validarIdInventario(imprimirInventariosEl,idBorrado)){
+                console.log("seleccione un id valido");
+                menuInventario();
+                break;
+             }  
+
             await instanciaInventarioDao.eliminarInventario(idBorrado);
 
             menuInventario();
             break;
+            }else{
+              console.log("no existen registros en la bd");
+              menuInventario();
+              break;
+            }
         case 4:
             console.log("CONSULTA DE INVENTARIOS");
             console.log("   °-----------------°-----------------°");
@@ -378,18 +474,30 @@ async function menuPrestamo(){
             console.log("Ingrese datos");
             console.log("   °-----------------°-----------------°");
 
-            const fechaInicio = readline.question("Fecha de entrega (aaaa-mm-dd): ");
-            const FechaFin = readline.question("Fecha de devolución (aaaa-mm-dd): ");
+            const fechaInicio = validarFecha("de entrega (aaaa-mm-dd)"); 
+            const FechaFin = validarFecha("de devolucion (aaaa-mm-dd)"); 
 
             let imprimirlibros = await instanciaLibroDao.consultarLibros();
             console.log(imprimirlibros);
             const idLibro = readline.question("ID libro: ");
             let idLibroPrestamo = parseInt(idLibro);
 
+            if(!validarIdLibro(imprimirlibros,idLibroPrestamo)){
+                console.log("seleccione un id valido");
+                menuPrestamo();
+                break;
+            }
+
             let resultadoSocios = await instanciaSocioDao.consultarSocios();
             console.log(resultadoSocios);
             const idSocio = readline.question("ID socio: ");
             let idSocioPrestamo = parseInt(idSocio);
+
+            if(!validarIdSocio(resultadoSocios,idSocioPrestamo)){
+                console.log("seleccione un id valido");
+                menuPrestamo();
+                break;
+            }
 
             await instanciaPrestamoDao.registrarPrestamo(new prestamo(0,crearFecha(fechaInicio),crearFecha(FechaFin), 'prestado', idLibroPrestamo, idSocioPrestamo));
 
@@ -398,13 +506,21 @@ async function menuPrestamo(){
         case 2:
             console.log("RENOVAR PRESTAMO");
             let imprimirPrestamosRe = await instanciaPrestamoDao.consultarPrestamos();
+            if(imprimirPrestamosRe.length !==0){
             console.log(imprimirPrestamosRe);
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
 
             const idRenovar = readline.question("ID: ");
             let idActualizado = parseInt(idRenovar);
-            const FechaDevolucionNueva = readline.question("Fecha de devolución (aaaa/mm/dd): ");
+
+            if(!validarIdPrestamo(imprimirPrestamosRe,idActualizado)){
+                console.log("seleccione un id valido");
+                menuPrestamo();
+                break;
+             }  
+
+            const FechaDevolucionNueva =  validarFecha("de devolucion (aaaa-mm-dd)"); 
             const estadoNuevo = readline.question("estado nuevo: (prestado,devuelto,atrasado)");
 
             //campos que contengan 0 no se actualizaran
@@ -412,6 +528,11 @@ async function menuPrestamo(){
 
             menuPrestamo();
             break;    
+            }else{
+              console.log("no existen registros en la bd");
+              menuPrestamo();
+              break;
+            }
         case 3:
             console.log("CONSULTAR PRESTAMO POR ID");
             console.log("Ingrese ID");
@@ -461,17 +582,28 @@ async function menuReserva(){
             console.log("Ingrese datos");
             console.log("   °-----------------°-----------------°");
 
-            const fechaEspera = readline.question("Fecha de entrega (aaaa-mm-dd): ");
+            const fechaEspera =  validarFecha("de espera (aaaa-mm-dd)"); 
             
             let imprimirlibros = await instanciaLibroDao.consultarLibros();
             console.log(imprimirlibros);
             const idLibro = readline.question("ID libro: ");
             let idLibroPrestamo = parseInt(idLibro);
+            if(!validarIdLibro(imprimirlibros,idLibroPrestamo)){
+                console.log("seleccione un id valido");
+                menuReserva();
+                break;
+            }
 
             let resultadoSocio = await instanciaSocioDao.consultarSocios();
             console.log(resultadoSocio);
             const idSocio = readline.question("ID socio: ");
             let idSocioPrestamo = parseInt(idSocio);
+
+            if(!validarIdSocio(resultadoSocio,idSocioPrestamo)){
+                console.log("seleccione un id valido");
+                menuReserva();
+                break;
+            }
 
             await instanciaReservaDao.registrarReserva(new reserva(0,crearFecha(fechaEspera),idLibroPrestamo, idSocioPrestamo));
 
@@ -480,18 +612,30 @@ async function menuReserva(){
         case 2:
             console.log("ELIMINAR RESERVA");
             let imprimirReservasEl = await instanciaReservaDao.consultarReservas();
-            console.log(imprimirReservasEl);
 
+            if(imprimirReservasEl.length !== 0){ 
+            console.log(imprimirReservasEl);
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
 
             const idEliminar = readline.question("ID: ");
             let idReservaEliminado = parseInt(idEliminar);
+            
+            if(!validarIdReserva(imprimirReservasEl,idReservaEliminado)){
+                console.log("seleccione un id valido");
+                menuReserva();
+                break;
+            }   
 
             await instanciaReservaDao.eliminarReserva(idReservaEliminado);
 
             menuReserva();
             break;    
+            }else{
+                console.log("no existen registros en la bd");
+                menuReserva();
+                break;
+            }
         case 3:
             console.log("CONSULTAR RESERVA POR ID");
             console.log("Ingrese ID");
@@ -545,13 +689,18 @@ async function menuMulta(){
 
             const registrarMulta = readline.question("Multa (cantidad/precio): ");
             let cantidad = parseInt(registrarMulta);
-            const fechaMulta = readline.question("Fecha de multa (aaaa-mm-dd): ");
+            const fechaMulta = validarFecha("de multa (aaaa-mm-dd)");
             
             let imprimirPrestamos = await instanciaPrestamoDao.consultarPrestamos();
             console.log(imprimirPrestamos);
             const idPrestamo = readline.question("ID prestamo: ");
             let idPrestamoMultado = parseInt(idPrestamo);
             
+            if(!validarIdPrestamo(imprimirPrestamos,idPrestamoMultado)){
+                console.log("seleccione un id valido");
+                menuMulta();
+                break;
+             }
 
             await instanciaMultaDao.registrarMulta(new multa(0,cantidad, crearFecha(fechaMulta), idPrestamoMultado));
 
@@ -560,6 +709,8 @@ async function menuMulta(){
         case 2:
             console.log("ACTUALIZAR MULTA");
             let imprimirMultasAct = await instanciaMultaDao.consultarMultas();
+
+            if(imprimirMultasAct.length !== 0){
             console.log(imprimirMultasAct);
             console.log("Ingrese ID");
             console.log("   °-----------------°-----------------°");
@@ -567,28 +718,55 @@ async function menuMulta(){
             const idRenovar = readline.question("ID: ");
             let idActualizado = parseInt(idRenovar);
 
+            if(!validarIdMulta(imprimirMultasAct,idActualizado)){
+                console.log("seleccione un id valido");
+                menuMulta();
+                break;
+             }  
+
             const multaActualizada = readline.question("Multa: ");
             let multaNueva = parseInt(multaActualizada);
-            const fechaMultaNueva = readline.question("Fecha de multa (aaaa-mm-dd): ");
+            const fechaMultaNueva = validarFecha("de multa (aaaa-mm-dd)")
     
             await instanciaMultaDao.actualizarMulta(new multa(idActualizado,multaNueva, crearFecha(fechaMultaNueva),0));
 
             menuMulta();
             break;
+            }else{
+                console.log("no existen registros en la bd");
+                menuMulta();
+                break;
+            }
+            
         case 3:
             console.log("ELIMINAR MULTA");
             let imprimirMultasEl = await instanciaMultaDao.consultarMultas();
-            console.log(imprimirMultasEl);
-            console.log("Ingrese ID");
-            console.log("   °-----------------°-----------------°");
 
-            const idEliminar = readline.question("ID: ");
-            let idMultaEliminada = parseInt(idEliminar);
+            if(imprimirMultasEl.length !==0){
+             console.log(imprimirMultasEl);
+             console.log("Ingrese ID");
+             console.log("   °-----------------°-----------------°");
 
-            await instanciaMultaDao.eliminarMulta(idMultaEliminada);
+             const idEliminar = readline.question("ID: ");
+             let idMultaEliminada = parseInt(idEliminar);
 
-            menuMulta();
-            break;   
+             if(!validarIdMulta(imprimirMultasEl,idMultaEliminada)){
+                console.log("seleccione un id valido");
+                menuMulta();
+                break;
+             }  
+
+             await instanciaMultaDao.eliminarMulta(idMultaEliminada);
+
+             menuMulta();
+             break;  
+
+            }else{
+                console.log("no existen registros en la bd");
+                menuMulta();
+                break;
+            }
+             
         case 4:
             console.log("CONSULTAR MULTA POR ID");
             console.log("Ingrese ID");
@@ -623,23 +801,121 @@ async function menuMulta(){
 
 menu();
 
+
+//validaciones
 function crearFecha(fecha){
     let fechaRegresar = new Date(fecha);
     return fechaRegresar;
 }
 
-function validarFecha(){
+function validarFecha(tipoFecha){
+    let regex = /^\d{4}-\d{2}-\d{2}$/;
+    let fecha = 0;
 
+    do{
+     fecha = readline.question("ingrese fecha de "+tipoFecha+": ");
+
+     if(!regex.test(fecha)){
+      console.log("ingrese fecha en formato: aaaa-mm-dd"); 
+     }
+
+    }while(!regex.test(fecha));
+
+    return fecha;
 }
 
-function campoVacio(){
-
+function campoVacio(campo){
+   if(campo === ""){
+     return true;
+   }else{
+     return false;
+   }
 }
 
 function validarCorreo(){
+   let regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+   let correo = 0;
+   do{
+    correo = readline.question("email: ");
 
+    if(!regex.test(correo)){
+      console.log("ingrese correo en formato valido (ejemplo@ejemplo.com)"); 
+    }
+
+   }while(!regex.test(correo));
+
+   return correo;
 }
 
 function validarNumero(){
+    let regex = /^\d{10}$/;
+    let numero = 0;
+    do{
+     numero = readline.question("telefono: ");
 
+     if(!regex.test(numero)){
+      console.log("ingrese telefono valido: (numero de 10 digitos xxxxxxxxxx"); 
+     }
+
+    }while(!regex.test(numero));
+
+    return numero;
 }
+
+
+
+function validarIdReserva(lista,id){
+    for (const buscar of lista) {
+        if (buscar.idreserva === id) {
+          return true; // El ID existe en la lista
+        }
+      }
+      return false; // El ID no existe en la lista
+}
+
+function validarIdLibro(lista,id){
+    for (const buscar of lista) {
+        if (buscar.idlibro === id) {
+          return true; // El ID existe en la lista
+        }
+      }
+      return false; // El ID no existe en la lista
+}
+
+function validarIdMulta(lista,id){
+    for (const buscar of lista) {
+        if (buscar.idmulta === id) {
+          return true; // El ID existe en la lista
+        }
+      }
+      return false; // El ID no existe en la lista
+}
+
+function validarIdPrestamo(lista,id){
+    for (const buscar of lista) {
+        if (buscar.idprestamo === id) {
+          return true; // El ID existe en la lista
+        }
+      }
+      return false; // El ID no existe en la lista
+}
+
+function validarIdInventario(lista,id){
+    for (const buscar of lista) {
+        if (buscar.idinventario === id) {
+          return true; // El ID existe en la lista
+        }
+      }
+      return false; // El ID no existe en la lista
+}
+
+function validarIdSocio(lista,id){
+    for (const buscar of lista) {
+        if (buscar.idsocio === id) {
+          return true; // El ID existe en la lista
+        }
+      }
+      return false; // El ID no existe en la lista
+}
+
+//mucho
