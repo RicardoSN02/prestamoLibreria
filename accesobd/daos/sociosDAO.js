@@ -109,6 +109,27 @@ class socioDAO{
         });
     }
 
+    consultarSocioCorreo(email){
+        return new Promise((resolve,reject) => {
+            
+            let sqlObj = {
+                sql: 'SELECT * FROM socio WHERE email = ?',
+                timeout: 40000, 
+                values: [email]
+            };
+    
+            this.conexion.conn.query(sqlObj, (error, results, fields) => {
+            if (error){
+                reject(error);
+            } else {
+                console.log("se ha consultado con exito");
+                resolve(results);
+            }
+            });
+
+        });
+    }
+
 }
 
 module.exports = socioDAO
