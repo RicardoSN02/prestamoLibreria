@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Libro = require('../models/libro.js');
+const Libro = require('../../accesobd/objetos/libro.js');
 const dataPath = './data/libros.json';
 
 exports.getAllLibros = (req,res) => {

@@ -109,21 +109,25 @@ class socioDAO{
         });
     }
 
-    consultarSocioCorreo(email){
+    consultaLogin(email,password){
         return new Promise((resolve,reject) => {
             
             let sqlObj = {
-                sql: 'SELECT * FROM socio WHERE email = ?',
+                sql: 'SELECT * FROM socio WHERE email = ? && contrasenia = ?',
                 timeout: 40000, 
-                values: [email]
+                values: [email,password]
             };
     
             this.conexion.conn.query(sqlObj, (error, results, fields) => {
             if (error){
                 reject(error);
             } else {
-                console.log("se ha consultado con exito");
-                resolve(results);
+
+                if(results.length !== 1){
+                    resolve(false);
+                }else{
+                    resolve(results[0].idsocio);
+                }
             }
             });
 

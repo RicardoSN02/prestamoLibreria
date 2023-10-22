@@ -12,9 +12,12 @@ app.use('/libreria',librosRutas);
 const authRoutes = require('./routes/authroutes');
 app.use('/auth', authRoutes);
 
+/**
+ * const protectedRoutes = require('./routes/protectedRoutes');
+ * app.use('/protegido', protectedRoutes);
+ * 
+ */
 // Middleware de rutas protegidas
-const protectedRoutes = require('./routes/protectedRoutes');
-app.use('/protegido', protectedRoutes);
 
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
