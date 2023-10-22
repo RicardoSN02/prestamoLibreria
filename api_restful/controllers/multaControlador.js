@@ -6,60 +6,60 @@ const libro = require('../../accesobd/objetos/libro.js');
 const { error } = require('console');
 const nuevaConexcion = new conexion();
 
-function validarCampos(camposPermitidos, recibidas){
+function validarCampos(camposPermitidos, recibidas) {
     let devolver = Object.keys(recibidas).find(key => !camposPermitidos.includes(key));
     return devolver;
 }
 
-async function abrirConexion(){
+async function abrirConexion() {
     await nuevaConexcion.abrirConexion();
 }
 
-async function cerrarConexion(){
+async function cerrarConexion() {
     await nuevaConexcion.cerrarConexion();
 }
 
 const secretKey = process.env.SECRET_KEY;
 
 exports.getAllMultas = async (req, res) => {
-    try{
+    try {
         await abrirConexion();
         const multasdao = new multadao(nuevaConexcion);
         let multas = await multasdao.consultarMultas();
 
         await cerrarConexion();
         res.json(multas);
-    }catch(err){
-        res.status(500).json({error: "Error al consiltar las multas"});
+    } catch (err) {
+        res.status(500).json({ error: "Error al consiltar las multas" });
     }
 }
 
 exports.addMulta = async (req, res, next) => {
-    try{
+    try {
         camposPermitidos = ['cantidad', 'fechamulta', 'idprestamo'];
-        if (validarCampos(camposPermitidos, req.body)){
+        if (validarCampos(camposPermitidos, req.body)) {
             const error = new Error('Estructura incorrecta');
             error.statusCode = 400;
             throw error;
         }
 
-        const nuevaMulta = new multa(0, req.body.cantidad, new Date (req.body.fechamulta), req.body.idprestamo);
+        const nuevaMulta = new multa(0, req.body.cantidad, new Date(req.body.fechamulta), req.body.idprestamo);
         abrirConexion();
 
         const multasdao = new multadao(nuevaConexcion);
-        await multasdao.registrarMulta( nuevaMulta);
+        await multasdao.registrarMulta(nuevaMulta);
         cerrarConexion();
 
         res.json(nuevaMulta);
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }
 
 exports.getMultaById = async (req, res, next) => {
-    try{
+    try {
         const multaId = parseInt(req.params.id);
-        if(isNaN(multaId)){
+        if (isNaN(multaId)) {
             const error = new Error('ID invalido');
             error.statusCode = 400;
             throw error;
@@ -70,22 +70,22 @@ exports.getMultaById = async (req, res, next) => {
         const multa = await multasdao.consultarMulta(multaId);
         cerrarConexion();
 
-        if(multa.length <= 0){
+        if (multa.length <= 0) {
             const error = new Error('Multa no encontrada');
             error.statusCode = 404;
             throw error;
         }
 
         res.json(multa);
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 }
 
 exports.updateMulta = async (req, res, next) => {
-    try{
+    try {
         camposPermitidos = ['cantidad', 'fechamulta', 'idprestamo'];
-        if(validarCampos(camposPermitidos, req.body)){
+        if (validarCampos(camposPermitidos, req.body)) {
             const error = new Error('Estructura incorrecta');
             error.statusCode = 400;
             throw error;
@@ -93,7 +93,7 @@ exports.updateMulta = async (req, res, next) => {
 
         const multaId = parseInt(req.params.id);
 
-        if(isNaN(multaId)){
+        if (isNaN(multaId)) {
             const error = new Error('ID invalido');
             error.statusCode = 400;
             throw error;
@@ -103,21 +103,21 @@ exports.updateMulta = async (req, res, next) => {
         const multasdao = new multadao(nuevaConexcion);
         const multas = await multasdao.consultarMulta(multaId);
 
-        if(multas.length <= 0){
-            const error = new Error ('Multa no encontrada');
+        if (multas.length <= 0) {
+            const error = new Error('Multa no encontrada');
             error.statusCode = 404;
             throw error;
         }
-        
-        if(req.body.cantidad){
+
+        if (req.body.cantidad) {
             multas[0].cantidad = req.body.cantidad;
         }
 
-        if(req.body.fechamulta){
+        if (req.body.fechamulta) {
             multas[0].fechamulta = new Date(req.body.fechamulta);
         }
 
-        if(req.body.idprestamo){
+        if (req.body.idprestamo) {
             multas[0].idprestamo = req.body.idprestamo;
         }
 
@@ -127,15 +127,15 @@ exports.updateMulta = async (req, res, next) => {
         cerrarConexion();
 
         res.json(multaActualizar);
-    }catch (err){
+    } catch (err) {
         next(err);
     }
 }
 
-exports.deleteCantidad = async(req, res, next) => {
-    try{
-        const multaId = parseInt (req.params.id);
-        if(isNaN(multaId)){
+exports.deleteMulta = async (req, res, next) => {
+    try {
+        const multaId = parseInt(req.params.id);
+        if (isNaN(multaId)) {
             const error = new Error('ID invalido');
             error.statusCode = 400;
             throw error;
@@ -145,7 +145,7 @@ exports.deleteCantidad = async(req, res, next) => {
         const multasdao = new multadao(nuevaConexcion);
         const multa = await multasdao.consultarMulta(multaId);
 
-        if(multa.length <= 0){
+        if (multa.length <= 0) {
             const mutasdao = new Error('Multa no encontrada');
             error.statusCode = 404;
             throw error;
@@ -155,9 +155,9 @@ exports.deleteCantidad = async(req, res, next) => {
         cerrarConexion();
 
         res.json('Libro eliminado');
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 
-    
+
 }

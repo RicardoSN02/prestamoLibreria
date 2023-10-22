@@ -12,6 +12,9 @@ app.use('/auth', authRoutes);
 const librosRutas = require('./routes/librosrutas');
 app.use('/libros',librosRutas);
 
+const multasRutas = require('./routes/multasRutas');
+app.use('/multas', multasRutas);
+
 
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
