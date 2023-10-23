@@ -25,7 +25,7 @@ exports.getAllSocios = async (req,res) => {
         await abrirConexion();
         const sociosdao = new sociodao(nuevaConexcion);
 
-        let socios = await  sociodao.consultarLibros();
+        let socios = await  sociosdao.consultarSocios();
         
         await cerrarConexion();
         
@@ -47,10 +47,10 @@ exports.addSocio = async (req,res,next) => {
 
         const nuevoSocio = new socio(0,req.body.nombre,req.body.email,req.body.password,req.body.telefono,req.body.tipo);
 
-        abrirConexion();
+        await abrirConexion();
         const sociosdao = new sociodao(nuevaConexcion);
-        await sociosdao.insertarLibro(nuevoSocio);
-        cerrarConexion();
+        await sociosdao.insertarSocio(nuevoSocio);
+        await cerrarConexion();
 
         res.json(nuevoSocio);
     } catch (err){
@@ -71,10 +71,10 @@ exports.getSocioById = async (req,res,next) =>{
            //return res.status(400).json({error: "ID invalido"});
         }
 
-        abrirConexion();
+        await abrirConexion();
         const sociosdao = new sociodao(nuevaConexcion);
-        const socio = await sociosdao.consultarLibro(socioID);
-        cerrarConexion();
+        const socio = await sociosdao.consultarSocio(socioID);
+        await cerrarConexion();
         
         if(socio.length <= 0){
             const error = new Error('Socio no encontrado');
@@ -108,11 +108,11 @@ exports.updateSocio = async (req,res,next) =>{
             //return res.status(400).json({error: "ID invalido"});
         }
 
-        abrirConexion();
+        await abrirConexion();
         const sociosdao = new sociodao(nuevaConexcion);
-        const socio = await sociosdao.consultarSocio(socioID);
+        const socioRec = await sociosdao.consultarSocio(socioID);
         
-        if(socio.length <= 0){
+        if(socioRec.length <= 0){
             const error = new Error('Socio no encontrado');
             error.statusCode = 404; // Establecer el código de estado
             throw error;
@@ -120,31 +120,31 @@ exports.updateSocio = async (req,res,next) =>{
         }
 
         if(req.body.nombre){
-            socio[0].nombre = req.body.nombre;
+            socioRec[0].nombre = req.body.nombre;
         }
 
         if(req.body.email){
-            socio[0].email = req.body.email;
+            socioRec[0].email = req.body.email;
         }
 
         if(req.body.password){
-            socio[0].password = req.body.password;
+            socioRec[0].password = req.body.password;
         }
 
         if(req.body.telefono){
-            socio[0].telefono = req.body.telefono;
+            socioRec[0].telefono = req.body.telefono;
         }
 
         if(req.body.tipo){
-            socio[0].tipo = req.body.tipo;
+            socioRec[0].tipo = req.body.tipo;
         }
 
 
-        let socioActualizar = new socio(socio[0].idsocio,socio[0].nombre,socio[0].email,socio[0].password,socio[0].telefono,socio[0].tipo)
+        let socioActualizar = new socio(socioRec[0].idsocio,socioRec[0].nombre,socioRec[0].email,socioRec[0].password,socioRec[0].telefono,socioRec[0].tipo)
 
         await sociosdao.actualizarSocio(socioActualizar)
 
-        cerrarConexion();   
+        await cerrarConexion();   
 
         res.json(socioActualizar);
     } catch (err) {
@@ -163,7 +163,7 @@ exports.deleteSocio = async (req,res,next) =>{
             //return res.status(400).json({error: "ID invalido"});
         }
 
-        abrirConexion();
+        await abrirConexion();
         const sociosdao = new sociodao(nuevaConexcion);
         const socio = await sociosdao.consultarSocio(socioID);        
 
@@ -176,7 +176,7 @@ exports.deleteSocio = async (req,res,next) =>{
 
         await sociosdao.eliminarSocio(socioID);
 
-        cerrarConexion();
+        await cerrarConexion();
 
         res.json("Socio eliminado");
     } catch (err) {
