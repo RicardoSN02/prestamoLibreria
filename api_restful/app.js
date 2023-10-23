@@ -21,6 +21,9 @@ app.use('/socios', sociosRutas);
 const prestamosRutas = require('./routes/prestamosRutas');
 app.use('/prestamos', prestamosRutas);
 
+const reservasRutas = require('./routes/reservaRutas');
+app.use('/reservas', reservasRutas);
+
 
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
