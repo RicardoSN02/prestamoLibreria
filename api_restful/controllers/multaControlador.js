@@ -154,7 +154,7 @@ exports.deleteMulta = async (req, res, next) => {
         await multasdao.eliminarMulta(multaId);
         cerrarConexion();
 
-        res.json('Libro eliminado');
+        res.json('Multa eliminado');
     } catch (err) {
         next(err);
     }
