@@ -19,7 +19,7 @@ async function cerrarConexion() {
 
 const secretKey = process.env.SECRET_KEY;
 
-exports.getAllInvetario = async (req, res) => {
+exports.getAllInventario = async (req, res) => {
     try {
         await abrirConexion();
         const invetariosdao = new invetariodao(nuevaConexcion);
@@ -41,7 +41,7 @@ exports.addInventario = async (req, res, next) => {
             throw error;
         }
 
-        const nuevoInvetario = new inventario(0, req.body.cantidad, req.body.existencia, rq.body.idlibro);
+        const nuevoInvetario = new inventario(0, req.body.cantidad, req.body.existencia, req.body.idlibro);
         abrirConexion();
         const invetariosdao = new invetariodao(nuevaConexcion);
         await invetariosdao.agregarInventario(nuevoInvetario);
@@ -67,13 +67,13 @@ exports.getInventarioById = async (req, res, next) => {
         const invetario = await invetariosdao.consultarInventario(inventarioId);
         cerrarConexion();
 
-        if (inventario.length <= 0) {
-            const error = new Error('Libro no encontrado');
+        if (invetario.length <= 0) {
+            const error = new Error('Inventario no encontrado');
             error.statusCode = 404;
             throw error;
         }
 
-        res.json(inventario);
+        res.json(invetario);
     } catch (err) {
         next(err);
     }
@@ -100,14 +100,14 @@ exports.updateInventario = async (req, res, next) => {
         const inventariosdao = new invetariodao(nuevaConexcion);
         const inventarios = await inventariosdao.consultarInventario(invetarioId);
 
-        if (inventario.length <= 0) {
+        if (inventarios.length <= 0) {
             const error = new Error('Inventario no encontrado');
             error.statusCode = 404;
             throw error;
         }
 
         if (req.body.cantidad) {
-            invetarios[0].cantidad = req.body.cantidad;
+            inventarios[0].cantidad = req.body.cantidad;
         }
 
         if (req.body.existencia) {
@@ -119,7 +119,7 @@ exports.updateInventario = async (req, res, next) => {
         }
 
         let inventarioActualizado = new inventario(inventarios[0].idinventario, inventarios[0].cantidad, inventarios[0].existencia, inventarios[0].idlibro);
-        await inventariosdao.actualizarInventario(inventarioActualizado);
+        await inventariosdao.actualizarInventario(invetarioId,req.body.cantidad);
         cerrarConexion();
 
         res.json(inventarioActualizado);

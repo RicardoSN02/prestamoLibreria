@@ -25,7 +25,7 @@ const reservasRutas = require('./routes/reservaRutas');
 app.use('/reservas', reservasRutas);
 
 const invemtarioRuta = require('./routes/inventarioRutas');
-app.use('/inventario', invemtarioRuta)
+app.use('/inventarios', invemtarioRuta)
 
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);

@@ -4,10 +4,10 @@ const inventarioController = require('../controllers/inventarioControlador.');
 const { verifyToken } = require('../controllers/authControlador');
 
 
-router.get('/', verifyToken, inventarioController.getAllInvetario);
-router.post('/invetario', verifyToken, inventarioController.addInventario);
-router.get('/invetario/:id', verifyToken, inventarioController.getInventarioById);
-router.put('/invetario/:id', verifyToken, inventarioController.updateInventario);
-router.delete('/invetario/:id', verifyToken, inventarioController.deleteInventario);
+router.get('/', verifyToken, inventarioController.getAllInventario);
+router.post('/inventario', verifyToken, inventarioController.addInventario);
+router.get('/inventario/:id', verifyToken, inventarioController.getInventarioById);
+router.put('/inventario/:id', verifyToken, inventarioController.updateInventario);
+router.delete('/inventario/:id', verifyToken, inventarioController.deleteInventario);
 
 module.exports = router;
