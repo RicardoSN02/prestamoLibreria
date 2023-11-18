@@ -1,0 +1,67 @@
+.fondo{
+    background-color: rgb(236, 229, 199);
+}
+
+.contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.contenedorImagen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+
+.contenedor button{
+    width: 150px;
+    background-color:  rgb(17, 106, 123);
+    border-radius: 150px;
+}
+
+.logo{
+    border-radius:90px;
+    width: 200px;
+    height: 200px;
+}
+
+.contenedorLabel{
+    width: 30%;
+    margin-top: 30px;
+    margin-left: 35%;
+    border: 1px solid #060606;
+    background-color: aliceblue;
+}
+
+label, input {
+    margin-bottom: 5px; /* Añade espacio entre los elementos */
+}
+
+label{
+    margin-left: 1%;
+    margin-right: 5%;
+    width: 25%;
+    border-radius:80px;
+    border: 1 solid #060606;
+}
+
+input{
+    width: 65%;
+    margin-top: 7%;
+}
+
+.labelRegistrarse{
+    text-align: center;
+    margin-left: 1%;
+    margin-top: 15px;
+}
+
+/* Cambio de color al pasar el cursor */
+.labelRegistrarse:hover {
+    color: darkblue;
+    cursor: pointer;
+}

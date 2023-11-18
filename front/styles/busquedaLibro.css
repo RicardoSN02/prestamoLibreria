@@ -1,0 +1,44 @@
+body{
+    background-color: rgb(236, 229, 199);
+}
+
+.containerBusqueda{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.containerRadioButton{
+    display: flex;
+    columns: 2;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 13%;
+}
+
+.containerRadioButton input{
+    margin-right: 1%;
+    padding-right: 5%;
+}
+
+.inputBusqueda{
+    width: 30%;
+}
+
+.containerBusqueda button{
+    margin-left: 2%;
+    background-color: rgb(86, 130, 147);
+    border-radius: 35px;
+    width: 150px;
+}
+
+.containerCarrusel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    width: 50%;
+    margin-left: 25%;
+}
