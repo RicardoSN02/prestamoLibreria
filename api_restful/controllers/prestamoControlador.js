@@ -45,7 +45,7 @@ exports.addPrestamo = async (req,res,next) => {
             throw error;
         }
 
-        const nuevoPrestamo = new socio(0,new Date(req.body.fechainicio),new Date(req.body.fechafin),req.body.estado,req.body.libro,req.body.socio);
+        const nuevoPrestamo = new prestamo(0,new Date(req.body.fechainicio),new Date(req.body.fechafin),req.body.estado,req.body.libro,req.body.socio);
 
         await abrirConexion();
         const prestamosdao = new prestamodao(nuevaConexcion);

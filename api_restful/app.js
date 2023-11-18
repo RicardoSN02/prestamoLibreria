@@ -18,6 +18,15 @@ app.use('/multas', multasRutas);
 const sociosRutas = require('./routes/sociosRutas');
 app.use('/socios', sociosRutas);
 
+const prestamosRutas = require('./routes/prestamosRutas');
+app.use('/prestamos', prestamosRutas);
+
+const reservasRutas = require('./routes/reservaRutas');
+app.use('/reservas', reservasRutas);
+
+const invemtarioRuta = require('./routes/inventarioRutas');
+app.use('/inventarios', invemtarioRuta)
+
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
