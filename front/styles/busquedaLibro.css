@@ -1,44 +1,66 @@
-body{
+body {
     background-color: rgb(236, 229, 199);
 }
 
-.containerBusqueda{
+.containerBusqueda {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 100px;
-}
-
-.containerRadioButton{
-    display: flex;
-    columns: 2;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    margin-right: 13%;
 }
 
-.containerRadioButton input{
-    margin-right: 1%;
-    padding-right: 5%;
+.custom-search {
+    position: relative;
 }
 
-.inputBusqueda{
+.custom-search input {
+    width: 60%; /* Ajusta el ancho según tus preferencias */
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+.custom-search button {
+    position: absolute;
+    right: 115px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgb(86, 130, 147);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: white;
+}
+
+.containerRadioButton {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.containerRadioButton .form-check {
+    margin-right: 20px; 
+}
+
+.inputBusqueda {
     width: 30%;
 }
 
-.containerBusqueda button{
+.containerBusqueda button {
     margin-left: 2%;
     background-color: rgb(86, 130, 147);
     border-radius: 35px;
     width: 150px;
 }
 
-.containerCarrusel{
+.containerCarrusel {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 2%;
+    margin-top: 20px; /* Ajusta el espacio entre el carrusel y el buscador */
     width: 50%;
     margin-left: 25%;
 }

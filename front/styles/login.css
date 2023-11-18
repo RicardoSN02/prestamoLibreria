@@ -1,57 +1,73 @@
-.fondo{
+body {
+    font-family: 'Arial', sans-serif;
     background-color: rgb(236, 229, 199);
-}
-
-.contenedor{
+    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    height: 100vh;
 }
-
 .contenedorImagen{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 20px;
+}
+.logo {
+    max-width: 100px;
+    max-height: 100px; 
+    width: auto;
+    height: auto;
 }
 
 
-.contenedor button{
-    width: 150px;
+.login-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+}
+
+.login-form {
+    padding: 20px;
+}
+
+.login-form h2 {
+    text-align: center;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
     background-color:  rgb(17, 106, 123);
-    border-radius: 150px;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
 }
 
-.logo{
-    border-radius:90px;
-    width: 200px;
-    height: 200px;
-}
-
-.contenedorLabel{
-    width: 30%;
-    margin-top: 30px;
-    margin-left: 35%;
-    border: 1px solid #060606;
-    background-color: aliceblue;
-}
-
-label, input {
-    margin-bottom: 5px; /* Añade espacio entre los elementos */
-}
-
-label{
-    margin-left: 1%;
-    margin-right: 5%;
-    width: 25%;
-    border-radius:80px;
-    border: 1 solid #060606;
-}
-
-input{
-    width: 65%;
-    margin-top: 7%;
+button:hover {
+    background-color: #258cd1;
 }
 
 .labelRegistrarse{
