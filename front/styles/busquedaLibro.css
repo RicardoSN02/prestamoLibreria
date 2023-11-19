@@ -2,6 +2,8 @@ body {
     background-color: rgb(236, 229, 199);
 }
 
+
+/* INICIA WEBCOMPONENT*/
 .containerBusqueda {
     display: flex;
     justify-content: center;
@@ -14,7 +16,7 @@ body {
 }
 
 .custom-search input {
-    width: 60%; /* Ajusta el ancho según tus preferencias */
+    width: 60%; 
     padding: 10px;
     border: none;
     border-radius: 25px;
@@ -56,6 +58,34 @@ body {
     width: 150px;
 }
 
+/*  iamgen js*/
+#resultadosBusqueda {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    justify-content: center; 
+    align-items: center;
+  }
+  
+  .resultadosBusqueda .form-check {
+    text-align: left;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-left: 350px;
+  }
+  
+  .resultadosBusqueda .imagenResultado {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    margin-left: 20px;
+    
+  }
+  .resaltadoPalabraClave {
+    color: blue;
+}
+/* TERMINA WEBCOMPONENT*/
+
 .containerCarrusel {
     display: flex;
     justify-content: center;
@@ -64,3 +94,4 @@ body {
     width: 50%;
     margin-left: 25%;
 }
+

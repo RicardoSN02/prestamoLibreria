@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../styles/busquedaLibro.css">
     <link rel="stylesheet" href="../styles/navbar.css">
+    <script src="../js/buscar.js"></script>
     <title>Biblioteca</title>
 </head>
 <body>
@@ -27,14 +28,13 @@
   </header>
   <div class="containerCarrusel">
     <div id="demo" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
+      
         <ul class="carousel-indicators">
           <li data-target="#demo" data-slide-to="0" class="active"></li>
           <li data-target="#demo" data-slide-to="1"></li>
           <li data-target="#demo" data-slide-to="2"></li>
         </ul>
-        
-        <!-- The slideshow -->
+     
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="../media/HarryPotter.jpg" alt="Los Angeles" width="700" height="200">
@@ -47,7 +47,7 @@
           </div>
         </div>
         
-        <!-- Left and right controls -->
+       
         <a class="carousel-control-prev" href="#demo" data-slide="prev">
           <span class="carousel-control-prev-icon"></span>
         </a>
@@ -57,36 +57,39 @@
       </div>
 </div>
 
-    <div class="containerCarrusel">
-        <!-- Código del carrusel (sin cambios) -->
-    </div>
+<!-- INICIA WEB COMPONENT-->
 
-    <div class="containerBusqueda custom-search">
-      <input class="inputBusqueda" type="text" placeholder="Búsqueda en categoría">
-      <button class="btn btn-dark">Buscar</button>
+<div class="containerBusqueda custom-search">
+  <input class="inputBusqueda" type="text" placeholder="Búsqueda en categoría" id="busquedaInput">
+  <button class="btn btn-dark" onclick="buscar()">Buscar</button>
+</div>
+
+<div class="containerRadioButton">
+  <div class="form-check">
+    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="palabraClave" value="a">
+    <label class="form-check-label" for="palabraClave">Palabra clave</label>
   </div>
-  
-    <div class="containerRadioButton">
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="Titulo" id="palabraClave" value="a">
-        <label class="form-check-label" for="palabraClave">Palabra clave</label>
-      </div>
 
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="Titulo" id="titulo" value="a">
-        <label class="form-check-label" for="titulo">Título</label>
-      </div>
+  <div class="form-check">
+    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="titulo" value="a">
+    <label class="form-check-label" for="titulo">Título</label>
+  </div>
 
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="Titulo" id="autor" value="a">
-        <label class="form-check-label" for="autor">Autor</label>
-      </div>
+  <div class="form-check">
+    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="autor" value="a">
+    <label class="form-check-label" for="autor">Autor</label>
+  </div>
 
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="Titulo" id="editorial" value="a">
-        <label class="form-check-label" for="editorial">Editorial</label>
-      </div>
-    </div>
+  <div class="form-check">
+    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="editorial" value="a">
+    <label class="form-check-label" for="editorial">Editorial</label>
+  </div>
+</div>
 
+<div id="resultadosBusqueda" class="resultadosBusqueda">
+ 
+</div>
+
+<!-- TERMINA WEB COMPONENT-->
 </body>
 </html>
