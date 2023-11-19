@@ -5,7 +5,7 @@ function buscar() {
         .then(response => response.json())
         .then(data => {
             var resultadosFiltrados = data.filter(function (item) {
-                return item.title.toLowerCase().includes(busquedaInput);
+                return item.title.toLowerCase().includes(busquedaInput) || item.albumId.toString() === busquedaInput || item.id.toString() === busquedaInput;
             });
 
             if (!validarBusqueda(busquedaInput, resultadosFiltrados)) {
@@ -20,8 +20,10 @@ function buscar() {
 
             if (tipoBusqueda === 'titulo') {
                 mostrarTitulos(resultadosFiltrados);
+            } else if (tipoBusqueda === 'autor') {
+                mostrarPorAutor(resultadosFiltrados);
             } else {
-                mostrarPalabraClave(resultadosFiltrados);
+                mostrarEditorial(resultadosFiltrados);
             }
         })
         .catch(error => console.error('Error al obtener datos de la API:', error));
@@ -111,7 +113,69 @@ function mostrarTitulos(resultados) {
     });
 }
 
+function mostrarPorAutor(resultados) {
+    var contenedorResultados = document.getElementById('resultadosBusqueda');
+    contenedorResultados.innerHTML = '';
 
+    var resultadosLimitados = resultados.slice(0, 15);
+
+    resultadosLimitados.forEach(libro => {
+        var divResultado = document.createElement('div');
+        divResultado.classList.add('form-check');
+
+        var inputRadio = document.createElement('input');
+        inputRadio.classList.add('form-check-input');
+        inputRadio.type = 'radio';
+        inputRadio.name = 'Resultado';
+        inputRadio.value = libro.title;
+
+        var autor = document.createElement('label');
+        autor.classList.add('form-check-label');
+       autor.innerText = ` ${libro.title}`;
+
+        var imagen = document.createElement('img');
+        imagen.src = libro.url; // IMAGEN
+        imagen.alt = libro.title; // Título 
+        imagen.classList.add('imagenResultado');
+
+        divResultado.appendChild(inputRadio);
+        divResultado.appendChild(autor);
+        divResultado.appendChild(imagen);
+
+        contenedorResultados.appendChild(divResultado);
+    });
+}
+
+function mostrarEditorial(resultados) {
+    var contenedorResultados = document.getElementById('resultadosBusqueda');
+    contenedorResultados.innerHTML = '';
+
+    if (resultados.length > 0) {
+        var divResultado = document.createElement('div');
+        divResultado.classList.add('form-check');
+
+        var inputRadio = document.createElement('input');
+        inputRadio.classList.add('form-check-input');
+        inputRadio.type = 'radio';
+        inputRadio.name = 'Resultado';
+        inputRadio.value = resultados[0].title; 
+
+        var editorial = document.createElement('label');
+        editorial.classList.add('form-check-label');
+        editorial.innerText = ` ${resultados[0].title}`;
+
+        var imagen = document.createElement('img');
+        imagen.src = resultados[0].url; // IMAGEN
+        imagen.alt = resultados[0].title; // Título 
+        imagen.classList.add('imagenResultado');
+
+        divResultado.appendChild(inputRadio);
+        divResultado.appendChild(editorial);
+        divResultado.appendChild(imagen);
+
+        contenedorResultados.appendChild(divResultado);
+    }
+}
 
 function validarBusqueda(busquedaInput, resultados) {
     var tipoBusquedaSeleccionada = document.querySelector('.tipo-busqueda:checked');
@@ -134,7 +198,28 @@ function validarBusqueda(busquedaInput, resultados) {
             alert('No se encontraron resultados para el libro con ese título.');
             return false;
         }
-    } else {
+    }else if (tipoBusqueda === 'autor'){
+        if (busquedaInput.trim() === ''){
+            alert('Por favor, ingrese un autor para buscar.');
+            return false;
+        }
+        if (!resultados.some(item => item.albumId.toString() === busquedaInput.toLowerCase())) {
+            alert('No se encontraron libros con el autor ingresado.');
+            return false;
+        }
+        
+    } else if (tipoBusqueda === 'editorial'){
+        if (busquedaInput.trim() === ''){
+            alert('Por favor, ingrese un editorial para buscar.');
+            return false;
+        }
+
+        if(!resultados.some(item => item.id.toString () === busquedaInput.toLowerCase())){
+            alert('No se encontraron libros con la editorial ingresada.');
+            return false;
+        }
+    }
+     else {
     
         if (busquedaInput.trim() === '') {
             alert('Por favor, ingrese una palabra clave para buscar.');
@@ -151,6 +236,7 @@ function validarBusqueda(busquedaInput, resultados) {
             alert('No se encontraron resultados de libros con la palabra clave ingresada.');
             return false;
         }
+        
     }
 
     return true;

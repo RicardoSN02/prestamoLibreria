@@ -82,7 +82,8 @@ body {
     
   }
   .resaltadoPalabraClave {
-    color: blue;
+    background-color: blue; 
+    font-weight: bold; 
 }
 /* TERMINA WEBCOMPONENT*/
 
