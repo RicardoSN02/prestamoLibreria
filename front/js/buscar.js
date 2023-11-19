@@ -5,7 +5,7 @@ function buscar() {
         .then(response => response.json())
         .then(data => {
             var resultadosFiltrados = data.filter(function (item) {
-                return item.title.toLowerCase().includes(busquedaInput) || item.albumId.toString() === busquedaInput || item.id.toString() === busquedaInput;
+                return item.title.toLowerCase().includes(busquedaInput) || item.albumId.toString() === busquedaInput || item.id.toString() === busquedaInput; //titulo-autor-editorial
             });
 
             if (!validarBusqueda(busquedaInput, resultadosFiltrados)) {
@@ -63,7 +63,7 @@ function mostrarPalabraClave(resultados) {
 
         var resaltadoPalabraClave = document.createElement('label');
         resaltadoPalabraClave.classList.add('form-check-label');
-        //HACE EL RESALTADO DE LA PALABRA CLAVE
+        //HACE EL RESALTADO DE LA PALABRA CLAVE (FALTA ARREGLARLO)
         resaltadoPalabraClave.innerHTML = palabraClave.title.replace(new RegExp(`(${busqueda})`, 'gi'), '<span class="resaltadoPalabraClave">$1</span>');
 
         var imgResultado = document.createElement('img');
@@ -131,7 +131,7 @@ function mostrarPorAutor(resultados) {
 
         var autor = document.createElement('label');
         autor.classList.add('form-check-label');
-       autor.innerText = ` ${libro.title}`;
+       autor.innerText = ` ${libro.title}`;//Me diante el autor que se ingreso se muestra el titulo nomas
 
         var imagen = document.createElement('img');
         imagen.src = libro.url; // IMAGEN
