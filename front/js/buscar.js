@@ -1,4 +1,4 @@
-function buscar() {
+/*function buscar() {
     var busquedaInput = document.getElementById('busquedaInput').value.toLowerCase();
 
     fetch('https://jsonplaceholder.typicode.com/photos')
@@ -44,6 +44,7 @@ function mostrarPalabraClave(resultados) {
     } MUESTRA TODAS LAS OPCIONES PERO COMO SON MUCHAS EN ESTA API */
 
     //LOS LIMITA A MOSTRAR 15 DE TODAS LAS OPCIONES QUE TIENE LA API
+    /*
     var contenedorResultados = document.getElementById('resultadosBusqueda');
     contenedorResultados.innerHTML = '';
 
@@ -79,7 +80,7 @@ function mostrarPalabraClave(resultados) {
     });
 
 }
-
+*/
 function mostrarTitulos(resultados) {
     var contenedorResultados = document.getElementById('resultadosBusqueda');
     contenedorResultados.innerHTML = '';

@@ -3,7 +3,7 @@ body {
 }
 
 
-/* INICIA WEBCOMPONENT*/
+/* INICIA WEBCOMPONENT
 .containerBusqueda {
     display: flex;
     justify-content: center;
@@ -58,7 +58,7 @@ body {
     width: 150px;
 }
 
-/*  iamgen js*/
+  iamgen js*/
 #resultadosBusqueda {
     display: flex;
     flex-wrap: wrap;
