@@ -1,0 +1,79 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: rgb(236, 229, 199);
+}
+
+.containerForm{
+    margin-top: 2%;
+    margin-left: 30%;
+    border-radius: 15px;
+    width: 700px;
+    background-color: white;
+}
+
+.containerForm input{
+    width: 300px;
+    margin-left: 10%;
+    border-radius: 15px;
+    font-size: small;
+}
+
+.containerForm div{
+    margin-bottom: 0;
+}
+
+.formulario{
+    margin-right: 90px;
+    margin-left: 1%;
+}
+
+.formulario label{
+    font-size: small;
+}
+
+.formulario select{
+    width: 300px;
+    margin-left: 10%;
+    border-radius: 15px;
+    font-size: small;
+}
+
+#archivo{
+    border-radius: 0px;
+}
+.formulario textarea{
+    width: 500px;
+    margin-left: 10%;
+    font-size: small;
+}
+
+.containerButton{
+    margin-left: 50%;
+    padding-bottom: 10px;
+}
+
+.containerButton button{
+    width: 150px;
+    margin-top: 5%;
+    margin-left: 1%;
+    border-radius: 5px;
+    font-size: medium;
+}
+
+#botonCancelar{
+    background-color: rgb(238, 141, 28);
+    color: white;
+}
+
+#botonGuardar{
+    background-color: rgb(36, 190, 242);
+    color: white;
+}
+
+#botonGuardar:hover{
+    background-color: rgb(21, 109, 139);
+}
+
+#botonCancelar:hover{
+    background-color: rgb(128, 73, 9);
+}
