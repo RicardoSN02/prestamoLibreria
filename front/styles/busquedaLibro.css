@@ -96,3 +96,24 @@ body {
     margin-left: 25%;
 }
 
+.containerVideo{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5%;
+    margin-left: 15%;
+    width: 80%; /* O ajusta el ancho según tus necesidades */
+}
+
+.containerVideo video{
+    width: 300px;
+    height: 150px;
+}
+
+video:hover  {
+    opacity: 0.8; /* Opacidad reducida al hacer hover */
+}
+
+.columna {
+    flex: 1;
+    margin-right: 10px; /* Espacio entre columnas */
+}
