@@ -1,0 +1,83 @@
+.containerBusqueda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .custom-search {
+    position: relative;
+  }
+  
+  .custom-search input {
+    width: 60%; 
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  .custom-search button {
+    position: absolute;
+    right: 115px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgb(86, 130, 147);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .containerRadioButton {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .containerRadioButton .form-check {
+    margin-right: 20px; 
+  }
+  
+  .inputBusqueda {
+    width: 30%;
+  }
+  
+  .containerBusqueda button {
+    margin-left: 2%;
+    background-color: rgb(86, 130, 147);
+    border-radius: 35px;
+    width: 150px;
+  }
+  
+  /*  iamgen js*/
+  #resultadosBusqueda {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    justify-content: center; 
+    align-items: center;
+  }
+  
+  .resultadosBusqueda .form-check {
+    text-align: left;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-left: 350px;
+  }
+  
+  .resultadosBusqueda .imagenResultado {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    margin-left: 20px;
+    
+  }
+  .resaltadoPalabraClave {
+    background-color: blue; 
+    font-weight: bold; 
+  }
+  /* TERMINA WEBCOMPONENT*/
+  

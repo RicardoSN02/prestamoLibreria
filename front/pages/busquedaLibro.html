@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../styles/busquedaLibro.css">
     <link rel="stylesheet" href="../styles/navbar.css">
     <script src="../js/buscar.js"></script>
+
+   <script src="../../microFront/post.js"></script>
     <title>Biblioteca</title>
 </head>
 <body>
@@ -59,40 +61,8 @@
       </div>
   </div>
 
-<!-- INICIA WEB COMPONENT-->
 
-<div class="containerBusqueda custom-search">
-  <input class="inputBusqueda" type="text" placeholder="Búsqueda en categoría" id="busquedaInput">
-  <button class="btn btn-dark" onclick="buscar()">Buscar</button>
-</div>
-
-<div class="containerRadioButton">
-  <div class="form-check">
-    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="palabraClave" value="a">
-    <label class="form-check-label" for="palabraClave">Palabra clave</label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="titulo" value="a">
-    <label class="form-check-label" for="titulo">Título</label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="autor" value="a">
-    <label class="form-check-label" for="autor">Autor</label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input tipo-busqueda" type="radio" name="Titulo" id="editorial" value="a">
-    <label class="form-check-label" for="editorial">Editorial</label>
-  </div>
-</div>
-
-<div id="resultadosBusqueda" class="resultadosBusqueda">
- 
-</div>
-
-<!-- TERMINA WEB COMPONENT-->
+<busqueda-filtro id="busquedaPorFiltro">ENTRO</busqueda-filtro><!--MICROFRONT O WEB COMPONENT-->
 
 <div class="containerVideo">
   <div class="columna">
