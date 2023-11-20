@@ -80,4 +80,6 @@
     font-weight: bold; 
   }
   /* TERMINA WEBCOMPONENT*/
-  
+  #buscador {
+    cursor: pointer;
+  }
