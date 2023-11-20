@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `libreriabd` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `libreriabd`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: localhost    Database: libreriabd
@@ -30,17 +32,8 @@ CREATE TABLE `inventario` (
   PRIMARY KEY (`idinventario`),
   KEY `fk_inventario_libro_idx` (`idlibro`),
   CONSTRAINT `fk_inventario_libro` FOREIGN KEY (`idlibro`) REFERENCES `libro` (`idlibro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `inventario`
---
-
-LOCK TABLES `inventario` WRITE;
-/*!40000 ALTER TABLE `inventario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `inventario` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `libro`
@@ -56,18 +49,11 @@ CREATE TABLE `libro` (
   `fechaPublicacion` date NOT NULL,
   `categoria` varchar(45) NOT NULL,
   `autor` varchar(45) NOT NULL,
+  `resumen` varchar(200) NOT NULL,
+  `imagen` varchar(200) NOT NULL,
   PRIMARY KEY (`idlibro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `libro`
---
-
-LOCK TABLES `libro` WRITE;
-/*!40000 ALTER TABLE `libro` DISABLE KEYS */;
-/*!40000 ALTER TABLE `libro` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `multa`
@@ -84,17 +70,8 @@ CREATE TABLE `multa` (
   PRIMARY KEY (`idmulta`),
   KEY `fk_multa_prestamo_idx` (`idprestamo`),
   CONSTRAINT `fk_multa_prestamo` FOREIGN KEY (`idprestamo`) REFERENCES `prestamo` (`idprestamo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `multa`
---
-
-LOCK TABLES `multa` WRITE;
-/*!40000 ALTER TABLE `multa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `multa` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `prestamo`
@@ -115,17 +92,8 @@ CREATE TABLE `prestamo` (
   KEY `fk_prestamo_socio_idx` (`idsocio`),
   CONSTRAINT `fk_prestamo_libro` FOREIGN KEY (`idlibro`) REFERENCES `libro` (`idlibro`),
   CONSTRAINT `fk_prestamo_socio` FOREIGN KEY (`idsocio`) REFERENCES `socio` (`idsocio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `prestamo`
---
-
-LOCK TABLES `prestamo` WRITE;
-/*!40000 ALTER TABLE `prestamo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `prestamo` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `reserva`
@@ -144,17 +112,8 @@ CREATE TABLE `reserva` (
   KEY `fk_reserva_socio_idx` (`idsocio`),
   CONSTRAINT `fk_reserva_libro` FOREIGN KEY (`idlbro`) REFERENCES `libro` (`idlibro`),
   CONSTRAINT `fk_reserva_socio` FOREIGN KEY (`idsocio`) REFERENCES `socio` (`idsocio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `reserva`
---
-
-LOCK TABLES `reserva` WRITE;
-/*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `socio`
@@ -171,17 +130,8 @@ CREATE TABLE `socio` (
   `telefono` varchar(45) NOT NULL,
   `tipo` enum('admin','socio') NOT NULL,
   PRIMARY KEY (`idsocio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `socio`
---
-
-LOCK TABLES `socio` WRITE;
-/*!40000 ALTER TABLE `socio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `socio` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -192,4 +142,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-01 15:41:59
+-- Dump completed on 2023-11-19 18:19:03

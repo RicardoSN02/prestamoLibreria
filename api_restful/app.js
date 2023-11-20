@@ -6,6 +6,8 @@ dotenv.config();
 
 app.use(express.json());
 
+app.use('/public/uploads', express.static('public/uploads'));
+
 const authRoutes = require('./routes/authroutes');
 app.use('/auth', authRoutes);
 

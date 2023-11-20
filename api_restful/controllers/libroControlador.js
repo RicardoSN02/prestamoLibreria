@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 const conexion = require('../../accesobd/conexion/conexion.js');
 const librodao = require('../../accesobd/daos/librosDAO.js')
 const libro = require('../../accesobd/objetos/libro.js')
@@ -26,10 +27,23 @@ exports.getAllLibros = async (req,res) => {
         const librosdao = new librodao(nuevaConexcion);
 
         let libros = await  librosdao.consultarLibros();
-        
+
+        const librosConImagenBase64 = await Promise.all(libros.map(async libro => {
+            if (libro.imagen) {
+                const imagePath = `public/${libro.imagen}`;
+                const imageData = fs.readFileSync(imagePath, { encoding: 'base64' });
+                return {
+                    ...libro,
+                    imagen: `${imageData}`,
+                };
+            } else {
+                return libro;
+            }
+        }));
+
         await cerrarConexion();
-        
-        res.json(libros);
+
+        res.json(librosConImagenBase64);
     }catch(err){
         res.status(500).json({ error: "Error al consultar libros"});
     }
@@ -38,14 +52,16 @@ exports.getAllLibros = async (req,res) => {
 exports.addLibro = async (req,res,next) => {
     try{
 
-        camposPermitidos = ['titulo', 'editorial', 'fechaPublicacion', 'categoria', 'autor'];
+        camposPermitidos = ['titulo', 'editorial', 'fechaPublicacion', 'categoria', 'autor','resumen','imagen'];
         if(validarCampos(camposPermitidos,req.body)){
             const error = new Error('Estructura incorrecta');
             error.statusCode = 400; // Establecer el código de estado
             throw error;
         }
 
-        const nuevoLibro = new libro(0,req.body.titulo,req.body.editorial,new Date(req.body.fechaPublicacion),req.body.categoria,req.body.autor);
+        const imagenPath = req.file ? 'uploads/' + req.file.filename : null;
+
+        const nuevoLibro = new libro(0,req.body.titulo,req.body.editorial,new Date(req.body.fechaPublicacion),req.body.categoria,req.body.autor,req.body.resumen,imagenPath);
 
         abrirConexion();
         const librosdao = new librodao(nuevaConexcion);
@@ -74,6 +90,27 @@ exports.getLibroById = async (req,res,next) =>{
         abrirConexion();
         const librosdao = new librodao(nuevaConexcion);
         const libro = await librosdao.consultarLibro(libroId);
+
+        
+        const librosConImagenBase64 = await Promise.all(libro.map(async libro => {
+            if (libro.imagen) {
+                const imagePath = `public/${libro.imagen}`;
+                const imageData = fs.readFileSync(imagePath, { encoding: 'base64' });
+                return {
+                    ...libro,
+                    imagen: `${imageData}`,
+                };
+            } else {
+                return libro;
+            }
+        }));
+
+        /** 
+        const librosConImagenUrl = libro.map(libro => ({
+            ...libro,
+            imagen: libro.imagen ? `http://localhost:8082/public/${libro.imagen}` : null,
+        }));
+        */
         cerrarConexion();
         
         if(libro.length <= 0){
@@ -83,7 +120,7 @@ exports.getLibroById = async (req,res,next) =>{
             //return res.status(404).json({error: "Libro no encontrado"});
         }
 
-        res.json(libro);
+        res.json(librosConImagenBase64);
     } catch (err) {
         next(err);
         //res.status(500).json({ error: "Hubo un problema al encontrar el libro"});
@@ -92,7 +129,7 @@ exports.getLibroById = async (req,res,next) =>{
 
 exports.updateLibro = async (req,res,next) =>{
     try {
-        camposPermitidos = ['titulo', 'editorial', 'fechaPublicacion', 'categoria', 'autor'];
+        camposPermitidos = ['titulo', 'editorial', 'fechaPublicacion', 'categoria', 'autor','resumen','imagen'];
         if(validarCampos(camposPermitidos,req.body)){
             const error = new Error('Estructura incorrecta');
             error.statusCode = 400; // Establecer el código de estado
@@ -119,6 +156,8 @@ exports.updateLibro = async (req,res,next) =>{
             //return res.status(404).json({error: "Libro no encontrado"});
         }
 
+        const imagenPath = req.file ? 'uploads/' + req.file.filename : null;
+
         if(req.body.titulo){
             libros[0].titulo = req.body.titulo;
         }
@@ -139,8 +178,16 @@ exports.updateLibro = async (req,res,next) =>{
             libros[0].autor = req.body.autor;
         }
 
+        if(req.body.resumen){
+            libros[0].resumen = req.body.resumen;
+        }
 
-        let libroActualizar = new libro(libros[0].idlibro,libros[0].titulo,libros[0].editorial,libros[0].fechaPublicacion,libros[0].categoria,libros[0].autor)
+        if(req.file.filename){
+            libros[0].imagen = imagenPath;
+        }
+
+
+        let libroActualizar = new libro(libros[0].idlibro,libros[0].titulo,libros[0].editorial,libros[0].fechaPublicacion,libros[0].categoria,libros[0].autor,libros[0].resumen,libros[0].imagen)
 
         await librosdao.actualizarLibro(libroActualizar)
 
