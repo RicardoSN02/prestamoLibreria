@@ -52,3 +52,22 @@ td, tr{
   .acciones button:hover {
     background-color: #555;
   }
+
+  .containerButton{
+  margin-left: 70%;
+  margin-top: 10%;
+}
+
+.containerButton button{
+  width: 100px;
+  border-radius: 50px;
+  background-color: rgb(36, 190, 242);
+}
+
+.containerButton button:hover{
+  background-color: rgb(35, 116, 143);
+}
+
+.icon-button i {
+  font-size: 20px; 
+}
