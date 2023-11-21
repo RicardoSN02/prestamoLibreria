@@ -1,0 +1,54 @@
+body {
+    background-color: rgb(236, 229, 199);
+}
+
+.containerTabla{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+
+table{
+    border: 1px solid black;
+    width: 70%;
+}
+
+th{
+    border: 1px solid black; 
+    background-color: rgb(68, 156, 150);
+}
+
+td, tr{
+    border: 1px solid black; 
+    background-color: rgb(194, 222, 220);
+}
+
+.acciones {
+    display: flex;
+    justify-content: center;
+  }
+
+  .acciones button {
+    padding: 6px 10px; 
+    margin: 2% 5%; 
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    width: 120px;
+    transition: background-color 0.3s;
+  }
+
+  .acciones .editar {
+    background-color: rgb(86, 130, 147);
+    color: white;
+  }
+
+  .acciones .eliminar {
+    background-color: rgb(17, 106, 123);
+    color: white;
+  }
+
+  .acciones button:hover {
+    background-color: #555;
+  }
