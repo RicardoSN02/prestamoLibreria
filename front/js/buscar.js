@@ -80,7 +80,7 @@ function mostrarPalabraClave(resultados) {
     });
 
 }
-*/
+
 function mostrarTitulos(resultados) {
     var contenedorResultados = document.getElementById('resultadosBusqueda');
     contenedorResultados.innerHTML = '';
@@ -242,3 +242,4 @@ function validarBusqueda(busquedaInput, resultados) {
 
     return true;
 }
+*/

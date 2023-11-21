@@ -19,7 +19,7 @@
   }
   .custom-search button {
     position: absolute;
-    right: 115px;
+    right: 100px;
     top: 50%;
     transform: translateY(-50%);
     background-color: rgb(86, 130, 147);
@@ -28,7 +28,12 @@
     padding: 10px 20px;
     color: white;
   }
-  
+  .containerBusqueda,
+  .containerBusqueda button,
+  .custom-search input {
+      font-family: sans-serif;
+      font-size: 19px;
+  }
   .containerRadioButton {
     display: flex;
     flex-wrap: wrap; 
