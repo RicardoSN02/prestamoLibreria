@@ -40,3 +40,22 @@ body {
     padding: 20px;
     text-align: start;
   }
+
+  .containerButton{
+    margin-top: 5%;
+    margin-left: 70%;
+  }
+
+  .containerButton button{
+    background-color: rgb(36, 190, 242);
+    color: white;
+    border-radius: 50px;
+    width: 200px;
+    height: 35px;
+    font-size: medium;
+  }
+
+  .containerButton button:hover{
+    background-color: rgb(25, 117, 148);
+    cursor: pointer;
+  }
