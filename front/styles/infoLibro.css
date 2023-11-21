@@ -1,0 +1,41 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: rgb(236, 229, 199);
+}
+
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10%;
+  }
+  
+  .imagen {
+    width: 30%;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  
+  .imagen img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .informacion {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  .texto-inferior {
+    background-color: #ffffff;
+    width: 50%;
+    margin-left: 20%;
+    padding: 20px;
+    text-align: start;
+  }
