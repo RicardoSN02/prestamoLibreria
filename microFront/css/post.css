@@ -84,7 +84,13 @@
     background-color: blue; 
     font-weight: bold; 
   }
-  /* TERMINA WEBCOMPONENT*/
+
   #buscador {
     cursor: pointer;
   }
+  .form-check .form-check-label:hover {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
+}

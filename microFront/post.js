@@ -95,73 +95,69 @@ class Post extends HTMLElement {
 	}
 
 	#mostrarPalabraClave(resultados) {
-        var contenedorResultados = this.#resultados;
-        contenedorResultados.innerHTML = '';
+		var contenedorResultados = this.#resultados;
+		contenedorResultados.innerHTML = '';
+	
+		var busqueda = this.shadowRoot.getElementById('busquedaInput').value.toLowerCase();
+	
+		var resultadosLimitados = resultados.slice(0, 15);
+	
+		resultadosLimitados.forEach(palabraClave => {
+			var divResultado = document.createElement('div');
+			divResultado.classList.add('form-check');
+	
+			var resaltadoPalabraClave = document.createElement('label');
+			resaltadoPalabraClave.classList.add('form-check-label');
+			resaltadoPalabraClave.innerHTML = palabraClave.title.replace(new RegExp(`(${busqueda})`, 'gi'), '<span class="resaltadoPalabraClave">$1</span>');
+	
+			var imgResultado = document.createElement('img');
+			imgResultado.src = palabraClave.url;
+			imgResultado.alt = palabraClave.title;
+			imgResultado.classList.add('imagenResultado');
+	
+			divResultado.appendChild(resaltadoPalabraClave);
+			divResultado.appendChild(imgResultado);
+	
 
-        var busqueda = this.shadowRoot.getElementById('busquedaInput').value.toLowerCase();
+		//	divResultado.id = 'resultado-' + palabraClave.id;
 
-        var resultadosLimitados = resultados.slice(0, 15);
-
-        resultadosLimitados.forEach(palabraClave => {
-            var divResultado = document.createElement('div');
-            divResultado.classList.add('form-check');
-
-            var inputRadio = document.createElement('input');
-            inputRadio.classList.add('form-check-input');
-            inputRadio.type = 'radio';
-            inputRadio.name = 'Resultado';
-            inputRadio.value = palabraClave.title;
-
-            var resaltadoPalabraClave = document.createElement('label');
-            resaltadoPalabraClave.classList.add('form-check-label');
-            resaltadoPalabraClave.innerHTML = palabraClave.title.replace(new RegExp(`(${busqueda})`, 'gi'), '<span class="resaltadoPalabraClave">$1</span>');
-
-            var imgResultado = document.createElement('img');
-            imgResultado.src = palabraClave.url;
-            imgResultado.alt = palabraClave.title;
-            imgResultado.classList.add('imagenResultado');
-
-            divResultado.appendChild(inputRadio);
-            divResultado.appendChild(resaltadoPalabraClave);
-            divResultado.appendChild(imgResultado);
-
-            contenedorResultados.appendChild(divResultado);
-        });
-    }
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(palabraClave.id));
+	
+			contenedorResultados.appendChild(divResultado);
+		});
+	}
 	
 	#mostrarTitulos(resultados) {
-        var contenedorResultados = this.#resultados;
-        contenedorResultados.innerHTML = '';
+		var contenedorResultados = this.#resultados;
+		contenedorResultados.innerHTML = '';
+	
+		var resultadosLimitados = resultados.slice(0, 15);
+	
+		resultadosLimitados.forEach(libro => {
+			var divResultado = document.createElement('div');
+			divResultado.classList.add('form-check');
+	
+			var titulo = document.createElement('label');
+			titulo.classList.add('form-check-label');
+			titulo.innerText = libro.title;
+	
+			var imagen = document.createElement('img');
+			imagen.src = libro.url;
+			imagen.alt = libro.title;
+			imagen.classList.add('imagenResultado');
+	
+			divResultado.appendChild(titulo);
+			divResultado.appendChild(imagen);
 
-        var resultadosLimitados = resultados.slice(0, 15);
+			//divResultado.id = 'resultado-' + libro.id;
+	
 
-        resultadosLimitados.forEach(libro => {
-            var divResultado = document.createElement('div');
-            divResultado.classList.add('form-check');
-
-            var inputRadio = document.createElement('input');
-            inputRadio.classList.add('form-check-input');
-            inputRadio.type = 'radio';
-            inputRadio.name = 'Resultado';
-            inputRadio.value = libro.title;
-
-            var titulo = document.createElement('label');
-            titulo.classList.add('form-check-label');
-            titulo.innerText = libro.title;
-
-            var imagen = document.createElement('img');
-            imagen.src = libro.url;
-            imagen.alt = libro.title;
-            imagen.classList.add('imagenResultado');
-
-            divResultado.appendChild(inputRadio);
-            divResultado.appendChild(titulo);
-            divResultado.appendChild(imagen);
-
-            contenedorResultados.appendChild(divResultado);
-        });
-    }
-
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.id));
+	
+			contenedorResultados.appendChild(divResultado);
+		});
+	}
+	
 	#mostrarPorAutor(resultados) {
 		var contenedorResultados = this.#resultados;
 		contenedorResultados.innerHTML = '';
@@ -172,29 +168,28 @@ class Post extends HTMLElement {
 			var divResultado = document.createElement('div');
 			divResultado.classList.add('form-check');
 	
-			var inputRadio = document.createElement('input');
-			inputRadio.classList.add('form-check-input');
-			inputRadio.type = 'radio';
-			inputRadio.name = 'Resultado';
-			inputRadio.value = libro.title;
-	
 			var autor = document.createElement('label');
 			autor.classList.add('form-check-label');
-		   autor.innerText = ` ${libro.title}`;//Me diante el autor que se ingreso se muestra el titulo nomas
+			autor.innerText = ` ${libro.title}`;
 	
 			var imagen = document.createElement('img');
-			imagen.src = libro.url; // IMAGEN
-			imagen.alt = libro.title; // Título 
+			imagen.src = libro.url;
+			imagen.alt = libro.title;
 			imagen.classList.add('imagenResultado');
 	
-			divResultado.appendChild(inputRadio);
 			divResultado.appendChild(autor);
 			divResultado.appendChild(imagen);
+	
+			
+			//divResultado.id = 'resultado-' + libro.id;
+	
+		
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.id));
 	
 			contenedorResultados.appendChild(divResultado);
 		});
 	}
-
+	
 	#mostrarEditorial(resultados) {
 		var contenedorResultados = this.#resultados;
 		contenedorResultados.innerHTML = '';
@@ -207,25 +202,35 @@ class Post extends HTMLElement {
 			inputRadio.classList.add('form-check-input');
 			inputRadio.type = 'radio';
 			inputRadio.name = 'Resultado';
-			inputRadio.value = resultados[0].title; 
+			inputRadio.value = resultados[0].title;
 	
 			var editorial = document.createElement('label');
 			editorial.classList.add('form-check-label');
 			editorial.innerText = ` ${resultados[0].title}`;
 	
 			var imagen = document.createElement('img');
-			imagen.src = resultados[0].url; // IMAGEN
-			imagen.alt = resultados[0].title; // Título 
+			imagen.src = resultados[0].url;
+			imagen.alt = resultados[0].title;
 			imagen.classList.add('imagenResultado');
 	
 			divResultado.appendChild(inputRadio);
 			divResultado.appendChild(editorial);
 			divResultado.appendChild(imagen);
 	
+
+			//divResultado.id = 'resultado-' + resultados[0].id;
+	
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(resultados[0].id));
+	
 			contenedorResultados.appendChild(divResultado);
 		}
 	}
 	
+	#abrirBusquedaLibro(id) {
+		
+		window.location.href = 'infoLibro.html?id=' + id;
+		console.log(`Abrir busquedaLibro con ID: ${id}`);
+	}
 	#validarBusqueda(busquedaInput, resultados) {
 		var tipoBusquedaSeleccionada = this.shadowRoot.querySelector('.tipo-busqueda:checked');
 	
