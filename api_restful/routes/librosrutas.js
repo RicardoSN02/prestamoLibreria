@@ -19,16 +19,19 @@ const upload = multer({ storage: storage });
 
 // Rutas
 
+/*
 router.get('/',verifyToken,libroController.getAllLibros);
 router.post('/libro',verifyToken, upload.single('imagen'), libroController.addLibro);
 router.get('/libro/:id',verifyToken,libroController.getLibroById);
 router.put('/libro/:id',verifyToken,upload.single('imagen'), libroController.updateLibro);
 router.delete('/libro/:id',verifyToken ,libroController.deleteLibro);
-/*
+*/
+
+
 router.get('/',libroController.getAllLibros);
 router.post('/libro', upload.single('imagen'), libroController.addLibro);
 router.get('/libro/:id',libroController.getLibroById);
 router.put('/libro/:id',upload.single('imagen'), libroController.updateLibro);
 router.delete('/libro/:id' ,libroController.deleteLibro);
-*/
+
 module.exports = router;

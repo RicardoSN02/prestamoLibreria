@@ -61,7 +61,7 @@ class Post extends HTMLElement {
 	#buscar(){
 		var busquedaInput = this.#palabraBuscar.value.toLowerCase();
 	
-		fetch('/libros/') 
+		fetch('http://localhost:8082/libros/') 
 			.then(response => response.json())
 			.then(data => {
 				var resultadosFiltrados = data.filter(function (item) {
@@ -110,7 +110,7 @@ class Post extends HTMLElement {
 			resaltadoPalabraClave.innerHTML = libro.titulo.replace(new RegExp(`(${busqueda})`, 'gi'), '<span class="resaltadoPalabraClave">$1</span>');
 	
 			var imgResultado = document.createElement('img');
-			imgResultado.src = libro.imagen; 
+			imgResultado.src = 'data:image/png;base64,' + libro.imagen; 
 			imgResultado.alt = libro.titulo;
 			imgResultado.classList.add('imagenResultado');
 	
