@@ -58,17 +58,16 @@ class Post extends HTMLElement {
 		link.setAttribute("href", "../../microFront/css/post.css");	
 		shadow.appendChild(link);
 	}
-
 	#buscar(){
 		var busquedaInput = this.#palabraBuscar.value.toLowerCase();
-
-		fetch('https://jsonplaceholder.typicode.com/photos')
+	
+		fetch('/libros/') 
 			.then(response => response.json())
 			.then(data => {
 				var resultadosFiltrados = data.filter(function (item) {
-					return item.title.toLowerCase().includes(busquedaInput) || 
-					item.albumId.toString() === busquedaInput || 
-					item.id.toString() === busquedaInput; //titulo-autor-editorial
+					return item.titulo.toLowerCase().includes(busquedaInput) || 
+					item.autor.toLowerCase() === busquedaInput || 
+					item.editorial.toLowerCase() === busquedaInput; 
 				});
 	
 				if (!this.#validarBusqueda(busquedaInput, resultadosFiltrados)) {
@@ -87,13 +86,13 @@ class Post extends HTMLElement {
 					this.#mostrarPorAutor(resultadosFiltrados);
 				} else if (tipoBusqueda === 'editorial'){
 					this.#mostrarEditorial(resultadosFiltrados);
-				}else {
+				} else {
 					this.#mostrarPalabraClave(resultadosFiltrados);
 				}
 			})
 			.catch(error => console.error('Error al obtener datos de la API:', error));
 	}
-
+	
 	#mostrarPalabraClave(resultados) {
 		var contenedorResultados = this.#resultados;
 		contenedorResultados.innerHTML = '';
@@ -102,26 +101,23 @@ class Post extends HTMLElement {
 	
 		var resultadosLimitados = resultados.slice(0, 15);
 	
-		resultadosLimitados.forEach(palabraClave => {
+		resultadosLimitados.forEach(libro => {
 			var divResultado = document.createElement('div');
 			divResultado.classList.add('form-check');
 	
 			var resaltadoPalabraClave = document.createElement('label');
 			resaltadoPalabraClave.classList.add('form-check-label');
-			resaltadoPalabraClave.innerHTML = palabraClave.title.replace(new RegExp(`(${busqueda})`, 'gi'), '<span class="resaltadoPalabraClave">$1</span>');
+			resaltadoPalabraClave.innerHTML = libro.titulo.replace(new RegExp(`(${busqueda})`, 'gi'), '<span class="resaltadoPalabraClave">$1</span>');
 	
 			var imgResultado = document.createElement('img');
-			imgResultado.src = palabraClave.url;
-			imgResultado.alt = palabraClave.title;
+			imgResultado.src = libro.imagen; 
+			imgResultado.alt = libro.titulo;
 			imgResultado.classList.add('imagenResultado');
 	
 			divResultado.appendChild(resaltadoPalabraClave);
 			divResultado.appendChild(imgResultado);
 	
-
-		//	divResultado.id = 'resultado-' + palabraClave.id;
-
-			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(palabraClave.id));
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro));
 	
 			contenedorResultados.appendChild(divResultado);
 		});
@@ -300,3 +296,74 @@ class Post extends HTMLElement {
 	
 }
 window.customElements.define('busqueda-filtro', Post);
+
+
+/*    #buscar(){
+        var busquedaInput = this.#palabraBuscar.value.toLowerCase();
+
+        fetch('https://jsonplaceholder.typicode.com/photos')
+            .then(response => response.json())
+            .then(data => {
+                var resultadosFiltrados = data.filter(function (item) {
+                    return item.title.toLowerCase().includes(busquedaInput) || 
+                    item.albumId.toString() === busquedaInput || 
+                    item.id.toString() === busquedaInput; //titulo-autor-editorial
+                });
+    
+                if (!this.#validarBusqueda(busquedaInput, resultadosFiltrados)) {
+                    return;
+                }
+    
+                var tipoBusqueda = this.shadowRoot.querySelector('.tipo-busqueda:checked');
+    
+                if (tipoBusqueda) {
+                    tipoBusqueda = tipoBusqueda.id;
+                }
+    
+                if (tipoBusqueda === 'titulo') {
+                    this.#mostrarTitulos(resultadosFiltrados);
+                } else if (tipoBusqueda === 'autor') {
+                    this.#mostrarPorAutor(resultadosFiltrados);
+                } else if (tipoBusqueda === 'editorial'){
+                    this.#mostrarEditorial(resultadosFiltrados);
+                }else {
+                    this.#mostrarPalabraClave(resultadosFiltrados);
+                }
+            })
+            .catch(error => console.error('Error al obtener datos de la API:', error));
+    }
+
+    #mostrarPalabraClave(resultados) {
+        var contenedorResultados = this.#resultados;
+        contenedorResultados.innerHTML = '';
+    
+        var busqueda = this.shadowRoot.getElementById('busquedaInput').value.toLowerCase();
+    
+        var resultadosLimitados = resultados.slice(0, 15);
+    
+        resultadosLimitados.forEach(palabraClave => {
+            var divResultado = document.createElement('div');
+            divResultado.classList.add('form-check');
+    
+            var resaltadoPalabraClave = document.createElement('label');
+            resaltadoPalabraClave.classList.add('form-check-label');
+            resaltadoPalabraClave.innerHTML = palabraClave.title.replace(new RegExp(`(${busqueda})`, 'gi'), '<span class="resaltadoPalabraClave">$1</span>');
+    
+            var imgResultado = document.createElement('img');
+            imgResultado.src = palabraClave.url;
+            imgResultado.alt = palabraClave.title;
+            imgResultado.classList.add('imagenResultado');
+    
+            divResultado.appendChild(resaltadoPalabraClave);
+            divResultado.appendChild(imgResultado);
+    
+
+        //  divResultado.id = 'resultado-' + palabraClave.id;
+
+            divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(palabraClave.id));
+    
+            contenedorResultados.appendChild(divResultado);
+        });
+    }
+    
+*/
