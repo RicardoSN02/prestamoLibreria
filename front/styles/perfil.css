@@ -1,0 +1,36 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: rgb(236, 229, 199);
+}
+
+.container{
+    margin-top: 1%;
+    width: 100%;
+    height: 100vh;
+    border: 1px solid black;
+}
+
+.containerInfoSocio{
+    margin-top: 10px;
+    height: 20%;
+    background-color: rgb(190, 229, 215);
+} 
+
+.containerInfoPrestamos{
+    margin-top: auto;
+    height: 20%;
+} 
+
+.containerInfoReservas{
+    margin-top: auto;
+    height: 20%;
+} 
+
+.containerInfoMultas{
+    margin-top: auto;
+    height: 20%;
+} 
+
+.infoUsuario{
+    margin-left: 1%;
+}
