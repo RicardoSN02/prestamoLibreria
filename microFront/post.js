@@ -117,7 +117,9 @@ class Post extends HTMLElement {
 			divResultado.appendChild(resaltadoPalabraClave);
 			divResultado.appendChild(imgResultado);
 
-			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro));
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro, libro));
+
+
 
 			contenedorResultados.appendChild(divResultado);
 		});
@@ -145,7 +147,9 @@ class Post extends HTMLElement {
 			divResultado.appendChild(titulo);
 			divResultado.appendChild(imagen);
 	
-			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro));
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro, libro));
+
+
 	
 			contenedorResultados.appendChild(divResultado);
 		});
@@ -174,7 +178,8 @@ class Post extends HTMLElement {
 			divResultado.appendChild(autor);
 			divResultado.appendChild(imagen);
 	
-			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro));
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro, libro));
+
 	
 			contenedorResultados.appendChild(divResultado);
 		});
@@ -206,18 +211,20 @@ class Post extends HTMLElement {
 			divResultado.appendChild(editorial);
 			divResultado.appendChild(imagen);
 	
-			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(resultados[0].idlibro));
+			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro, libro));
+
+
 	
 			contenedorResultados.appendChild(divResultado);
 		}
 	}
-	
 
-	#abrirBusquedaLibro(id) {
 
-		window.location.href = 'infoLibro.html?id=' + id;
-		console.log(`Abrir busquedaLibro con ID: ${id}`);
+	#abrirBusquedaLibro(id, libro) {
+		const libroString = encodeURIComponent(JSON.stringify(libro));
+		window.location.href = `infoLibro.html?id=${id}&libro=${libroString}`;
 	}
+	
 	#validarBusqueda(busquedaInput, resultadosFiltrados) {
 		var tipoBusquedaSeleccionada = this.shadowRoot.querySelector('.tipo-busqueda:checked');
 	

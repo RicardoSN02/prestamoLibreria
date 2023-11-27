@@ -28,11 +28,11 @@ body {
     box-sizing: border-box;
     padding: 20px;
   }
-  
+/*  
   label {
     font-weight: bold;
   }
-  
+  */
   .texto-inferior {
     background-color: #ffffff;
     width: 50%;
