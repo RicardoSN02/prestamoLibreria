@@ -36,12 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if(data){
             if(data[0].cantidad === data[0].existencia){
+                document.getElementById('estado').innerText = "sin disponibilidad";
+            }else{
                 document.getElementById('estado').innerText = "disponible";
             }
     
-            if(data[0].cantidad < data[0].existencia){
-                document.getElementById('estado').innerText = "sin disponibilidad";
-            }
         }else{
             console.error("no se encontro el inventario del libro seleccionado")
         }
