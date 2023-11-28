@@ -59,3 +59,12 @@ body {
     background-color: rgb(25, 117, 148);
     cursor: pointer;
   }
+  /* Estilo para Sin disponibilidad (rojo) */
+.sin-disponibilidad {
+  color: red;
+}
+
+/* Estilo para Disponible (verde) */
+.disponible {
+  color: green;
+}
