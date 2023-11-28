@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const listaCarrito = document.getElementById('lista-carrito');
     const totalCarrito = document.getElementById('total');
