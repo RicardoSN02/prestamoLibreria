@@ -6,7 +6,8 @@ const { verifyToken } = require('../controllers/authControlador');
 
 router.get('/', verifyToken, inventarioController.getAllInventario);
 router.post('/inventario', verifyToken, inventarioController.addInventario);
-router.get('/inventario/:id', verifyToken, inventarioController.getInventarioById);
+router.get('/inventario/:id', inventarioController.getInventarioById);
+router.get('/inventarioLibro/:id', inventarioController.getInventarioByLibroId);
 router.put('/inventario/:id', verifyToken, inventarioController.updateInventario);
 router.delete('/inventario/:id', verifyToken, inventarioController.deleteInventario);
 

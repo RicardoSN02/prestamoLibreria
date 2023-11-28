@@ -79,6 +79,32 @@ exports.getInventarioById = async (req, res, next) => {
     }
 }
 
+exports.getInventarioByLibroId = async (req, res, next) => {
+    try {
+        const inventarioId = parseInt(req.params.id);
+        if (isNaN(inventarioId)) {
+            const error = new Error('ID invalido');
+            error.statusCode = 400;
+            throw error;
+        }
+
+        abrirConexion();
+        const invetariosdao = new invetariodao(nuevaConexcion);
+        const invetario = await invetariosdao.consultarInventarioLibro(inventarioId);
+        cerrarConexion();
+
+        if (invetario.length <= 0) {
+            const error = new Error('Inventario no encontrado');
+            error.statusCode = 404;
+            throw error;
+        }
+
+        res.json(invetario);
+    } catch (err) {
+        next(err);
+    }
+}
+
 exports.updateInventario = async (req, res, next) => {
     try {
         camposPermitidos = ['cantidad', 'existencia', 'idlibro'];

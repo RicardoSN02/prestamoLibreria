@@ -108,6 +108,27 @@ class inventarioDAO{
         });
     }
 
+    consultarInventarioLibro(id){
+        return new Promise((resolve,reject) => {
+            
+            let sqlObj = {
+                sql: 'SELECT * FROM inventario WHERE inventario.idlibro = ?',
+                timeout: 40000, 
+                values: [id]
+            };
+    
+            this.conexion.conn.query(sqlObj, (error, results, fields) => {
+            if (error){
+                reject(error);
+            } else {
+                console.log("se ha consultado con exito");
+                resolve(results);
+            }
+            });
+
+        });
+    }
+
 }
 
 module.exports = inventarioDAO
