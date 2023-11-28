@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if(data){
-            if(data[0].cantidad === data[0].existencia){
+            if(data[0].cantidad === 0){
                 document.getElementById('estado').innerText = "sin disponibilidad";
             }else{
                 document.getElementById('estado').innerText = "disponible";
