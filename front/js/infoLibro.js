@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
 
-<<<<<<< HEAD
+
         if(data){
             if(data[0].cantidad === data[0].existencia){
                 document.getElementById('estado').innerText = "sin disponibilidad";
@@ -45,19 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }else{
             console.error("no se encontro el inventario del libro seleccionado")
         }
-=======
-            if (data) {
-                if (data[0].cantidad === data[0].existencia) {
-                    document.getElementById('estado').innerText = "disponible";
-                }
-
-                if (data[0].cantidad < data[0].existencia) {
-                    document.getElementById('estado').innerText = "sin disponibilidad";
-                }
-            } else {
-                console.error("no se encontro el inventario del libro seleccionado")
-            }
->>>>>>> 2ffd09661522407e5cb12f674c012924332262b3
 
 
 
