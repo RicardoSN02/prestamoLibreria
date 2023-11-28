@@ -18,7 +18,7 @@ class Post extends HTMLElement {
 
 	}
 	#render(shadow) {
-		shadow.innerHTML += `
+		shadow.innerHTML += ` 
 		<div class="containerBusqueda custom-search">
 		<input class="inputBusqueda" type="text" placeholder="Búsqueda en categoría" id="busquedaInput">
 		<button class="btn btn-dark" onclick="buscar()" id="buscador">Buscar</button>
@@ -46,9 +46,11 @@ class Post extends HTMLElement {
 		</div>
 	  </div>
 	  
-	  <div id="resultadosBusqueda" class="resultadosBusqueda">
-	   
-	  </div>
+	  <div class="contenedorBuscar">
+	  <div id="resultadosBusqueda" class="resultadosBusqueda"></div>
+  <div id="botonPaginado" class="text-center mt-3"></div>
+</div>
+	  
 		  
 		`;
 	}
@@ -58,6 +60,7 @@ class Post extends HTMLElement {
 		link.setAttribute("href", "../../microFront/css/post.css");
 		shadow.appendChild(link);
 	}
+
 	#buscar() {
 		var busquedaInput = this.#palabraBuscar.value.toLowerCase();
 
@@ -128,120 +131,112 @@ class Post extends HTMLElement {
 	#mostrarTitulos(resultados) {
 		var contenedorResultados = this.#resultados;
 		contenedorResultados.innerHTML = '';
-	
+
 		var resultadosLimitados = resultados.slice(0, 15);
-	
+
 		resultadosLimitados.forEach(libro => {
 			var divResultado = document.createElement('div');
 			divResultado.classList.add('form-check');
-	
+
 			var titulo = document.createElement('label');
 			titulo.classList.add('form-check-label');
 			titulo.innerText = libro.titulo;
-	
+
 			var imagen = document.createElement('img');
 			imagen.src = 'data:image/png;base64,' + libro.imagen;
-			imagen.alt = libro.titulo; 
+			imagen.alt = libro.titulo;
 			imagen.classList.add('imagenResultado');
-	
+
 			divResultado.appendChild(titulo);
 			divResultado.appendChild(imagen);
-	
+
 			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro, libro));
 
 
-	
+
 			contenedorResultados.appendChild(divResultado);
 		});
 	}
-	
+
 
 	#mostrarPorAutor(resultados) {
 		var contenedorResultados = this.#resultados;
 		contenedorResultados.innerHTML = '';
-	
+
 		var resultadosLimitados = resultados.slice(0, 15);
-	
+
 		resultadosLimitados.forEach(libro => {
 			var divResultado = document.createElement('div');
 			divResultado.classList.add('form-check');
-	
+
 			var autor = document.createElement('label');
 			autor.classList.add('form-check-label');
 			autor.innerText = ` ${libro.titulo}`;
-	
+
 			var imagen = document.createElement('img');
 			imagen.src = 'data:image/png;base64,' + libro.imagen;
-			imagen.alt = libro.titulo;  
+			imagen.alt = libro.titulo;
 			imagen.classList.add('imagenResultado');
-	
+
 			divResultado.appendChild(autor);
 			divResultado.appendChild(imagen);
-	
+
 			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro, libro));
 
-	
+
 			contenedorResultados.appendChild(divResultado);
 		});
 	}
-	
+
 	#mostrarEditorial(resultados) {
 		var contenedorResultados = this.#resultados;
 		contenedorResultados.innerHTML = '';
-	
+
 		if (resultados.length > 0) {
 			var divResultado = document.createElement('div');
 			divResultado.classList.add('form-check');
-	
+
 			var inputRadio = document.createElement('input');
 			inputRadio.classList.add('form-check-input');
 			inputRadio.type = 'radio';
 			inputRadio.name = 'Resultado';
 			inputRadio.value = resultados[0].titulo;
-	
+
 			var editorial = document.createElement('label');
 			editorial.classList.add('form-check-label');
 			editorial.innerText = ` ${resultados[0].titulo}`;
-	
+
 			var imagen = document.createElement('img');
 			imagen.src = 'data:image/png;base64,' + resultados[0].imagen; // <-- Corregí aquí
 			imagen.alt = resultados[0].titulo;
 			imagen.classList.add('imagenResultado');
-	
+
 			divResultado.appendChild(editorial);
 			divResultado.appendChild(imagen);
-	
+
 			divResultado.addEventListener('click', () => this.#abrirBusquedaLibro(libro.idlibro, libro));
 
-
-	
 			contenedorResultados.appendChild(divResultado);
 		}
 	}
 
-
-	#abrirBusquedaLibro(id, libro) {
-		const libroString = encodeURIComponent(JSON.stringify(libro));
-		window.location.href = `infoLibro.html?id=${id}&libro=${libroString}`;
-	}
-	
 	#validarBusqueda(busquedaInput, resultadosFiltrados) {
 		var tipoBusquedaSeleccionada = this.shadowRoot.querySelector('.tipo-busqueda:checked');
-	
+
 		if (!tipoBusquedaSeleccionada || !tipoBusquedaSeleccionada.id) {
 			alert('Por favor, seleccione una opción de búsqueda.');
 			return false;
 		}
-	
+
 		var tipoBusqueda = tipoBusquedaSeleccionada.id;
-	
+
 		if (tipoBusqueda === 'titulo') {
-	
+
 			if (busquedaInput.trim() === '') {
 				alert('Por favor, ingrese un título para buscar.');
 				return false;
 			}
-	
+
 			if (!resultadosFiltrados.some(item => item.titulo.toLowerCase().includes(busquedaInput.toLowerCase()))) {
 				alert('No se encontraron resultados para el libro con ese título.');
 				return false;
@@ -255,41 +250,108 @@ class Post extends HTMLElement {
 				alert('No se encontraron libros con el autor ingresado.');
 				return false;
 			}
-	
+
 		} else if (tipoBusqueda === 'editorial') {
 			if (busquedaInput.trim() === '') {
 				alert('Por favor, ingrese un editorial para buscar.');
 				return false;
 			}
-	
+
 			if (!resultadosFiltrados.some(item => item.editorial.toLowerCase() === busquedaInput.toLowerCase())) {
 				alert('No se encontraron libros con la editorial ingresada.');
 				return false;
 			}
 		} else {
-	
+
 			if (busquedaInput.trim() === '') {
 				alert('Por favor, ingrese una palabra clave para buscar.');
 				return false;
 			}
-	
+
 			var palabraClaveRegex = /^\S+$/;
 			if (!palabraClaveRegex.test(busquedaInput)) {
 				alert('La palabra clave no debe contener espacios.');
 				return false;
 			}
-	
+
 			if (resultadosFiltrados.length === 0) {
 				alert('No se encontraron resultados de libros con la palabra clave ingresada.');
 				return false;
 			}
-	
+
 		}
-	
+
 		return true;
 	}
-	
+/*
+	document.addEventListener("DOMContentLoaded", function() {
+		var urlParams = new URLSearchParams(window.location.search);
+		var libroString = urlParams.get('libro');
+		var libro = JSON.parse(decodeURIComponent(libroString));
+
+		document.getElementById('imagenLibro').src = 'data:image/png;base64,' + libro.imagenLibro;
+		document.getElementById('titulo').innerText = libro.titulo;
+		document.getElementById('autor').innerText = libro.autor;
+		document.getElementById('editorial').innerText = libro.editorial;
+		document.getElementById('fechaPublicacion').innerText = libro.fechaPublicacion;
+		document.getElementById('categoria').innerText = libro.categoria;
+		document.getElementById('resumen').innerText = libro.resumen;
+
+		// Simulated search results (replace this with your actual search results)
+		var searchResults = [
+			{ title: 'Book 1', author: 'Author 1' },
+			{ title: 'Book 2', author: 'Author 2' },
+			{ title: 'Book 3', author: 'Author 3' },
+			// Add more books as needed
+		];
+
+		var itemsPerPage = 3;
+		var currentPage = 1;
+
+		function displaySearchResults() {
+			var startIndex = (currentPage - 1) * itemsPerPage;
+			var endIndex = startIndex + itemsPerPage;
+
+			var resultsContainer = document.getElementById('resultadosBusqueda');
+			resultsContainer.innerHTML = '';
+
+			for (var i = startIndex; i < endIndex && i < searchResults.length; i++) {
+				var result = searchResults[i];
+				var resultElement = document.createElement('div');
+				resultElement.innerHTML = `<p>${result.title} - ${result.author}</p>`;
+				resultsContainer.appendChild(resultElement);
+			}
+		}
+
+		function updatePaginationButtons() {
+			var totalPages = Math.ceil(searchResults.length / itemsPerPage);
+			var paginationButtons = document.getElementById('botonPaginado');
+			paginationButtons.innerHTML = '';
+
+			for (var i = 1; i <= totalPages; i++) {
+				var button = document.createElement('button');
+				button.innerText = i;
+				button.addEventListener('click', function (event) {
+					currentPage = parseInt(event.target.innerText);
+					displaySearchResults();
+					updatePaginationButtons();
+				});
+				paginationButtons.appendChild(button);
+			}
+		}
+
+		displaySearchResults();
+		updatePaginationButtons();
+	});
+*/
+	#abrirBusquedaLibro(id, libro) {
+		const libroString = encodeURIComponent(JSON.stringify(libro));
+		window.location.href = `infoLibro.html?id=${id}&libro=${libroString}`;
+	}
+
 }
 window.customElements.define('busqueda-filtro', Post);
+
+
 
 
