@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var id = urlParams.get('id')
     var libro = JSON.parse(decodeURIComponent(libroString));
 
-    
-    console.log("info Imagen:", 'data:image/png;base64,' + libro.imagen);
+
+    // console.log("info Imagen:", 'data:image/png;base64,' + libro.imagen);
 
     if (libro.imagen) {
         var imagenResultado = document.getElementById('imagenLibro');
@@ -27,13 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('categoria').innerText = libro.categoria;
     document.getElementById('resumen').innerText = libro.resumen;
 
-    console.log(id);
-    
-    //consulta el inventario para poner el estado
-    fetch('http://localhost:8082/inventarios/inventarioLibro/'+id)
-    .then(response => response.json())
-    .then(data => {
+    //console.log(id);
 
+    //consulta el inventario para poner el estado
+    fetch('http://localhost:8082/inventarios/inventarioLibro/' + id)
+        .then(response => response.json())
+        .then(data => {
+
+<<<<<<< HEAD
         if(data){
             if(data[0].cantidad === data[0].existencia){
                 document.getElementById('estado').innerText = "sin disponibilidad";
@@ -44,10 +45,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }else{
             console.error("no se encontro el inventario del libro seleccionado")
         }
+=======
+            if (data) {
+                if (data[0].cantidad === data[0].existencia) {
+                    document.getElementById('estado').innerText = "disponible";
+                }
+
+                if (data[0].cantidad < data[0].existencia) {
+                    document.getElementById('estado').innerText = "sin disponibilidad";
+                }
+            } else {
+                console.error("no se encontro el inventario del libro seleccionado")
+            }
+>>>>>>> 2ffd09661522407e5cb12f674c012924332262b3
 
 
-        
-    })
-    .catch(error => console.error('Error al obtener datos de la API:', error));
-    
+
+        })
+        .catch(error => console.error('Error al obtener datos de la API:', error));
+
 });
