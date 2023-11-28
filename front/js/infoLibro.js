@@ -51,3 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 });
+
+function abrirCarrito(id, libro){
+    const libroString = 'carrito.html?id=' + id + '&libro=' + encodeURIComponent(libro);
+    window.location.href = libroString;
+
+};
