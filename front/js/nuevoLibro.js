@@ -77,20 +77,20 @@ function validarFormulario() {
         return false; 
     }
 
+    'titulo', 'editorial', 'fechaPublicacion', 'categoria', 'autor','resumen','imagen'
 
     var formData = new FormData();
     formData.append('titulo', titulo);
-    formData.append('categoria', categoria);
-    formData.append('autor', autor);
     formData.append('editorial', editorial);
     formData.append('fechaPublicacion', fechaPublicacion);
+    formData.append('categoria', categoria);
+    formData.append('autor', autor);
     formData.append('resumen', resumen);
-    formData.append('archivo', archivoInput.files[0]); 
+    formData.append('imagen', archivoInput.files[0]); 
 
-    
     fetch('http://localhost:8082/libros/libro', {
         method: 'POST',
-        body: formData,
+        body: formData
     })
     .then(response => {
         if (!response.ok) {
