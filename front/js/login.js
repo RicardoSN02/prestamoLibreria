@@ -42,7 +42,15 @@ function consultarTipo(idUsuario,token){
     })
     .then(response => response.json())
     .then(result => {
-        console.log(result);
+        if (result[0].tipo === "admin") {
+            console.log("es admin");
+            const usuarioString = 'menuAdministrador.html';
+            window.location.href = usuarioString;
+        }
+        else{
+            const usuarioString = 'busquedaLibro.html';
+            window.location.href = usuarioString;
+        }
     })
     .catch(error => {
         console.error('Error al realizar la solicitud a la API:', error);
