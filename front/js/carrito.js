@@ -2,47 +2,49 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const listaCarrito = document.getElementById('lista-carrito');
-    const totalCarrito = document.getElementById('total');
     const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
   
-    // Puedes agregar tus productos aquí o cargarlos desde una API
-    const productos = [
-      { id: 1, nombre: 'Producto 1', precio: 20 },
-      { id: 2, nombre: 'Producto 2', precio: 30 },
-      // Agrega más productos según sea necesario
-    ];
+    function agregarAlCarrito(idLibro) {
+      // Realizar una solicitud a la API para obtener información del libro por su ID
+      fetch(``)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('No se pudo obtener la información del libro');
+          }
+          return response.json();
+        })
+        .then(libroInfo => {
+          const libroExistente = carrito.find(libro => libro.id === idLibro);
+    
+          if (libroExistente) {
+            libroExistente.cantidad++;
+          } else {
+            carrito.push({ id: idLibro, cantidad: 1, nombre: libroInfo.nombre, precio: libroInfo.precio });
+          }
+          localStorage.setItem('carrito', JSON.stringify(carrito));
+          renderizarCarrito();
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   
     productos.forEach(producto => {
       const productoHTML = document.createElement('li');
       productoHTML.innerHTML = `
         <span>${producto.nombre}</span>
-        <span>${producto.precio} pesos</span>
         <button class="eliminar-producto" data-id="${producto.id}">Eliminar</button>
       `;
       listaCarrito.appendChild(productoHTML);
     });
   
-    function calcularTotal() {
-      let total = 0;
-      const productosEnCarrito = document.querySelectorAll('#lista-carrito li');
-  
-      productosEnCarrito.forEach(producto => {
-        const precio = parseFloat(producto.children[1].textContent);
-        total += precio;
-      });
-  
-      totalCarrito.textContent = total.toFixed(2);
-    }
-  
     function vaciarCarrito() {
       listaCarrito.innerHTML = '';
-      totalCarrito.textContent = '0';
     }
   
     function eliminarProducto(id) {
       const productoAEliminar = document.querySelector(`#lista-carrito [data-id="${id}"]`);
       productoAEliminar.parentElement.removeChild(productoAEliminar);
-      calcularTotal();
     }
   
     listaCarrito.addEventListener('click', e => {
