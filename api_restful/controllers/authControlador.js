@@ -33,7 +33,7 @@ exports.login =  async (req,res) =>{
   
     const token = jwt.sign({userId: usuario},secretKey,{expiresIn});
   
-    res.json({token});
+    res.json({token,usuario});
     console.log(token);
 }
 
