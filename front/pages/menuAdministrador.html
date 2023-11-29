@@ -10,9 +10,10 @@
     <script src="https://kit.fontawesome.com/cf86aee2f9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../styles/administrarLibros.css">
     <link rel="stylesheet" href="../styles/navbar.css">
+
     <title>Administrar libros</title>
 </head>
-<body>
+<body onload="fetchData()">
 
   <header class="header">
       <div class="logo">
@@ -28,7 +29,7 @@
   </header>
 
   <div class="containerTabla">
-    <table id="miTabla">
+    <table id="dataTable">
         <thead>
           <tr>
             <th>Titulo</th>
@@ -46,7 +47,7 @@
   </div>
 
   <div class="containerButton">
-    <button class="icon-button">
+    <button class="icon-button" onclick="nuevoLibro()">
       <i class="fa-solid fa-plus fa-beat"></i>
     </button>    
   </div>
