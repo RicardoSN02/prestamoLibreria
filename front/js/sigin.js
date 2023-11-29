@@ -15,6 +15,8 @@ function validarFormulario() {
     var telefono = telefonoInput.value.trim();
     var regexTelefono = /^[0-9]{10}$/;
     var tipo = tipoSelect.value;
+    var isValid = true;
+
 
 
     if (nombre === '') {
@@ -61,9 +63,41 @@ function validarFormulario() {
         alert('Por favor, selecciona un tipo de usuario.');
         return false;
     }
-    return true;
-}
+   
 
+    if (!isValid) {
+        return false; 
+    }
+
+    var formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('telefono', telefono);
+    formData.append('tipo', tipo);
+    
+
+
+    fetch('http://localhost:8082/socios/socio', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al enviar los datos al servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+      
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    return true; 
+}
 
 function mostrarPassword() {
     var passwordInput = document.getElementById('password');
