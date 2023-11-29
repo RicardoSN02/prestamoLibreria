@@ -44,7 +44,7 @@ exports.addSocio = async (req,res,next) => {
             error.statusCode = 400; // Establecer el código de estado
             throw error;
         }
-
+        
         const nuevoSocio = new socio(0,req.body.nombre,req.body.email,req.body.password,req.body.telefono,req.body.tipo);
 
         await abrirConexion();

@@ -17,8 +17,6 @@ function validarFormulario() {
     var tipo = tipoSelect.value;
     var isValid = true;
 
-
-
     if (nombre === '') {
         alert('Por favor, ingresa un nombre.');
         return false;
@@ -69,24 +67,36 @@ function validarFormulario() {
         return false; 
     }
 
-    var formData = new FormData();
-    formData.append('nombre', nombre);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('telefono', telefono);
-    formData.append('tipo', tipo);
-    
+    var formData2 = new FormData();
+    formData2.append('nombre', nombre);
+    formData2.append('email', email);
+    formData2.append('password', password);
+    formData2.append('telefono', telefono);
+    formData2.append('tipo', tipo);
+
+    var user = {
+        "nombre": nombre,
+        "email": email,
+        "password": password,
+        "telefono": telefono,
+        "tipo": tipo
+    };
+
 
 
     fetch('http://localhost:8082/socios/socio', {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Error al enviar los datos al servidor');
         }
         return response.json();
+       
     })
     .then(data => {
       
