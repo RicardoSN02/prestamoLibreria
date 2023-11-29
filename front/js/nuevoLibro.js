@@ -77,8 +77,6 @@ function validarFormulario() {
         return false; 
     }
 
-    'titulo', 'editorial', 'fechaPublicacion', 'categoria', 'autor','resumen','imagen'
-
     var formData = new FormData();
     formData.append('titulo', titulo);
     formData.append('editorial', editorial);
