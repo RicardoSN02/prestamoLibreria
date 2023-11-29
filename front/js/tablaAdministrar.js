@@ -24,12 +24,19 @@ let button1;
         const button1 = document.createElement('button');
         button1.textContent = 'Mostrar inventario';
         button1.id ='inventario';
+        button1.setAttribute('data-target', 'modalInventario');
         button1.addEventListener('click', function() {
             // Lógica cuando se hace clic en el botón 1
-            console.log('Botón 1 clickeado para el ID:', button1.id);
+          console.log('Botón 1 clickeado para el ID:', button1.id);
 
-            const usuarioString = 'carrito.html';
-            window.location.href = usuarioString;
+          console.log('Datos de la fila:', element);
+
+          const modal = document.getElementById('modalInventario');
+          modal.style.display = 'block';
+          document.getElementById('modalTitulo').textContent = element.titulo;
+          consultarInventario(element.idlibro);
+          
+          
         });
 
 
@@ -42,9 +49,35 @@ let button1;
     });
   }
 
+  function consultarInventario(idLibro){
+    fetch('http://localhost:8082/inventarios/inventarioLibro/'+idLibro)
+    .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud no fue exitosa');
+            }
+            return response.json();
+        })
+        .then(libro => {
+            // Hacer algo con los datos obtenidos por ID
+            console.log('Datos obtenidos:', libro);
+            
+            document.getElementById('modalCantidad').textContent = libro.cantidad;
+        })
+  }
+
   function nuevoLibro(){
         const usuarioString = 'nuevoLibro.html';
         window.location.href = usuarioString;
   }
 
+  function cerrarModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = 'none';
+  }
+
+  
+
+  function llenarModal(libro){
+
+  }
   fetchData();
