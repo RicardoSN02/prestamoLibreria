@@ -112,6 +112,8 @@ function validarFormulario() {
         console.log(data);
         alert('Libro guardado exitosamente.');
         location.reload();
+        const usuarioString = 'menuAdministrador.html';
+        window.location.href = usuarioString;
     })
     .catch(error => {
         console.error('Error:', error);

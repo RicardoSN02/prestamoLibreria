@@ -80,8 +80,8 @@ table button:hover{
   display: none;
   position: fixed;
   top: 0;
-  left: 15%;
-  width: 70%;
+  left: 5%;
+  width: 110%;
   height: 100%;
 }
 
@@ -93,6 +93,7 @@ table button:hover{
   background-color: #fff;
   padding: 20px;
   border: 1px solid black;
+  display: flex;
 }
 
 .close {
@@ -112,4 +113,22 @@ table button:hover{
   background-color: aquamarine;
   width: 90px;
   border-radius: 60px;
+}
+
+.column {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.btnGuardar{
+  width:200px;
+  margin-top: 40%;
+  height: 40px;
+  border-radius: 50px;
+  background-color: rgb(75, 219, 210);
+  cursor: pointer;
+}
+
+.btnGuardar:hover{
+  background-color: rgb(47, 131, 125);
 }

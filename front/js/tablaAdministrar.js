@@ -122,7 +122,12 @@ let button1;
 
   //Funcion que actualiza un libro
   function actualizarLibro(libro){
-    document.getElementById('actualizarTitulo').innerHTML = libro.titulo;
+    document.getElementById('tituloActual').innerHTML = libro.titulo;
+    document.getElementById('categoriaActual').innerHTML = libro.categoria;
+    document.getElementById('autorActual').innerHTML = libro.autor;
+    document.getElementById('editorialActual').innerHTML = libro.editorial;
+    document.getElementById('fechaActual').innerHTML = libro.fechaPublicacion;
+    
   }
   //Funcion para actualizar un inventario
   function actualizarInventario(idInventario){

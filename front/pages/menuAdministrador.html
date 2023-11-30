@@ -72,13 +72,41 @@
   <!--Modal para actualizar-->
   <div id="modalActualizar" class="modalActualizar">
     <div class="modal-contentAct">
+      <div class="colum">
         <span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
-        <label for="" >Titulo:<label id="actualizarTitulo"></label> </label> <input type="text" name="Titulo" id="actualizarTitulo">
+        <label for="" >Titulo:</label><label id="tituloActual"></label> <br>
+        <label for="" >Categoría: </label><label id="categoriaActual"></label> <br>
+        <label for="" >Autor: </label><label id="autorActual"></label> <br>
+        <label for="" >Editorial: </label><label id="editorialActual"></label> <br>
+        <label for="" >Fecha de publicación: </label><label id="fechaActual"></label><br>
+      </div>
+      <div class="colum">
+        <span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
+        <form action="">
+          <label for="" >Titulo:</label>
+          <input type="text" name="Titulo" id="actualizarTitulo"><br>
+          <label for="" >Categoría: </label>
+          <input type="text" name="Titulo" id="actualizarCategoria"><br>
+          <label for="" >Autor: </label>
+          <input type="text" name="Titulo" id="actualizarAutor"><br>
+          <label for="" >Editorial: </label>
+          <input type="text" name="Titulo" id="actualizarEditorial"><br>
+          <label for="" >Fecha de publicación: </label>
+          <input type="date" name="Titulo" id="actualizarFecha">
+        </form>
+        
+      </div>
+      <div class="colum">
+        <button id="guardarActualizacion" class="btnGuardar">Guardar actualizacion</button>
+      </div>
+        <!--<span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
+        <label for="" >Titulo:<label id="actualizarTitulo"></label> </label> <br>
+        <input type="text" name="Titulo" id="actualizarTitulo">
         <label for="" >Categoría: </label>
         <label for="" >Autor: </label>
         <label for="" >Editorial: </label>
         <label for="" >Fecha de publicación: </label>
-        <label for="" >Resumen: </label>
+        <label for="" >Resumen: </label>-->
     </div>
   </div>
 
