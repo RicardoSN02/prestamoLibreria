@@ -38,6 +38,7 @@
             <th>categoría</th>
             <th>Editorial</th>
             <th>Acciones</th>
+            <th>inventario</th>
           </tr>
         </thead>
         <tbody>
@@ -52,12 +53,32 @@
     </button>    
   </div>
 
-  <!--Modal-->
-  <div id="modalInventario" class="modal">
-    <div class="modal-content">
+  <!--Modal de inventario-->
+  <div id="modalInventario" class="modalInventario">
+    <div class="modal-contentInv">
         <span class="close" onclick="cerrarModal('modalInventario')">&times;</span>
         <h3 id="modalTitulo"></h3>
-        <label for="">Cantidad en inventario: </label> <label for="" id="modalCantidad"></label>
+        <label for="">Cantidad en inventario: </label>
+        <label for="" id="modalCantidad"></label><br>
+        <label for="">Modificar Inventario: </label>
+        <input type="number" name="nuevoInventario" id="nuevaCantidad">
+        <label for="">Existencia: </label>
+        <label for="" id="modalExistencia"></label><br>
+        <div class="modalBtnContainer"></div>
+        <button type="button" id="sumarInventario" class="suma" >Guardar</button>
+    </div>
+  </div>
+
+  <!--Modal para actualizar-->
+  <div id="modalActualizar" class="modalActualizar">
+    <div class="modal-contentAct">
+        <span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
+        <label for="" >Titulo:<label id="actualizarTitulo"></label> </label> <input type="text" name="Titulo" id="actualizarTitulo">
+        <label for="" >Categoría: </label>
+        <label for="" >Autor: </label>
+        <label for="" >Editorial: </label>
+        <label for="" >Fecha de publicación: </label>
+        <label for="" >Resumen: </label>
     </div>
   </div>
 
