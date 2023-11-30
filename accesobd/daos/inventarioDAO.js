@@ -30,9 +30,9 @@ class inventarioDAO{
     actualizarInventario(inventario,cantidad){
         return new Promise((resolve, reject) => {
                 let sqlObj = {
-                sql: 'UPDATE inventario SET cantidad = (cantidad + (?)) WHERE inventario.idinventario = ?',
+                sql: 'UPDATE inventario SET cantidad = (cantidad + (?)),existencia = (existencia + (?))  WHERE inventario.idinventario = ?;',
                 timeout: 40000, 
-                values: [cantidad,inventario]
+                values: [cantidad,cantidad,inventario]
                 };
         
                 this.conexion.conn.query(sqlObj, (error, results, fields) => {
