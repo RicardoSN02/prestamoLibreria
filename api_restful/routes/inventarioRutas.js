@@ -8,7 +8,7 @@ router.get('/', verifyToken, inventarioController.getAllInventario);
 router.post('/inventario', verifyToken, inventarioController.addInventario);
 router.get('/inventario/:id', inventarioController.getInventarioById);
 router.get('/inventarioLibro/:id', inventarioController.getInventarioByLibroId);
-router.put('/inventario/:id', verifyToken, inventarioController.updateInventario);
+router.put('/inventario/:id', inventarioController.updateInventario);
 router.delete('/inventario/:id', verifyToken, inventarioController.deleteInventario);
 
 module.exports = router;
