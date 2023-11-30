@@ -128,6 +128,108 @@ let button1;
     document.getElementById('editorialActual').innerHTML = libro.editorial;
     document.getElementById('fechaActual').innerHTML = libro.fechaPublicacion;
     
+    var tituloNuevo = document.getElementById('titulo').value;
+    var categoriaNueva = document.getElementById('categoria').value;
+    var autorNuevo = document.getElementById('autor').value;
+    var editorialNueva = document.getElementById('editorial').value;
+    var fechaPublicacionNueva = document.getElementById('fechaPublicacion').value;
+    var isValid = true;
+
+    if (tituloNuevo.trim() === '') {
+        tituloNuevo = document.getElementById('tituloActual').value; 
+        return false;
+    }
+
+    if (tituloNuevo.includes('@')) {
+        alert('El título no puede contener el carácter "@"');
+        return false;
+    }
+
+    if (categoriaNueva.trim() === '') {
+        categoriaNueva = document.getElementById('categoriaActual').value;
+        return false;
+    }
+
+    if(autorNuevo.trim() === ''){
+        autorNuevo = document.getElementById('autorActual').value;
+        return false;
+    }
+
+    if(editorialNueva.trim() === ''){
+        editorialNueva = document.getElementById('editorial').value;
+        return false;
+    }
+
+    if (fechaPublicacionNueva.trim() === '') {
+        fechaPublicacionNueva = getElementById('fechaActual').value;
+        return false;
+    }
+    
+    var hoy = new Date().toISOString().split('T')[0]; 
+    if (fechaPublicacionNueva > hoy) {
+        alert('La fecha de publicación no puede ser futura.');
+        return false;
+    }
+
+    var regex = /^[a-zA-Z\s,áéíóúüÁÉÍÓÚÜ\-.,]*$/;
+
+    if (!regex.test(categoriaNueva)) {
+        alert('La categoría no puede contener números ni "@" y puede incluir puntos, comas, guiones y acentos.');
+        return false;
+    }
+    
+    if (!regex.test(autorNuevo)) {
+        alert('El autor no puede contener números ni "@" y puede incluir puntos, comas, guiones y acentos.');
+        return false;
+    }
+    
+    if (!regex.test(editorialNueva)) {
+        alert('El editorial no puede contener números ni "@" y puede incluir puntos, comas, guiones y acentos.');
+        return false;
+    }
+  
+
+    var formData = new FormData();
+    formData.append('titulo', tituloNuevo);
+    formData.append('editorial', editorialNueva);
+    formData.append('fechaPublicacion', fechaPublicacionNueva);
+    formData.append('categoria', categoriaNueva);
+    formData.append('autor', autorNuevo);
+ 
+    formData.forEach(function(value, key){
+        console.log(key, value);
+    });
+    /*
+    var nuevoLibro = {
+        "titulo": titulo,
+        "editorial":editorial,
+        "fechaPublicacion":fechaPublicacion,
+        "categoria":categoria,
+        "autor":autor,
+        "resumen":resumen,
+        "imagen":archivoInput.files[0]
+      };*/
+
+    fetch('http://localhost:8082/libros/libro', {
+        method: 'PUT',
+        body: formData
+    })
+    .then(response => {
+        console.log(response );
+        if (!response.ok) {
+            throw new Error('Error al enviar los datos al servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        alert('Libro actualizado exitosamente.');
+        location.reload();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
   }
   //Funcion para actualizar un inventario
   function actualizarInventario(idInventario){
