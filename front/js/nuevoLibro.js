@@ -72,11 +72,7 @@ function validarFormulario() {
         return false;
     }
   
-    
- 
 
-
-   
     var formData = new FormData();
     formData.append('titulo', titulo);
     formData.append('editorial', editorial);
@@ -85,23 +81,28 @@ function validarFormulario() {
     formData.append('autor', autor);
     formData.append('resumen', resumen);
     formData.append('imagen', archivoInput.files[0]); 
-
+ 
+    formData.forEach(function(value, key){
+        console.log(key, value);
+    });
+    /*
     var nuevoLibro = {
-        "titulo":document.getElementById('titulo').value,
-        "editorial":document.getElementById('editorial').value,
-        "fechaPublicacion":document.getElementById('fechaPublicacion').value,
-        "categoria":document.getElementById('categoria').value,
-        "autor":document.getElementById('autor').value,
-        "resumen":document.getElementById('resumen').value,
+        "titulo": titulo,
+        "editorial":editorial,
+        "fechaPublicacion":fechaPublicacion,
+        "categoria":categoria,
+        "autor":autor,
+        "resumen":resumen,
         "imagen":archivoInput.files[0]
-      };
+      };*/
+
 
     fetch('http://localhost:8082/libros/libro', {
         method: 'POST',
-        body: JSON.stringify(nuevoLibro),
+        body: formData
     })
     .then(response => {
-        console.log(response);
+        console.log(response );
         if (!response.ok) {
             throw new Error('Error al enviar los datos al servidor');
         }
