@@ -25,9 +25,13 @@ let button1;
         //Boton que elimina un libro del inventario
         const btnEliminar = document.createElement('button');
         btnEliminar.textContent = 'Eliminar';
-        btnEliminar.id ='idEliminar';
         btnEliminar.setAttribute('data-target', 'modalInventario');
-        btnEliminar.addEventListener('click', function() {
+        btnEliminar.addEventListener('click', function () {
+          
+            var fila = this.parentNode.parentNode;
+            var tabla = fila.parentNode;
+
+            eliminar(element.id,fila,tabla);
 
         });
 
@@ -71,9 +75,11 @@ let button1;
         cell6.appendChild(btnActualizar);
         cell6.appendChild(btnEliminar);
         cell7.appendChild(button1);
+
     });
   }
 
+  //Funcion que consulta un inventario por medio del id un libro
   function consultarInventario(idLibro){
     fetch('http://localhost:8082/inventarios/inventarioLibro/'+idLibro,{
       method: 'GET',
@@ -87,9 +93,8 @@ let button1;
             return response.json();
         })
     .then(result => {
-        // Hacer algo con los datos obtenidos por ID
         console.log('Datos obtenidos:', result);
-              
+        document.getElementById('nuevaCantidad').innerHTML= 0;     
         document.getElementById('modalCantidad').innerHTML = result[0].cantidad;
         document.getElementById('modalExistencia').innerHTML = result[0].existencia;
 
@@ -113,10 +118,11 @@ let button1;
     modal.style.display = 'none';
   }
 
+  //Funcion que actualiza un libro
   function actualizarLibro(libro){
     document.getElementById('actualizarTitulo').innerHTML = libro.titulo;
   }
-
+  //Funcion para actualizar un inventario
   function actualizarInventario(idInventario){
     var nuevoInventario = {
       "cantidad": document.getElementById('nuevaCantidad').value,
@@ -142,6 +148,70 @@ let button1;
   })
     .catch(error => console.error('Error al procesar los datos obtenidos:', error))
     .catch(error => console.error('Error en la solicitud de red:', error));
+  }
+
+  function eliminar(idLibro, fila, tabla){
+    fetch('http://localhost:8082/inventarios/inventarioLibro/'+idLibro,{
+      method: 'GET',
+      headers: {
+      }
+    })
+    .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud no fue exitosa');
+            }
+            return response.json();
+        })
+    .then(result => {
+      console.log('Datos obtenidos:', result);
+        if (result[0].existencia == 0) {
+          eliminarInventario(idLibro);
+          eliminarLibro(idLibro);
+          tabla.removeChild(fila);
+        }
+      })
+        .catch(error => console.error('Error al procesar los datos obtenidos:', error))
+        .catch(error => console.error('Error en la solicitud de red:', error));
+  }
+
+  function eliminarInventario(idLibro){
+    fetch('http://localhost:8082/inventarios/inventario/'+idLibro,{
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud no fue exitosa');
+            }
+            return response.json();
+        })
+    .then(result => {
+        console.log('Se elimino el inventario con éxito');
+      })
+        .catch(error => console.error('Error al procesar los datos obtenidos:', error))
+        .catch(error => console.error('Error en la solicitud de red:', error));
+  }
+
+  function eliminarLibro(idLibro){
+    fetch('http://localhost:8082/libros/libro/'+idLibro,{
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+            if (!response.ok) {
+                throw new Error('La solicitud no fue exitosa');
+            }
+            return response.json();
+        })
+    .then(result => {
+        console.log('Se elimino el libro con éxito');
+      })
+        .catch(error => console.error('Error al procesar los datos obtenidos:', error))
+        .catch(error => console.error('Error en la solicitud de red:', error));
   }
 
   fetchData();
