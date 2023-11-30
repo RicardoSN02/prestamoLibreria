@@ -86,11 +86,22 @@ function validarFormulario() {
     formData.append('resumen', resumen);
     formData.append('imagen', archivoInput.files[0]); 
 
+    var nuevoLibro = {
+        "titulo":document.getElementById('titulo').value,
+        "editorial":document.getElementById('editorial').value,
+        "fechaPublicacion":document.getElementById('fechaPublicacion').value,
+        "categoria":document.getElementById('categoria').value,
+        "autor":document.getElementById('autor').value,
+        "resumen":document.getElementById('resumen').value,
+        "imagen":archivoInput.files[0]
+      };
+
     fetch('http://localhost:8082/libros/libro', {
         method: 'POST',
-        body: formData
+        body: JSON.stringify(nuevoLibro),
     })
     .then(response => {
+        console.log(response);
         if (!response.ok) {
             throw new Error('Error al enviar los datos al servidor');
         }
