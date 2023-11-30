@@ -55,28 +55,28 @@ function validarFormulario() {
         alert('Por favor, selecciona una imagen.');
         return false;
     }
-    var regex = /^[a-zA-Z\s,áéíóúüÁÉÍÓÚÜ-]*$/;
+    var regex = /^[a-zA-Z\s,áéíóúüÁÉÍÓÚÜ\-.,]*$/;
 
     if (!regex.test(categoria)) {
-        alert('La categoría no puede contener números, caracteres especiales ni "@".');
+        alert('La categoría no puede contener números ni "@" y puede incluir puntos, comas, guiones y acentos.');
         return false;
     }
-
+    
     if (!regex.test(autor)) {
-        alert('El autor no puede contener números, caracteres especiales ni "@".');
+        alert('El autor no puede contener números ni "@" y puede incluir puntos, comas, guiones y acentos.');
         return false;
     }
-
+    
     if (!regex.test(editorial)) {
-        alert('El editorial no puede contener números, caracteres especiales ni "@".');
+        alert('El editorial no puede contener números ni "@" y puede incluir puntos, comas, guiones y acentos.');
         return false;
     }
+  
+    
  
 
-    if (!isValid) {
-        return false; 
-    }
 
+   
     var formData = new FormData();
     formData.append('titulo', titulo);
     formData.append('editorial', editorial);
@@ -97,12 +97,25 @@ function validarFormulario() {
         return response.json();
     })
     .then(data => {
-      
         console.log(data);
+        alert('Libro guardado exitosamente.');
+        location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
     });
 
-    return true; 
+    return true;
+}
+
+function limpiarCampos() {
+    document.getElementById('titulo').value = '';
+    document.getElementById('categoria').value = '';
+    document.getElementById('autor').value = '';
+    document.getElementById('editorial').value = '';
+    document.getElementById('fechaPublicacion').value = '';
+    document.getElementById('resumen').value = '';
+    document.getElementById('archivo').value = '';
+
+    window.location.href = 'menuAdministrador.html';
 }

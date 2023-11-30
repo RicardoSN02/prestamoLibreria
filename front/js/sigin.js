@@ -83,7 +83,6 @@ function validarFormulario() {
     };
 
 
-
     fetch('http://localhost:8082/socios/socio', {
         method: 'POST',
         headers: {
@@ -96,17 +95,24 @@ function validarFormulario() {
             throw new Error('Error al enviar los datos al servidor');
         }
         return response.json();
-       
     })
     .then(data => {
-      
         console.log(data);
+
+     console.log('Tipo:', tipo);
+        if (tipo === 'admin') {
+            window.location.href = 'menuAdministrador.html';
+        } else if (tipo === 'socio') {
+            window.location.href = 'busquedaLibro.html';
+        } 
+        
+
     })
     .catch(error => {
         console.error('Error:', error);
     });
 
-    return true; 
+    return true;
 }
 
 function mostrarPassword() {
