@@ -12,6 +12,7 @@ let button1;
     const tableBody = document.querySelector('#dataTable tbody');
     tableBody.innerHTML = '';
 
+    let contador = 0;
     data.forEach(element => {
         const row = tableBody.insertRow();
         const cell1 = row.insertCell(0);
@@ -31,7 +32,8 @@ let button1;
             var fila = this.parentNode.parentNode;
             var tabla = fila.parentNode;
 
-            eliminar(element.id,fila,tabla);
+            console.log(element.idlibro)
+            eliminar(element.idlibro,fila,tabla);
 
         });
 
@@ -152,9 +154,7 @@ let button1;
 
   function eliminar(idLibro, fila, tabla){
     fetch('http://localhost:8082/inventarios/inventarioLibro/'+idLibro,{
-      method: 'GET',
-      headers: {
-      }
+      method: 'GET'
     })
     .then(response => {
             if (!response.ok) {
@@ -165,17 +165,16 @@ let button1;
     .then(result => {
       console.log('Datos obtenidos:', result);
         if (result[0].existencia == 0) {
-          eliminarInventario(idLibro);
-          eliminarLibro(idLibro);
-          tabla.removeChild(fila);
+          
+          eliminarInventario(idLibro,result[0].idinventario,fila,tabla);
         }
       })
         .catch(error => console.error('Error al procesar los datos obtenidos:', error))
         .catch(error => console.error('Error en la solicitud de red:', error));
   }
 
-  function eliminarInventario(idLibro){
-    fetch('http://localhost:8082/inventarios/inventario/'+idLibro,{
+  function eliminarInventario(idLibro,idinventario,fila,tabla){
+    fetch('http://localhost:8082/inventarios/inventario/'+idinventario,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -189,17 +188,20 @@ let button1;
         })
     .then(result => {
         console.log('Se elimino el inventario con éxito');
+        eliminarLibro(idLibro,fila,tabla);
+        
       })
         .catch(error => console.error('Error al procesar los datos obtenidos:', error))
         .catch(error => console.error('Error en la solicitud de red:', error));
   }
 
-  function eliminarLibro(idLibro){
+  function eliminarLibro(idLibro,fila,tabla){
+    console.log(idLibro)
     fetch('http://localhost:8082/libros/libro/'+idLibro,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
-      }
+        }
     })
     .then(response => {
             if (!response.ok) {
@@ -209,6 +211,7 @@ let button1;
         })
     .then(result => {
         console.log('Se elimino el libro con éxito');
+        tabla.removeChild(fila);
       })
         .catch(error => console.error('Error al procesar los datos obtenidos:', error))
         .catch(error => console.error('Error en la solicitud de red:', error));

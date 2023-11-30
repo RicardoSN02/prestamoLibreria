@@ -201,8 +201,10 @@ exports.updateLibro = async (req,res,next) =>{
 
 exports.deleteLibro = async (req,res,next) =>{
     try {
+        console.log(req.params.id)
         const libroId = parseInt(req.params.id);
 
+        
         if(isNaN(libroId)){
             const error = new Error('ID invalido');
             error.statusCode = 400; // Establecer el código de estado
