@@ -131,6 +131,15 @@ let button1;
     document.getElementById('autorActual').innerHTML = libro.autor;
     document.getElementById('editorialActual').innerHTML = libro.editorial;
     document.getElementById('fechaActual').innerHTML = libro.fechaPublicacion;
+    document.getElementById('resumenActual').innerHTML = libro.resumen;
+
+    if (libro.imagen) {
+      var imagenResultado = document.getElementById('imagenLibro');
+      imagenResultado.src = 'data:image/png;base64,' + libro.imagen;
+      imagenResultado.alt = libro.titulo;
+  } else {
+      console.error('Error: libro.imagenLibro está indefinido o nulo.');
+  }
     
     var tituloNuevo = document.getElementById('titulo').value;
     var categoriaNueva = document.getElementById('categoria').value;
@@ -210,8 +219,8 @@ let button1;
         "fechaPublicacion":fechaPublicacionNueva,
         "categoria":categoriaNueva,
         "autor":autorNuevo,
-        "resumen":resumen,
-        "imagen":archivoInput.files[0]
+        "resumen": document.getElementById('resumenActual').value,
+        "imagen":imagenResultado
       };
 
     fetch('http://localhost:8082/libros/libro'+libro.idlibro, {

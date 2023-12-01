@@ -132,3 +132,9 @@ table button:hover{
 .btnGuardar:hover{
   background-color: rgb(47, 131, 125);
 }
+
+.imagenLibro{
+  width: 100px;
+  height: 100px;
+  margin-left: 2%;
+}
