@@ -1,6 +1,13 @@
 const { response } = require("express");
 const { result } = require("lodash");
 let button1;
+let modalCounter = 1;
+
+// Función para generar un identificador único para un modal
+function generateModalId() {
+  return 'modalInventario' + modalCounter++;
+}
+
   function fetchData() {
     fetch('http://localhost:8082/libros/')
     .then(response=>response.json())
@@ -8,6 +15,7 @@ let button1;
     .catch(error => console.error('Error al obtener datos',error));
   }
 
+ 
   function displayData(data){
     const tableBody = document.querySelector('#dataTable tbody');
     tableBody.innerHTML = '';
@@ -94,14 +102,15 @@ let button1;
         const button1 = document.createElement('button');
         button1.textContent = 'Mostrar inventario';
         button1.id ='inventario';
-        button1.setAttribute('data-target', 'modalInventario');
+        button.setAttribute('data-target', generateModalId());
         button1.addEventListener('click', function() {
             // Lógica cuando se hace clic en el botón 1
           console.log('Botón 1 clickeado para el ID:', button1.id);
 
           console.log('Datos de la fila:', element);
 
-          const modal = document.getElementById('modalInventario');
+          const modalId = button.getAttribute('data-target');
+          const modal = document.getElementById(modalId); 
           modal.style.display = 'block';
           document.getElementById('modalTitulo').textContent = element.titulo;
           consultarInventario(element.idlibro);
