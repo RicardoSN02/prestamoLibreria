@@ -47,7 +47,11 @@ let button1;
           const modal = document.getElementById('modalActualizar');
           modal.style.display = 'block';
 
-          actualizarLibro(element);
+          const botonModal = document.getElementById('guardarActualizacion');
+          botonModal.addEventListener('click',function(){
+            actualizarLibro(element);
+          })
+          
         });
 
         //Boton que muestra el modal de inventario
