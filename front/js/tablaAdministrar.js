@@ -189,7 +189,7 @@ let button1;
     }
   
 
-    var formData = new FormData();
+    /*var formData = new FormData();
     formData.append('titulo', tituloNuevo);
     formData.append('editorial', editorialNueva);
     formData.append('fechaPublicacion', fechaPublicacionNueva);
@@ -198,21 +198,24 @@ let button1;
  
     formData.forEach(function(value, key){
         console.log(key, value);
-    });
-    /*
-    var nuevoLibro = {
-        "titulo": titulo,
-        "editorial":editorial,
-        "fechaPublicacion":fechaPublicacion,
-        "categoria":categoria,
-        "autor":autor,
+    });*/
+
+    var libroActualizado = {
+        "titulo": tituloNuevo,
+        "editorial":editorialNueva,
+        "fechaPublicacion":fechaPublicacionNueva,
+        "categoria":categoriaNueva,
+        "autor":autorNuevo,
         "resumen":resumen,
         "imagen":archivoInput.files[0]
-      };*/
+      };
 
-    fetch('http://localhost:8082/libros/libro', {
+    fetch('http://localhost:8082/libros/libro'+libro.idlibro, {
         method: 'PUT',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(libroActualizado),
     })
     .then(response => {
         console.log(response );
