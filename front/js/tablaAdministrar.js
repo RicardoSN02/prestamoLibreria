@@ -36,7 +36,7 @@ let button1;
             var tabla = fila.parentNode;
 
             console.log(element.idlibro)
-            eliminar(element.idlibro,fila,tabla);
+            eliminarLibro(element.idlibro,fila,tabla);
 
         });
 
@@ -71,7 +71,7 @@ let button1;
           } else {
             setFileInputValue(element.imagen,modal1);
           }
-          
+
 
         })
 
@@ -399,7 +399,6 @@ let button1;
   }
 
   function eliminarLibro(idLibro,fila,tabla){
-    console.log(idLibro)
     fetch('http://localhost:8082/libros/libro/'+idLibro,{
         method: 'DELETE',
         headers: {
@@ -408,6 +407,7 @@ let button1;
     })
     .then(response => {
             if (!response.ok) {
+                alert('El libro tiene un inventario o prestamos pendientes');
                 throw new Error('La solicitud no fue exitosa');
             }
             return response.json();

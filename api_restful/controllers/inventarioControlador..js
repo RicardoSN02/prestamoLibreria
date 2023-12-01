@@ -122,7 +122,7 @@ exports.updateInventario = async (req, res, next) => {
             throw error;
         }
 
-        abrirConexion();
+        await abrirConexion();
         const inventariosdao = new invetariodao(nuevaConexcion);
         const inventarios = await inventariosdao.consultarInventario(invetarioId);
 
@@ -146,7 +146,7 @@ exports.updateInventario = async (req, res, next) => {
 
         let inventarioActualizado = new inventario(inventarios[0].idinventario, inventarios[0].cantidad, inventarios[0].existencia, inventarios[0].idlibro);
         await inventariosdao.actualizarInventario(invetarioId,req.body.cantidad);
-        cerrarConexion();
+        await cerrarConexion();
 
         res.json(inventarioActualizado);
     } catch (err) {
