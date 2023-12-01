@@ -37,6 +37,8 @@
             <th>Fecha publicación</th>
             <th>categoría</th>
             <th>Editorial</th>
+            <th>Resumen</th>
+            <th>imagen</th>
             <th>Acciones</th>
             <th>inventario</th>
           </tr>
@@ -75,14 +77,6 @@
     <div class="modal-contentAct">
       <div class="colum">
         <span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
-        <label for="" >Titulo:</label><label id="tituloActual"></label> <br>
-        <label for="" >Categoría: </label><label id="categoriaActual"></label> <br>
-        <label for="" >Autor: </label><label id="autorActual"></label> <br>
-        <label for="" >Editorial: </label><label id="editorialActual"></label> <br>
-        <label for="" >Fecha de publicación: </label><label id="fechaActual"></label><br>
-      </div>
-      <div class="colum">
-        <span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
         <form class="form-group">
           <fieldset class="form-group">
             <label for="" >Titulo:</label>
@@ -104,6 +98,20 @@
             <label for="" >Fecha de publicación: </label>
             <input type="date" name="fecha" id="actualizarFecha">
           </fieldset>
+          <fieldset class="form-group">
+            <label for="resumen">Resumen:</label>
+            <textarea class="form-control" rows="5" id="actualizarResumen"></textarea>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <label for="archivo">Selecciona una imagen:</label>
+            <input type="file" id="actualizarArchivo" name="actualizarArchivo" accept="image/*">
+          </fieldset>  
+
+          <div id="imagePreviewContainer">
+            <img id="imagePreview" alt="Image Preview">
+          </div>
+
         </form>
         
       </div>

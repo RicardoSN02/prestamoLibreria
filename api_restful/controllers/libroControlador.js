@@ -145,7 +145,7 @@ exports.updateLibro = async (req,res,next) =>{
             //return res.status(400).json({error: "ID invalido"});
         }
 
-        abrirConexion();
+        await abrirConexion();
         const librosdao = new librodao(nuevaConexcion);
         const libros = await librosdao.consultarLibro(libroId);
         
@@ -191,7 +191,7 @@ exports.updateLibro = async (req,res,next) =>{
 
         await librosdao.actualizarLibro(libroActualizar)
 
-        cerrarConexion();   
+        await cerrarConexion();   
 
         res.json(libroActualizar);
     } catch (err) {

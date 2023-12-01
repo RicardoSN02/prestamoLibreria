@@ -20,8 +20,11 @@ let button1;
         const cell3 = row.insertCell(2);
         const cell4 = row.insertCell(3);
         const cell5 = row.insertCell(4);
-        const cell6 = row.insertCell(5);
-        const cell7 = row.insertCell(6);
+        const cell51 = row.insertCell(5);
+        const cell52 = row.insertCell(6);
+        const cell6 = row.insertCell(7);
+        const cell7 = row.insertCell(8);
+
 
         //Boton que elimina un libro del inventario
         const btnEliminar = document.createElement('button');
@@ -39,6 +42,39 @@ let button1;
 
         //Boton que abre el modal de actualizar 
         const btnActualizar = document.createElement('button');
+        btnActualizar.addEventListener('click',function(){
+          console.log(element);
+
+
+          const modal1 = document.getElementById('modalActualizar');
+
+          modal1.querySelector('#actualizarTitulo').value = '';
+          modal1.querySelector('#actualizarCategoria').value = '';
+          modal1.querySelector('#actualizarAutor').value = '';
+          modal1.querySelector('#actualizarEditorial').value = '';
+          modal1.querySelector('#actualizarFecha').value = '';
+          modal1.querySelector('#actualizarResumen').value = '';
+          modal1.querySelector('#actualizarArchivo').value = '';
+        
+     
+          modal1.querySelector('#actualizarTitulo').value = element.titulo;
+          modal1.querySelector('#actualizarCategoria').value = element.categoria;
+          modal1.querySelector('#actualizarAutor').value = element.autor;
+          modal1.querySelector('#actualizarEditorial').value = element.editorial;
+          modal1.querySelector('#actualizarFecha').value = element.fechaPublicacion;
+          modal1.querySelector('#actualizarResumen').value = element.resumen;
+        
+          var imagenResultado = 0;
+        
+          if (element.imagen === "") {
+            console.error('Error: element.imagen está indefinido o nulo.');
+          } else {
+            setFileInputValue(element.imagen,modal1);
+          }
+          
+
+        })
+
         btnActualizar.textContent = 'Actualizar';
         btnActualizar.id ='idActualizar';
         btnActualizar.setAttribute('data-target', 'modalInventario');
@@ -78,6 +114,12 @@ let button1;
         cell3.textContent = element.fechaPublicacion;
         cell4.textContent = element.categoria;
         cell5.textContent = element.editorial;
+        cell51.textContent = element.resumen;
+        var imgElement = document.createElement('img');
+        imgElement.src = 'data:image/png;base64,' + element.imagen;
+        imgElement.style.maxWidth = '100px'; 
+        imgElement.style.maxHeight = '100px'; 
+        cell52.appendChild(imgElement);
         cell6.appendChild(btnActualizar);
         cell6.appendChild(btnEliminar);
         cell7.appendChild(button1);
@@ -85,6 +127,60 @@ let button1;
     });
   }
 
+  function setFileInputValue(base64Image,modal1) {
+    const input = modal1.querySelector('#actualizarArchivo');
+  
+    // Convert base64 to Blob
+    const byteCharacters = atob(base64Image);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    const blob = new Blob(byteArrays, { type: 'image/png' });
+  
+    // Create a DataTransfer object and add the file to it
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(new File([blob], 'image.png', { type: 'image/png' }));
+  
+    // Set the files property of the file input to the DataTransfer object
+    input.files = dataTransfer.files;
+  
+    // Trigger the change event to update the file input
+    const event = new Event('change');
+    input.dispatchEvent(event);
+  
+    // Optionally, you can update the preview if needed
+    previewImage();
+  }
+
+  function previewImage() {
+    var input = document.getElementById('actualizarArchivo');
+    var previewContainer = document.getElementById('imagePreviewContainer');
+    var previewImage = document.getElementById('imagePreview');
+  
+    var file = input.files[0];
+  
+    if (file) {
+      var reader = new FileReader();
+  
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        previewContainer.style.display = 'block'; 
+      };
+  
+      reader.readAsDataURL(file);
+    } else {
+      previewImage.src = ''; 
+      previewContainer.style.display = 'none'; 
+    }
+  }
+  
   //Funcion que consulta un inventario por medio del id un libro
   function consultarInventario(idLibro){
     fetch('http://localhost:8082/inventarios/inventarioLibro/'+idLibro,{
@@ -126,27 +222,16 @@ let button1;
 
   //Funcion que actualiza un libro
   function actualizarLibro(libro){
-    document.getElementById('tituloActual').innerHTML = libro.titulo;
-    document.getElementById('categoriaActual').innerHTML = libro.categoria;
-    document.getElementById('autorActual').innerHTML = libro.autor;
-    document.getElementById('editorialActual').innerHTML = libro.editorial;
-    document.getElementById('fechaActual').innerHTML = libro.fechaPublicacion;
-    document.getElementById('resumenActual').innerHTML = libro.resumen;
-
-    if (libro.imagen) {
-      var imagenResultado = document.getElementById('imagenLibro');
-      imagenResultado.src = 'data:image/png;base64,' + libro.imagen;
-      imagenResultado.alt = libro.titulo;
-  } else {
-      console.error('Error: libro.imagenLibro está indefinido o nulo.');
-  }
-    
+    console.log(libro);
     var tituloNuevo = document.getElementById('actualizarTitulo').value;
     var categoriaNueva = document.getElementById('actualizarCategoria').value;
     var autorNuevo = document.getElementById('actualizarAutor').value;
     var editorialNueva = document.getElementById('actualizarEditorial').value;
     var fechaPublicacionNueva = document.getElementById('actualizarFecha').value;
+    var resumenNuevo = document.getElementById('actualizarResumen').value;
+    var imagen = document.getElementById('actualizarArchivo');
     var isValid = true;
+
 
     if (tituloNuevo.trim() === '') {
         tituloNuevo = document.getElementById('tituloActual').value; 
@@ -186,6 +271,11 @@ let button1;
 
     var regex = /^[a-zA-Z\s,áéíóúüÁÉÍÓÚÜ\-.,]*$/;
 
+    if (imagen.files.length === 0) {
+      alert('Por favor, selecciona una imagen.');
+      return false;
+    }
+
     if (!regex.test(categoriaNueva)) {
         alert('La categoría no puede contener números ni "@" y puede incluir puntos, comas, guiones y acentos.');
         return false;
@@ -208,33 +298,19 @@ let button1;
     formData.append('fechaPublicacion', fechaPublicacionNueva);
     formData.append('categoria', categoriaNueva);
     formData.append('autor', autorNuevo);
+    formData.append('resumen', resumenNuevo);
+    formData.append('imagen', imagen.files[0]); 
  
     formData.forEach(function(value, key){
         console.log(key, value);
     });
 
-    var libroActualizado = {
-        "titulo": tituloNuevo,
-        "editorial":editorialNueva,
-        "fechaPublicacion":fechaPublicacionNueva,
-        "categoria":categoriaNueva,
-<<<<<<< HEAD
-        "autor":autorNuevo,
-        "resumen": document.getElementById('resumenActual').value,
-        "imagen":imagenResultado
-=======
-        "autor":autorNuevo
->>>>>>> 4876dff8133b3fd89ceae13e6b7b67513b949a28
-      };
-
-    fetch('http://localhost:8082/libros/libro'+libro.idlibro, {
+    console.log(libro.idlibro)
+    fetch('http://localhost:8082/libros/libro/'+libro.idlibro, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(libroActualizado),
+        body: formData
     })
-    .then(response => {
+    .then(response =>  {
         console.log(response );
         if (!response.ok) {
             throw new Error('Error al enviar los datos al servidor');
@@ -249,7 +325,7 @@ let button1;
     .catch(error => {
         console.error('Error:', error);
     });
-
+   
   }
   //Funcion para actualizar un inventario
   function actualizarInventario(idInventario){
