@@ -1,39 +1,38 @@
+
 // Función para establecer una cookie
-function setCookie(username, expirationDays) {
-    const date = new Date();
-    date.setTime(date.getTime() + (expirationDays * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = "username=" + username + ";" + expires + ";path=/";
-  }
+function setCookie(token) {
+    document.cookie = "token=" + token ;
+}
   
   // Función para obtener el valor de una cookie por su nombre
-  function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i].trim();
-      if (cookie.indexOf(name + "=") === 0) {
-        return cookie.substring(name.length + 1);
-      }
-    }
-    return "";
-  }
-  
+ function getCookie(token) {
+    const cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith(name + '='))
+        .split('=')[1];
+
+    return cookieValue ? decodeURIComponent(cookieValue) : null;
+}
+  //de aqui
   // Función para verificar si el usuario está logueado
-  function checkLogin() {
-    const username = getCookie("username");
-    if (username !== "") {
-      alert("Bienvenido de nuevo, " + username + "!");
-    } else {
-      const userInput = prompt("Introduce tu nombre de usuario:");
-      if (userInput !== "" && userInput !== null) {
-        setCookie(userInput, 30); // La cookie expirará en 30 días
-        alert("¡Bienvenido, " + userInput + "!");
+  export function checkLogin(token) {
+    let init = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json'
       }
-    }
-  }
+    };
+    fetch(
+        'http://localhost:8082/auth/verificar',
+        init)
+        .then((response) => response.json())
+        .then(function(data) {
+            if(data.estado === "valido"){
+               alert("sigue activo"); 
+            }else{
+               alert("no esta activo")
+            }
+        });
+   }
   
-  // Verificar el estado de inicio de sesión al cargar la página
-  window.onload = function() {
-    checkLogin();
-  };

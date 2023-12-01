@@ -1,3 +1,8 @@
+
+window.onload = function() {
+   checkLogin("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTcwMTQyMDE4NCwiZXhwIjoxNzAxNDIxOTg0fQ.4FuUIcCC1LFrpA55h8B-7cC9IXBjYkyqUktr-jF-eLI");
+};
+
 function submitForm() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
