@@ -132,11 +132,11 @@ let button1;
     document.getElementById('editorialActual').innerHTML = libro.editorial;
     document.getElementById('fechaActual').innerHTML = libro.fechaPublicacion;
     
-    var tituloNuevo = document.getElementById('titulo').value;
-    var categoriaNueva = document.getElementById('categoria').value;
-    var autorNuevo = document.getElementById('autor').value;
-    var editorialNueva = document.getElementById('editorial').value;
-    var fechaPublicacionNueva = document.getElementById('fechaPublicacion').value;
+    var tituloNuevo = document.getElementById('actualizarTitulo').value;
+    var categoriaNueva = document.getElementById('actualizarCategoria').value;
+    var autorNuevo = document.getElementById('actualizarAutor').value;
+    var editorialNueva = document.getElementById('actualizarEditorial').value;
+    var fechaPublicacionNueva = document.getElementById('actualizarFecha').value;
     var isValid = true;
 
     if (tituloNuevo.trim() === '') {
@@ -193,7 +193,7 @@ let button1;
     }
   
 
-    /*var formData = new FormData();
+    var formData = new FormData();
     formData.append('titulo', tituloNuevo);
     formData.append('editorial', editorialNueva);
     formData.append('fechaPublicacion', fechaPublicacionNueva);
@@ -202,16 +202,14 @@ let button1;
  
     formData.forEach(function(value, key){
         console.log(key, value);
-    });*/
+    });
 
     var libroActualizado = {
         "titulo": tituloNuevo,
         "editorial":editorialNueva,
         "fechaPublicacion":fechaPublicacionNueva,
         "categoria":categoriaNueva,
-        "autor":autorNuevo,
-        "resumen":resumen,
-        "imagen":archivoInput.files[0]
+        "autor":autorNuevo
       };
 
     fetch('http://localhost:8082/libros/libro'+libro.idlibro, {
