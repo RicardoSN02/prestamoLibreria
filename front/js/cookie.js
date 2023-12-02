@@ -1,21 +1,17 @@
-
-// Función para establecer una cookie
 function setCookie(token) {
-    document.cookie = "token=" + token ;
-}
-  
-  // Función para obtener el valor de una cookie por su nombre
- function getCookie(token) {
-    const cookieValue = document.cookie
-        .split('; ')
-        .find(row => row.startsWith(name + '='))
-        .split('=')[1];
 
-    return cookieValue ? decodeURIComponent(cookieValue) : null;
+  localStorage.setItem('token', token);
+
+}
+
+function getCookie() {
+  const token = localStorage.getItem('token');
+
+  return token;
 }
   //de aqui
   // Función para verificar si el usuario está logueado
-  export function checkLogin(token) {
+  function checkLogin(token,pagina) {
     let init = {
       method: 'POST',
       headers: {
@@ -29,9 +25,18 @@ function setCookie(token) {
         .then((response) => response.json())
         .then(function(data) {
             if(data.estado === "valido"){
-               alert("sigue activo"); 
+               if(pagina === "login"){
+                const usuarioString = 'menuAdministrador.html';
+                window.location.href = usuarioString;
+               }
             }else{
-               alert("no esta activo")
+              if(pagina === "login"){
+                  console.log("en login")
+              }else{
+                const usuarioString = 'login.html';
+                window.location.href = usuarioString;
+              }
+
             }
         });
    }

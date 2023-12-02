@@ -1,6 +1,7 @@
 
 window.onload = function() {
-   checkLogin("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTcwMTQyMDE4NCwiZXhwIjoxNzAxNDIxOTg0fQ.4FuUIcCC1LFrpA55h8B-7cC9IXBjYkyqUktr-jF-eLI");
+    //obtener galleta y pagina en la que se encuentra actualmente
+   checkLogin(getCookie(),"login");
 };
 
 function submitForm() {
@@ -25,8 +26,10 @@ function submitForm() {
     .then(result => {
         // Verificar la respuesta de la API
         if (result.token) {
-            console.log(result);
+            setCookie(result.token)
+
             alert('Inicio de sesión exitoso');
+
             consultarTipo(result.usuario, result.token);
         } else {
             console.log(result);
