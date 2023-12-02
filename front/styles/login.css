@@ -1,3 +1,20 @@
+
+#toggleButton {
+    position: absolute;
+    top: 70%;
+    right: -10px;
+    transform: translateY(-50%);
+    height: 40px; 
+    width: 70px; 
+    background-color: #cec9c9;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+}
+
+#toggleButton:hover {
+    background-color: #e0e0e0;
+}
 body {
     font-family: 'Arial', sans-serif;
     background-color: rgb(236, 229, 199);
@@ -26,7 +43,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 300px;
+    width: 350px;
 }
 
 .login-form {
@@ -80,4 +97,16 @@ button:hover {
 .labelRegistrarse:hover {
     color: darkblue;
     cursor: pointer;
+}
+#password {
+    width: calc(100% - 61px);
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+
+}
+
+#password:focus {
+    outline: none;
+    border-color: #66afe9;
 }

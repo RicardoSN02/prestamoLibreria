@@ -65,3 +65,16 @@ function consultarTipo(idUsuario,token){
     });
 }
 
+
+function mostrarPassword() {
+    var passwordInput = document.getElementById('password');
+    var toggleButton = document.getElementById('toggleButton');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleButton.innerText = 'Ocultar';
+    } else {
+        passwordInput.type = 'password';
+        toggleButton.innerText = 'Mostrar';
+    }
+}
