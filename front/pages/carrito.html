@@ -5,21 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../styles/carrito.css">
   <link rel="stylesheet" href="../styles/navbar.css">
+  <script src="../js/cookie.js"></script>
   <title>Tu Carrito</title>
 </head>
 
 <body>
     <header class="header">
         <div class="logo">
-            <img src="../media/logo.png" alt="Logo de la marca">
+          <a href="../pages/busquedaLibro.html"><img src="../media/logo.png" alt="Logo de la marca"></a>
         </div>
         <nav>
           <ul class="nav-links">
                 <li><a href="#"><img src="../media/libros.png" alt="Logo de la marca" width="40px"></a></li>
-                <li><a href="#"><img src="../media/usuario.png" alt="Logo de la marca" width="40px"></a></li>
+                <li><a href="../pages/perfil.html"><img src="../media/usuario.png" alt="Logo de la marca" width="40px"></a></li>
           </ul>            
         </nav>
-        <a class="btn" href="#"><button>Cerrar sesión</button></a>
+        <a class="btn" href="#" onclick="cerrarCookie()"><button>Cerrar sesión</button></a>
       </header>
 <!--Hola -->
 <div class="container">

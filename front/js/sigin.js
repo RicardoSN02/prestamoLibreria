@@ -99,12 +99,8 @@ function validarFormulario() {
     .then(data => {
         console.log(data);
 
-     console.log('Tipo:', tipo);
-        if (tipo === 'admin') {
-            window.location.href = 'menuAdministrador.html';
-        } else if (tipo === 'socio') {
-            window.location.href = 'busquedaLibro.html';
-        } 
+        const usuarioString = 'login.html';
+        window.location.href = usuarioString;
         
 
     })

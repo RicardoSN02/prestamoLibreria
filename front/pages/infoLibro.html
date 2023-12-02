@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../styles/infoLibro.css" />
     <link rel="stylesheet" href="../styles/navbar.css">
-
+    <script src="../js/cookie.js"></script>
     <script src="../js/buscar.js"></script>
     <script src="../../microFront/post.js"></script>
     <script src="../js/infoLibro.js"></script>
@@ -24,15 +24,15 @@
     
     <header class="header">
       <div class="logo">
-          <img src="../media/logo.png" alt="Logo de la marca">
+        <a href="../pages/busquedaLibro.html"><img src="../media/logo.png" alt="Logo de la marca"></a>
       </div>
       <nav>
         <ul class="nav-links">
-              <li><a href="#"><img src="../media/libros.png" alt="Logo de la marca" width="40px"></a></li>
-              <li><a href="#"><img src="../media/usuario.png" alt="Logo de la marca" width="40px"></a></li>
+              <li><img src="../media/libros.png" alt="Logo de la marca" width="40px"></a></li>
+              <li><a href="../pages/perfil.html"><img src="../media/usuario.png" alt="Logo de la marca" width="40px"></a></li>
         </ul>            
       </nav>
-      <a class="btn" href="#"><button>Cerrar sesión</button></a>
+      <a class="btn" href="#" onclick="cerrarCookie()"><button>Cerrar sesión</button></a>
     </header>
 
     <busqueda-filtro id="busquedaPorFiltro">ENTRO</busqueda-filtro><!--MICROFRONT O WEB COMPONENT-->
@@ -62,7 +62,7 @@
         <strong><label for="nombre" id="estado">Estado</label></strong>
       </div>
     </div>
-  
+    <button id="reservar">Reservar</button>
     <div class="texto-inferior">
       <p>Resumen</p>
       <p id="resumen"></p>

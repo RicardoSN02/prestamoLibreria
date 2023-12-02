@@ -40,4 +40,10 @@ function getCookie() {
             }
         });
    }
+
+   function cerrarCookie(){
+      localStorage.setItem('token', " ");
+      const usuarioString = 'login.html';
+      window.location.href = usuarioString;
+   }
   

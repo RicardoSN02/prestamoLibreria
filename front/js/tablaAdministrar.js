@@ -81,7 +81,7 @@ let filaSeleccionadaId = null;
 
         btnActualizar.textContent = 'Actualizar';
         btnActualizar.id ='idActualizar';
-        btnActualizar.setAttribute('data-target', 'modalInventario');
+        btnActualizar.setAttribute('data-target', 'modalActualizar');
         btnActualizar.dataset.filaId = element.idlibro; 
         btnActualizar.addEventListener('click', function() {
 
@@ -102,6 +102,7 @@ let filaSeleccionadaId = null;
         button1.textContent = 'Mostrar inventario';
         button1.id ='inventario';
         button1.setAttribute('data-target', 'modalInventario');
+        button1.dataset.filaId = element.idlibro; 
         button1.addEventListener('click', function() {
             // Lógica cuando se hace clic en el botón 1
           console.log('Botón 1 clickeado para el ID:', button1.id);
@@ -111,7 +112,8 @@ let filaSeleccionadaId = null;
           const modal = document.getElementById('modalInventario');
           modal.style.display = 'block';
           document.getElementById('modalTitulo').textContent = element.titulo;
-          consultarInventario(element.idlibro);
+          const filaId = this.dataset.filaId;
+          consultarInventario(filaId);
           
           
         });
@@ -339,7 +341,7 @@ let filaSeleccionadaId = null;
     var nuevoInventario = {
       "cantidad": document.getElementById('nuevaCantidad').value,
       "existencia": document.getElementById('modalExistencia').value,
-      "idlibro": 0
+      "idlibro": idInventario
     };
 
     fetch('http://localhost:8082/inventarios/inventario/'+idInventario,{
@@ -449,5 +451,6 @@ let filaSeleccionadaId = null;
         imagen: imagen.files[0]
     });
   }
+
 
   fetchData();

@@ -46,6 +46,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data[0].cantidad === 0) {
                     estadoElement.innerText = "Sin disponibilidad";
                     estadoElement.classList.add("sin-disponibilidad");
+                    const btnReserva = document.getElementById('reservar');
+                    if (btnReserva) {
+                        // Oculta el botón
+                        btnReserva.style.display = 'none';
+                    }
                 } else {
                     estadoElement.innerText = "Disponible";
                     estadoElement.classList.add("disponible");

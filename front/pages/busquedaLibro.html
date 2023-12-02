@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../styles/busquedaLibro.css">
     <link rel="stylesheet" href="../styles/navbar.css">
-    
+    <script src="../js/cookie.js"></script>
     <script src="../js/buscar.js"></script>
     <script src="../../microFront/post.js"></script>
     <title>Biblioteca</title>
@@ -23,10 +23,10 @@
       <nav>
         <ul class="nav-links">
               <li><a href="#"><img src="../media/libros.png" alt="Logo de la marca" width="40px"></a></li>
-              <li><a href="#"><img src="../media/usuario.png" alt="Logo de la marca" width="40px"></a></li>
+              <li><a href="../pages/perfil.html"><img src="../media/usuario.png" alt="Logo de la marca" width="40px"></a></li>
         </ul>            
       </nav>
-      <a class="btn" href="#"><button>Cerrar sesión</button></a>
+      <a class="btn" href="#" onclick="cerrarCookie()"><button>Cerrar sesión</button></a>
   </header>
 
   <div class="containerCarrusel">
