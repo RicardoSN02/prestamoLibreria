@@ -1,7 +1,10 @@
 var idFinal;
 var libroFinal;
 
-
+window.onload = function() {
+    //obtener galleta y pagina en la que se encuentra actualmente
+   checkLogin(getCookie(),"infolibro");
+};
 document.addEventListener("DOMContentLoaded", function () {
     var urlParams = new URLSearchParams(window.location.search);
     var libroString = urlParams.get('libro');
@@ -50,12 +53,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     if (btnReserva) {
                        btnReserva.addEventListener('click', function(){
-                            const libroReservado = {
-                            fechaespera: new Date('2023-12-25'),
+                        const formattedDate = formatDate(new Date());
+                        
+                        console.log(formattedDate)
+                        const libroReservado = {
+                            fechaespera: formattedDate,
                             libro:id,
                             socio:obtenerId(getCookie())
                         }
-                        console.log(libroReservado);
                         reservarLibro(libroReservado);
                        })
                         
@@ -76,6 +81,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
 function abrirCarrito() {
     const libroString = 'carrito.html?id=' + idFinal + '&libro=' + encodeURIComponent(JSON.stringify(libroFinal));
     console.log(libroString)
@@ -83,14 +96,28 @@ function abrirCarrito() {
 
 };
 
-function reservarLibro(reserva){
-    console.log(reserva);
+function reservarLibro(){
+
+    const formattedDate = formatDate(new Date());
+                        
+    console.log(formattedDate);
+
+    console.log(obtenerId(getCookie()));
+
+    const libroReservado = {
+        fechaespera: formattedDate,
+        libro: idFinal ,
+        //socio:obtenerId(getCookie())
+        socio: 1
+    }
+
+    console.log(libroReservado);
     fetch('http://localhost:8082/reservas/reserva', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(reserva)
+        body: JSON.stringify(libroReservado)
     })
     .then(response => response.json())
     .then(result => {

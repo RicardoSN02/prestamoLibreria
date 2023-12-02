@@ -1,3 +1,9 @@
+
+window.onload = function() {
+    //obtener galleta y pagina en la que se encuentra actualmente
+   checkLogin(getCookie(),"signin");
+};
+
 function validarFormulario() {
     var nombreInput = document.getElementById('nombreUsuario');
     var emailInput = document.getElementById('email');

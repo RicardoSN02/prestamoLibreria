@@ -1,3 +1,7 @@
+window.onload = function() {
+    //obtener galleta y pagina en la que se encuentra actualmente
+   checkLogin(getCookie(),"no login");
+};
 
 function validarFormulario() {
     var titulo = document.getElementById('titulo').value;

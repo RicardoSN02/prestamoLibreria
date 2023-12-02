@@ -1,4 +1,7 @@
-
+window.onload = function() {
+  //obtener galleta y pagina en la que se encuentra actualmente
+ checkLogin(getCookie(),"carrito");
+};
 // Obtener el arreglo almacenado localmente, si existe
 var arregloPersistente = localStorage.getItem('miArreglo');
 

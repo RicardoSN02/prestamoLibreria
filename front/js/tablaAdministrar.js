@@ -2,6 +2,12 @@ const { response } = require("express");
 const { result } = require("lodash");
 let button1;
 let filaSeleccionadaId = null;
+
+window.onload = function() {
+  //obtener galleta y pagina en la que se encuentra actualmente
+ checkLogin(getCookie(),"tabla");
+};
+
   function fetchData() {
     fetch('http://localhost:8082/libros/')
     .then(response=>response.json())
