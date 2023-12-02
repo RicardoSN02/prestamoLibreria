@@ -70,6 +70,8 @@ exports.tokenActivo = (req,res,next) =>{
 
         req.userId = decoded.userId;
         
+        console.log(decoded.userId)
+
         res.json({estado: "valido",idusuario: decoded.userId})
     }catch(error){
         res.status(401).json({error: 'Token invalido'});

@@ -176,11 +176,15 @@ async function guardarPrestamo(data){
     formData.append('libro', libro.idlibro)
     formData.append('socio',socio)
 
+    formData.forEach(function(value, key){
+      console.log(key, value);
+    });
+
     fetch('http://localhost:8082/prestamos/prestamo', {
       method: 'POST',
       body: formData
     })
-      .then(response => {
+      .then(response =>   {
         console.log(response);
         if (!response.ok) {
           throw new Error('Error al enviar los datos al servidor');
@@ -189,9 +193,9 @@ async function guardarPrestamo(data){
       })
       .then(data => {
         console.log(data);
-        location.reload();
-        const usuarioString = 'menuAdministrador.html';
-        window.location.href = usuarioString;
+        //location.reload();
+        //const usuarioString = 'menuAdministrador.html';
+        //window.location.href = usuarioString;
       })
       .catch(error => {
         console.error('Error:', error);
