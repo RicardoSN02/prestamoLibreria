@@ -41,6 +41,29 @@ function getCookie() {
         });
    }
 
+   function obtenerId(token) {
+    let init = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      }
+    };
+    fetch(
+        'http://localhost:8082/auth/verificar',
+        init)
+        .then((response) => response.json())
+        .then(function(data) {
+            if(data.estado === "valido"){
+               console.log(data.idusuario);
+               return data.idusuario;
+            }else{
+
+
+            }
+        });
+   }
+
    function cerrarCookie(){
       localStorage.setItem('token', " ");
       const usuarioString = 'login.html';
