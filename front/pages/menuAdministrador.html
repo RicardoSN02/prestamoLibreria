@@ -75,7 +75,8 @@
   <!--Modal para actualizar-->
   <div id="modalActualizar" class="modalActualizar">
     <div class="modal-contentAct">
-      <div class="colum">
+      
+      <div class="colum" id="infoLibro">
         <span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
         <form class="form-group">
           <fieldset class="form-group">
@@ -98,25 +99,25 @@
             <label for="" >Fecha de publicación: </label>
             <input type="date" name="fecha" id="actualizarFecha">
           </fieldset>
-          <fieldset class="form-group">
-            <label for="resumen">Resumen:</label>
-            <textarea class="form-control" rows="5" id="actualizarResumen"></textarea>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <label for="archivo">Selecciona una imagen:</label>
-            <input type="file" id="actualizarArchivo" name="actualizarArchivo" accept="image/*">
-          </fieldset>  
-
-          <div id="imagePreviewContainer">
-            <img id="imagePreview" alt="Image Preview">
-          </div>
-
-        </form>
-        
+        </form>     
       </div>
       <div class="colum">
-        <button id="guardarActualizacion" class="btnGuardar">Guardar actualizacion</button>
+        <fieldset class="form-group">
+          <label for="resumen">Resumen:</label>
+          <textarea class="form-control" rows="5" id="actualizarResumen"></textarea>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <label for="archivo">Selecciona una imagen:</label>
+          <input type="file" id="actualizarArchivo" name="actualizarArchivo" accept="image/*">
+        </fieldset>  
+
+        <div id="imagePreviewContainer">
+          <img id="imagePreview" alt="Image Preview">
+        </div>
+      </div>
+      <div class="colum">
+        <button id="guardarActualizacion" class="btnGuardar">Actualizar</button>
       </div>
         <!--<span class="close" onclick="cerrarModal('modalActualizar')">&times;</span>
         <label for="" >Titulo:<label id="actualizarTitulo"></label> </label> <br>

@@ -81,7 +81,7 @@ table button:hover{
   position: fixed;
   top: 0;
   left: 5%;
-  width: 110%;
+  width: 120%;
   height: 100%;
 }
 
@@ -121,8 +121,8 @@ table button:hover{
 }
 
 .btnGuardar{
-  width:200px;
-  margin-top: 40%;
+  width:150px;
+  margin-top: 300%;
   height: 40px;
   border-radius: 50px;
   background-color: rgb(75, 219, 210);
@@ -133,8 +133,11 @@ table button:hover{
   background-color: rgb(47, 131, 125);
 }
 
-.imagenLibro{
+.modal-contentAct img{
   width: 100px;
-  height: 100px;
-  margin-left: 2%;
+  height:100px;
+}
+
+#infoLibro{
+  margin-right: 2%;
 }
