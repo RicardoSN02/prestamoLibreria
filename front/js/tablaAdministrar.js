@@ -36,7 +36,7 @@ window.onload = function() {
         const cell7 = row.insertCell(8);
 
 
-        //Boton que elimina un libro del inventario
+        /*Boton que elimina un libro del inventario
         const btnEliminar = document.createElement('button');
         btnEliminar.textContent = 'Eliminar';
         btnEliminar.setAttribute('data-target', 'modalInventario');
@@ -48,7 +48,7 @@ window.onload = function() {
             console.log(element.idlibro)
             eliminarLibro(element.idlibro,fila,tabla);
 
-        });
+        });*/
 
         //Boton que abre el modal de actualizar 
         const btnActualizar = document.createElement('button');
@@ -136,7 +136,6 @@ window.onload = function() {
         imgElement.style.maxHeight = '100px'; 
         cell52.appendChild(imgElement);
         cell6.appendChild(btnActualizar);
-        cell6.appendChild(btnEliminar);
         cell7.appendChild(button1);
 
     });
