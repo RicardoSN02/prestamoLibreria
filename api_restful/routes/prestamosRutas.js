@@ -5,7 +5,7 @@ const { verifyToken } = require('../controllers/authControlador');
 
 // Rutas
 router.get('/',verifyToken,PrestamoController.getAllPrestamos);
-router.post('/prestamo',verifyToken, PrestamoController.addPrestamo);
+router.post('/prestamo', PrestamoController.addPrestamo);
 router.get('/prestamo/:id',verifyToken,PrestamoController.getPrestamoById);
 router.put('/prestamo/:id',verifyToken, PrestamoController.updatePrestamo);
 
