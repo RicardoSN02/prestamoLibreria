@@ -47,21 +47,3 @@ function getCookie() {
       window.location.href = usuarioString;
    }
   
-   function obtenerId(token) {
-    const jwt = token;  // Reemplaza esto con tu JWT real
-  
-    // Dividir el JWT en sus partes: encabezado, cuerpo y firma
-    const [headerEncoded, bodyEncoded, signature] = jwt.split('.');
-  
-    // Añadir relleno a la cadena del encabezado si es necesario
-    const headerEncodedPadded = headerEncoded + '=='.slice((headerEncoded.length + 3) % 4);
-  
-    // Decodificar el encabezado (primera parte) desde Base64
-    const header = JSON.parse(atob(headerEncodedPadded));
-  
-    // Acceder al ID del JWT si está presente en el encabezado
-    const jwtId = header.userId;
-  
-    console.log('ID del JWT:', jwtId);
-    return jwtId;
-  }
