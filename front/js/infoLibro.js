@@ -47,14 +47,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     estadoElement.innerText = "Sin disponibilidad";
                     estadoElement.classList.add("sin-disponibilidad");
                     const btnReserva = document.getElementById('reservar');
+
                     if (btnReserva) {
-                       
-                        const libroReservado = {
+                       btnReserva.addEventListener('click', function(){
+                            const libroReservado = {
                             fechaespera: new Date('2023-12-25'),
                             libro:id,
                             socio:obtenerId(getCookie())
                         }
                         console.log(libroReservado);
+                        reservarLibro(libroReservado);
+                       })
+                        
                     }
                 } else {
                     estadoElement.innerText = "Disponible";

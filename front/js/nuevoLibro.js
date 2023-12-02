@@ -111,12 +111,12 @@ function validarFormulario() {
     .then(data => {
         console.log(data);
         alert('Libro guardado exitosamente.');
-        //location.reload();
+        location.reload();
 
         console.log(data.insertId)
         crearInventario(data.insertId)
         const usuarioString = 'menuAdministrador.html';
-        //window.location.href = usuarioString;
+        window.location.href = usuarioString;
     })
     .catch(error => {
         console.error('Error:', error);
