@@ -109,9 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  
-  
-  
 
   listaCarrito.addEventListener('click', e => {
     if (e.target.classList.contains('eliminar-producto')) {
@@ -125,18 +122,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+  const day = String(date.getDate()).padStart(2, '0');
 
-function guardarPrestamo(){
+  return `${year}-${month}-${day}`;
+}
+
+function obtenerSocio(){
+  var galleta = getCookie()
+  let init = {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + galleta,
+      'Content-Type': 'application/json'
+    }
+  };
+  fetch(
+      'http://localhost:8082/auth/verificar',
+      init)
+      .then((response) => response.json())
+      .then(function(data) {
+          if(data.estado === "valido"){
+            console.log("data idusuario:",data.idusuario)
+            guardarPrestamo(data.idusuario)
+          }else{
+
+
+          }
+      });
+}
+
+async function guardarPrestamo(data){
+
+  console.log(data)
 
   for (let index = 0; index < arregloPersistente.length; index++) {
     const libro = arregloPersistente[index];
     console.log(libro)
+
+    var socio = data
+    console.log(socio)
     var formData = new FormData();
-    formData.append('libro', libro)
+
+    var fechainicio = new Date()
+    var fechafin = new Date()
+    fechafin.setDate(fechafin.getDate()+3)
+
+    formData.append('fechainicio',formatDate(fechainicio))
+    formData.append('fechafin', formatDate(fechafin))
+    formData.append('estado', 'prestado')
+    formData.append('libro', libro.idlibro)
+    formData.append('socio',socio)
 
     fetch('http://localhost:8082/prestamos/prestamo', {
       method: 'POST',
-      body: JSON.parse(libro)
+      body: formData
     })
       .then(response => {
         console.log(response);
