@@ -1,3 +1,4 @@
+
 body {
     background-color: rgb(236, 229, 199);
 }
@@ -6,12 +7,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 1%;
 }
 
 table{
-    border: 1px solid black;
-    width: 90%;
+  border: 1px solid black;
+  width: 95%; 
+  margin-top: 1%;
 }
 
 th{
@@ -40,7 +42,7 @@ table button:hover{
 
 .containerButton{
   margin-left: 70%;
-  margin-top: 10%;
+    margin-top: 1%; 
 }
 
 .containerButton button{
