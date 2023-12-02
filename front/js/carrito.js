@@ -89,17 +89,29 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('miArreglo', JSON.stringify(arregloPersistente))
   }
 
-  function eliminarProducto(id) {
-    const productoAEliminar = document.querySelector(`#lista-carrito [data-id="${id}"]`);
-    productoAEliminar.parentElement.removeChild(productoAEliminar);
-    eliminarProductoArreglo(id)
-  }
 
-  function eliminarProductoArreglo(id) {
-    indice = arregloPersistente.indexOf(id)
-    arregloPersistente.splice(id, 1)
-    localStorage.setItem('miArreglo', JSON.stringify(arregloPersistente))
+  function eliminarProducto(idProducto) {
+    arregloPersistente = arregloPersistente.filter(producto => producto.idlibro !== idProducto);
+    localStorage.setItem('miArreglo', JSON.stringify(arregloPersistente));
+    renderizarCarrito();
   }
+  
+  function renderizarCarrito() {
+    const listaCarrito = document.getElementById('lista-carrito');
+    listaCarrito.innerHTML = '';
+    arregloPersistente.forEach(producto => {
+      const productoHTML = document.createElement('li');
+      productoHTML.innerHTML = `
+        <span>${producto.titulo}</span>
+        <button class="eliminar-producto" data-id="${producto.idlibro}">Eliminar</button>
+      `;
+      listaCarrito.appendChild(productoHTML);
+    });
+  }
+  
+  
+  
+  
 
   listaCarrito.addEventListener('click', e => {
     if (e.target.classList.contains('eliminar-producto')) {
