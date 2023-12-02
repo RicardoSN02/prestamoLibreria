@@ -13,7 +13,7 @@ class conexion{
             this.conn = this.mysql.createConnection({
                 host: 'localhost',
                 user: 'root',
-                password: '12345',
+                password: '1234',
                 database: 'libreriabd'
             });
             
