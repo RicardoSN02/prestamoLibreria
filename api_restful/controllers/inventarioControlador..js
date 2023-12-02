@@ -42,12 +42,12 @@ exports.addInventario = async (req, res, next) => {
         }
 
         const nuevoInvetario = new inventario(0, req.body.cantidad, req.body.existencia, req.body.idlibro);
-        abrirConexion();
+        await abrirConexion();
         const invetariosdao = new invetariodao(nuevaConexcion);
-        await invetariosdao.agregarInventario(nuevoInvetario);
-        cerrarConexion();
+        let creado = await invetariosdao.agregarInventario(nuevoInvetario);
+        await cerrarConexion();
 
-        res.json(nuevoInvetario);
+        res.json(creado);
     } catch (err) {
         next(err);
     }
