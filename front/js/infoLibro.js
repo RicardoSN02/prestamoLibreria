@@ -49,22 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data[0].cantidad === 0) {
                     estadoElement.innerText = "Sin disponibilidad";
                     estadoElement.classList.add("sin-disponibilidad");
-                    const btnReserva = document.getElementById('reservar');
 
-                    if (btnReserva) {
-                       btnReserva.addEventListener('click', function(){
-                        const formattedDate = formatDate(new Date());
-                        
-                        console.log(formattedDate)
-                        const libroReservado = {
-                            fechaespera: formattedDate,
-                            libro:id,
-                            socio:obtenerId(getCookie())
-                        }
-                        reservarLibro(libroReservado);
-                       })
-                        
-                    }
                 } else {
                     estadoElement.innerText = "Disponible";
                     estadoElement.classList.add("disponible");
