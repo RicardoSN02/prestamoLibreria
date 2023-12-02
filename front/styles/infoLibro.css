@@ -68,3 +68,16 @@ body {
 .disponible {
   color: green;
 }
+
+.reservar{
+  border-radius: 50px;
+  width: 100px;
+  margin-left: 63%;
+  margin-bottom: 2%;
+  background-color: rgb(242, 184, 36);
+  cursor: pointer;
+}
+
+.reservar:hover{
+  background-color: rgb(149, 113, 22);
+}
