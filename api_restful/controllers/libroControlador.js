@@ -65,10 +65,10 @@ exports.addLibro = async (req,res,next) => {
 
         abrirConexion();
         const librosdao = new librodao(nuevaConexcion);
-        await librosdao.insertarLibro(nuevoLibro);
+        let creado = await librosdao.insertarLibro(nuevoLibro);
         cerrarConexion();
 
-        res.json(nuevoLibro);
+        res.json(creado);
     } catch (err){
         next(err);
         //res.status(500).json({ error: "Hubo un problema al agregar el libro"});

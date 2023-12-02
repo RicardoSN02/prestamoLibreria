@@ -20,7 +20,7 @@ class libroDAO{
                     reject(error);
                 } else {
                     console.log("se guardo en base de datos");
-                    resolve("se guardo con exito");
+                    resolve(results);
                 }
                 });
             

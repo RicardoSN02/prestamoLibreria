@@ -111,15 +111,49 @@ function validarFormulario() {
     .then(data => {
         console.log(data);
         alert('Libro guardado exitosamente.');
-        location.reload();
+        //location.reload();
+
+        console.log(data.insertId)
+        crearInventario(data.insertId)
         const usuarioString = 'menuAdministrador.html';
-        window.location.href = usuarioString;
+        //window.location.href = usuarioString;
     })
     .catch(error => {
         console.error('Error:', error);
     });
 
     return true;
+}
+
+function crearInventario(id){
+
+    var inventario = {
+        "cantidad": 0,
+        "existencia": 0,
+        "idlibro": id
+      }
+
+    fetch('http://localhost:8082/inventarios/inventario', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(inventario),
+    })
+    .then(response => {
+        console.log(response );
+        if (!response.ok) {
+            throw new Error('Error al enviar los datos al servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+           console.log(data);
+           console.log("se creo un inventario para el libro recien agregado")
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 function limpiarCampos() {

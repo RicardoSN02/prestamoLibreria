@@ -48,12 +48,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     estadoElement.classList.add("sin-disponibilidad");
                     const btnReserva = document.getElementById('reservar');
                     if (btnReserva) {
-                        // Oculta el botón
-                        btnReserva.style.display = 'none';
+                       
+                        const libroReservado = {
+                            fechaespera: new Date('2023-12-25'),
+                            libro:id,
+                            socio:obtenerId(getCookie())
+                        }
+                        console.log(libroReservado);
                     }
                 } else {
                     estadoElement.innerText = "Disponible";
                     estadoElement.classList.add("disponible");
+                    // Oculta el botón
+                    btnReserva.style.display = 'none';
+
                 }
             } else {
                 console.error("No se encontró el inventario del libro seleccionado");
@@ -70,3 +78,22 @@ function abrirCarrito() {
     window.location.href = libroString;
 
 };
+
+function reservarLibro(reserva){
+    console.log(reserva);
+    fetch('http://localhost:8082/reservas/reserva', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reserva)
+    })
+    .then(response => response.json())
+    .then(result => {
+        // Verificar la respuesta de la API
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('Error al realizar la solicitud a la API:', error);
+    });
+}
